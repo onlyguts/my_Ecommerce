@@ -6,6 +6,9 @@ import Admin from './Admin/Admin'
 import Homes from './App/Homes'
 import Boitier from './App/produits/Boitier'
 import BoitierId from './App/produits/BoitierId'
+
+import Login from './Login/Login'
+import Register from './Login/Register'
 function App() {
     return (
         <BrowserRouter>
@@ -14,6 +17,8 @@ function App() {
                 <Route path="/admin" element={<Admin />}></Route>
                 <Route path="/boitier" element={<Boitier />}></Route>
                 <Route path="/boitier/:id" element={<BoitierId />}></Route>
+                <Route path="/Login" element={<Login />}></Route>
+                <Route path="/Register" element={<Register />}></Route>
 
             </Routes>
         </BrowserRouter>

@@ -24,10 +24,10 @@ function Boitier() {
             {
                 array.map((itme) => {
                     return (
-                        <div className="item" key={itme.id} >
+                        <div className="item" key={itme.id} onClick={() => ShowProduct(itme.id)}>
                             <span> {itme.designation} </span>
                             <img src={itme.imageUrl} alt={itme.designation} />
-                            <button onClick={() => ShowProduct(itme.id)}>Test</button>
+                   
                         </div>
                     )
                 })
