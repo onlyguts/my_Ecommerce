@@ -2,13 +2,13 @@
 
 import React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Admin from './Admin/Admin'
+import Admin from './App/Admin/Admin'
 import Homes from './App/Homes'
 import Boitier from './App/produits/Boitier'
 import BoitierId from './App/produits/BoitierId'
 
-import Login from './Login/Login'
-import Register from './Login/Register'
+import Login from './App/Login/Login'
+import Register from './App/Login/Register'
 function App() {
     return (
         <BrowserRouter>

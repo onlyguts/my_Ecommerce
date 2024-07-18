@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import localhost from './../Config';
 
 function Register() {
     const [email, setEmail] = useState("");
@@ -7,6 +8,7 @@ function Register() {
     const [username, setUsername] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const local = localhost
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,7 +25,7 @@ function Register() {
 
         console.log(email, password)
 
-        const response = await fetch('https://localhost:8000/users/post', {
+        const response = await fetch('https://'+local+'/users/post', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

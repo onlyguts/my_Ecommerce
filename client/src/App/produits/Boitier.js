@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Nav from './../Nav';
+import localhost from './../Config';
 
 function Boitier() {
     const [array, setArray] = useState([]);
-
+    const local = localhost
     useEffect(() => {
-        fetch("https://localhost:8000/boitier")
+        fetch('https://'+local+'/boitier')
             .then(response => response.json())
             .then(data => setArray(data))
 
