@@ -1,9 +1,12 @@
 import React from 'react'
 import AdminCss from './Admin.css'
+import AdminnAV from './NavAdmin'
 import { useNavigate } from "react-router-dom";
 
 function Admin() {
     const navigate = useNavigate();
+
+    const change = true
 
     const handleClick = () => {
         navigate("/");
@@ -165,41 +168,12 @@ function Admin() {
         </div>
 
         <div class="main">
-            <h1>Dashboard</h1>
+            {change 
+            ?   <AdminnAV />
+            :   <p>trefe</p>
 
-            <div class="buttons-container">
-                <button class="button">Button 1</button>
-                <button class="button">Button 2</button>
-                <button class="button">Button 3</button>
-
-            </div>
-
-            <div class="graph-container">
-                <h2>Graphique 1</h2>
-                <canvas id="graph1"></canvas>
-            </div>
-
-            <div class="graph-container">
-                <h2>Graphique 2</h2>
-                <canvas id="graph2"></canvas>
-            </div>
-
-            <div class="graph-container">
-                <h2>Graphique 3</h2>
-                <canvas id="graph3"></canvas>
-            </div>
-
-            <div class="version-list">
-                <h2>Historique des versions</h2>
-                <ul>
-                    <li>Version 1.0 - Date de sortie: 01/01/2022</li>
-                    <li>Version 1.1 - Date de sortie: 15/02/2022</li>
-                    <li>Version 1.2 - Date de sortie: 31/03/2022</li>
-                    <li>Version 1.3 - Date de sortie: 15/05/2022</li>
-                    <li>Version 1.4 - Date de sortie: 30/06/2022</li>
-                </ul>
-            </div>
-
+            }
+        
         </div>
 
         <script src="script.js"></script>

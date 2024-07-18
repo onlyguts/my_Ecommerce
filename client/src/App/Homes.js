@@ -8,26 +8,34 @@ import { useNavigate } from "react-router-dom";
 function Homes() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+    const navigate = useNavigate();
     const openPopup = () => {
-        setIsPopupOpen(true);
+        navigate('/login')
     };
 
-    const closePopup = () => {
-        setIsPopupOpen(false);
-    };
+
+   
 
     return (
         <div className="App">
             <Header openPopup={openPopup} />
             <Nav />
             <Main />
-            {isPopupOpen && <PopupForm closePopup={closePopup} />}
+           
         </div>
     );
 }
 
 function Header({ openPopup }) {
-    return (
+    const Login = localStorage.getItem('users'); 
+    const navigate = useNavigate();
+
+    const Deconnexion = () => {
+        localStorage.removeItem('users')
+        navigate('/')
+    }
+    console.log(Login)
+      return (
         <header>
             <div className='head'>
                 <div className="logo">
@@ -35,7 +43,11 @@ function Header({ openPopup }) {
                 </div>
                 <input className="navBar" type="text" placeholder="Recherche" />
                 <div className="menu">
-                    <button className="menu-btn" onClick={openPopup}>Connexion</button>
+                    {!Login 
+                    ?  <button className="menu-btn" onClick={openPopup}>Connexion</button>
+                    :  <button className="menu-btn" onClick={Deconnexion}>Deconnexion</button>
+                    }
+                    
                     <button className="menu-btn">Cart</button>
                 </div>
             </div>
@@ -52,6 +64,7 @@ function Main() {
     const OpenBoitier = () => {
         navigate("/boitier");
     }
+
     return (
         <main>
             <div className="main-banner">

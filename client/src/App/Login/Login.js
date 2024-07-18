@@ -8,7 +8,10 @@ function Login() {
     const [error, setError] = useState("");
     const local = localhost
     const navigate = useNavigate();
-    
+
+    function Register() {
+        navigate('/register')
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         const response = await fetch('https://'+local+'/users/get/' + email, {
@@ -24,6 +27,9 @@ function Login() {
         console.log(data);
         if (data[0].email) {
             navigate("/");
+            localStorage.setItem('users', data[0].email);
+            console.log(localStorage.getItem('users')) 
+           
         }
     } else if (response.status === 500) {
         setError("Deja la ");
@@ -42,8 +48,9 @@ function Login() {
                     <label>Password:</label>
                     <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </div>
-                <button type="submit">Register</button>
+                <button type="submit">Login</button>
             </form>
+                <button onClick={() => Register()}>Register</button>
     </div>
   )
 }

@@ -10,6 +10,10 @@ function Register() {
     const navigate = useNavigate();
     const local = localhost
 
+    function Login() {
+        navigate('/Login')
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
@@ -63,6 +67,7 @@ function Register() {
                 </div>
                 <button type="submit">Register</button>
             </form>
+            <button onClick={() => Login()}>Login</button>
         </div>
     );
 }
