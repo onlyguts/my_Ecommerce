@@ -11,10 +11,17 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class BoitierController extends AbstractController
 {
-    #[Route('/boitier', name: 'app_boitier', methods: ['GET', 'HEAD'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    #[Route('/boitier', name: 'appp_boitier', methods: ['GET', 'HEAD'])]
+    public function indexx(EntityManagerInterface $entityManager): Response
     {
         $boitier = $entityManager->getRepository(Boitier::class);
         return $this->json($boitier->findAll());
+    }
+    
+    #[Route('/boitier/{id}', name: 'app_boitier', methods: ['GET', 'HEAD'])]
+    public function index(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $boitier = $entityManager->getRepository(Boitier::class);
+        return $this->json($boitier->findBy(['id' => $id]));
     }
 }
