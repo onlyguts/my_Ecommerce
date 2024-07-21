@@ -3,7 +3,7 @@ import AdminCss from './Admin.css'
 import { useNavigate } from "react-router-dom";
 import localhost from '../Config';
 function Admin() {
-    const [change, setChange] = useState(true);
+    const [change, setChange] = useState('');
     const navigate = useNavigate();
 
 
@@ -12,7 +12,7 @@ function Admin() {
     }
 
     const Boitier = () => {
-        setChange(false)
+        setChange('boitier')
     }
     return (
 
@@ -160,11 +160,14 @@ function Admin() {
             </div>
 
             <div class="main">
-                {change 
+                {change !== 'boitier'
                 ? <p>DashBoard</p>
                 :   <Lisst />
-
                 }
+                {/* {change !== 'boitier'
+                ? <p>DashBoard</p>
+                :   <Lisst />
+                } */}
             
             </div>
 
@@ -185,6 +188,17 @@ function Lisst() {
             .then(data => setArray(data))
 
     }, [])
+    
+    function Deleted(id) {
+        const local = localhost
+    
+      
+          fetch("https://"+local+"/boitier/delete/" + id)
+            .then(response => response.json())
+            .then(data => console.log(data))
+      
+ 
+    }
 
     return (
         <div>          
@@ -203,8 +217,8 @@ function Lisst() {
                         <div  key={itme.id}>
                             <span> 
                             <p>{itme.id} | {itme.designation} | {itme.marque}</p> 
-                                <button>Edit</button>
-                               <button>Supprimer</button>
+                                <button >Edit</button>
+                               <button onClick={() => Deleted(itme.id)}>Supprimer</button>
                             </span>
                             {/* <img src={itme.imageUrl} alt={itme.designation} /> */}
 
