@@ -17,11 +17,6 @@ function App() {
                 <Route path="/admin" element={<Admin />}></Route>
                 <Route path="/boitier" element={<Boitier />}></Route>
                 <Route path="/boitier/:id" element={<BoitierId />}></Route>
-<<<<<<< Updated upstream
-=======
-                
-                <Route path="/product/boitier" element={<ProductBoitier />}></Route>
->>>>>>> Stashed changes
                 <Route path="/Login" element={<Login />}></Route>
                 <Route path="/Register" element={<Register />}></Route>
 
