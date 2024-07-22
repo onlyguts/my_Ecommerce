@@ -14,28 +14,35 @@ function Homes() {
     };
 
 
-   
+
 
     return (
         <div className="App">
             <Header openPopup={openPopup} />
             <Nav />
             <Main />
-           
+
         </div>
     );
 }
 
 function Header({ openPopup }) {
-    const Login = localStorage.getItem('users'); 
+    const Login = localStorage.getItem('users');
     const navigate = useNavigate();
 
     const Deconnexion = () => {
         localStorage.removeItem('users')
         navigate('/')
     }
-    console.log(Login)
-      return (
+    const parseUser = JSON.parse(Login);
+
+
+
+    const handleClick = () => {
+        navigate("/admin");
+    }
+
+    return (
         <header>
             <div className='head'>
                 <div className="logo">
@@ -43,11 +50,19 @@ function Header({ openPopup }) {
                 </div>
                 <input className="navBar" type="text" placeholder="Recherche" />
                 <div className="menu">
-                    {!Login 
-                    ?  <button className="menu-btn" onClick={openPopup}>Connexion</button>
-                    :  <button className="menu-btn" onClick={Deconnexion}>Deconnexion</button>
+                    {!parseUser
+                        ? <button className="menu-btn" onClick={openPopup}>Connexion</button>
+                        : <button className="menu-btn" onClick={Deconnexion}>Deconnexion</button>
                     }
-                    
+                    {parseUser && (
+                        parseUser.groupe === 1 ? (
+                            <button className="menu-btn"  onClick={handleClick}>Panel Admin</button>
+                        ) : (
+                            <p></p>
+                        )
+                    )}
+
+
                     <button className="menu-btn">Cart</button>
                 </div>
             </div>
@@ -69,9 +84,9 @@ function Main() {
         <main>
             <div className="main-banner">
                 <h1>Build Your PC</h1>
-       
+
             </div>
-        
+
             <div className="grid-container">
 
                 <ProductItem src={images.gpu} alt="Carte graphique" name="Carte graphique" />

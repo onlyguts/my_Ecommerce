@@ -24,12 +24,16 @@ function Login() {
       console.log(response)
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
+
         if (data[0].email) {
             navigate("/");
-            localStorage.setItem('users', data[0].email);
-            console.log(localStorage.getItem('users')) 
-           
+            const userData = {
+                email: data[0].email,
+                groupe: data[0].groupe
+            };
+            localStorage.setItem('users', JSON.stringify(userData));
+            const storedUser = localStorage.getItem('users');
+            console.log(storedUser);
         }
     } else if (response.status === 500) {
         setError("Deja la ");

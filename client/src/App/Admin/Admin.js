@@ -1,234 +1,207 @@
 import React, { useState, useEffect } from 'react';
-import AdminCss from './Admin.css'
 import { useNavigate } from "react-router-dom";
 import localhost from '../Config';
+
 function Admin() {
-    const [change, setChange] = useState('');
+    const [produits, setProduits] = useState([]);
+
+
+    const [produitActuel, setProduitActuel] = useState(null);
+
+
+    const [formulaire, setFormulaire] = useState({
+        designation: '',
+        marque: '',
+        image: ''
+    });
+
+    const [typeProduit, setTypeProduit] = useState('boitier');
+
     const navigate = useNavigate();
 
 
-    const handleClick = () => {
-        navigate("/");
-    }
+    useEffect(() => {
+        const utilisateurConnecte = localStorage.getItem('users');
+        const utilisateur = utilisateurConnecte ? JSON.parse(utilisateurConnecte) : null;
+        if (!utilisateur || utilisateur.groupe !== 1) {
 
-    const Boitier = () => {
-        setChange('boitier')
-    }
-    return (
+            navigate("/");
 
-        <div class="container">
-            <div class="sidebar">
-                <a onClick={handleClick} class="menu-home">
-                    <img src="https://img.icons8.com/ios/50/null/home.png" alt="Dashboard icon" />
-                </a>
-                <details>
-                    <summary>
-                        <img src="https://img.icons8.com/ios/50/null/user.png" alt="User icon" />
-                        Users
-                    </summary>
-                    <div class="container-div">
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/user.png" alt="Dashboard icon" />
-                            List All Users
+        }
 
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/user.png" alt="Dashboard icon" />
-                            Group Users
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/user.png" alt="Dashboard icon" />
-                            Create a User
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/user.png" alt="Dashboard icon" />
-                            Delete a User
-                        </a>
-                    </div>
-                </details>
-                <details>
-                    <summary>
-                        <img src="https://img.icons8.com/ios/50/null/shopping-cart.png" alt="User icon" />
-                        Shop
-
-                    </summary>
-                    <div class="container-div">
-                        <a onClick={Boitier}>
-                            <img src="https://img.icons8.com/ios/50/null/shopping-cart.png" alt="Dashboard icon" />
-                            Boitier
-                        </a>
-
-                    </div>
-                </details>
-                <details>
-                    <summary>
-                        <img src="https://img.icons8.com/ios/50/null/data-configuration.png" alt="User icon" />
-                        Data
-                    </summary>
-                    <div class="container-div">
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/data-configuration.png" alt="Dashboard icon" />
-                            Change Password
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/data-configuration.png" alt="Dashboard icon" />
-                            Edit Profile
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/data-configuration.png" alt="Dashboard icon" />
-                            Notification Settings
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/data-configuration.png" alt="Dashboard icon" />
-                            Logout
-                        </a>
-                    </div>
-                </details>
-                <details>
-                    <summary>
-                        <img src="https://img.icons8.com/ios/50/null/user-shield.png" alt="User icon" />
-                        Admin
-                    </summary>
-                    <div class="container-div">
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/user-shield.png" alt="Dashboard icon" />
-                            Change Password
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/user-shield.png" alt="Dashboard icon" />
-                            Edit Profile
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/user-shield.png" alt="Dashboard icon" />
-                            Notification Settings
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/user-shield.png" alt="Dashboard icon" />
-                            Logout
-                        </a>
-                    </div>
-                </details>
-                <details>
-                    <summary>
-                        <img src="https://img.icons8.com/ios/50/null/log.png" alt="User icon" />
-                        Log
-                    </summary>
-                    <div class="container-div">
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/log.png" alt="Dashboard icon" />
-                            Change Password
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/log.png" alt="Dashboard icon" />
-                            Edit Profile
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/log.png" alt="Dashboard icon" />
-                            Notification Settings
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/log.png" alt="Dashboard icon" />
-                            Logout
-                        </a>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>
-                        <img src="https://img.icons8.com/ios/50/null/settings.png" alt="User icon" />
-                        Settings
-                    </summary>
-                    <div class="container-div">
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/settings.png" alt="Dashboard icon" />
-                            Change Password
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/settings.png" alt="Dashboard icon" />
-                            Edit Profile
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/settings.png" alt="Dashboard icon" />
-                            Notification Settings
-                        </a>
-                        <a href="#">
-                            <img src="https://img.icons8.com/ios/50/null/settings.png" alt="Dashboard icon" />
-                            Logout
-                        </a>
-                    </div>
-                </details>
-            </div>
-
-            <div class="main">
-                {change !== 'boitier'
-                ? <p>DashBoard</p>
-                :   <Lisst />
-                }
-                {/* {change !== 'boitier'
-                ? <p>DashBoard</p>
-                :   <Lisst />
-                } */}
-            
-            </div>
-
-            <script src="script.js"></script>
-        </div>
-
-    )
-}
+    }, [navigate]);
 
 
-function Lisst() {
-    const [array, setArray] = useState([]);
-    const local = localhost
+
+
 
     useEffect(() => {
-        fetch('https://' + local + '/boitier')
-            .then(response => response.json())
-            .then(data => setArray(data))
+        fetchProduits();
 
-    }, [])
-    
-    function Deleted(id) {
-        const local = localhost
-    
-      
-          fetch("https://"+local+"/boitier/delete/" + id)
+    }, [typeProduit]);
+
+
+
+    const fetchProduits = () => {
+
+        fetch(`https://${localhost}/${typeProduit}`)
             .then(response => response.json())
-            .then(data => console.log(data))
-      
- 
-    }
+            .then(data => setProduits(data))
+
+            .catch(error => console.error('Erreur fetch', error));
+    };
+
+    const handleInputChange = (e) => {
+
+        const { name, value } = e.target;
+
+
+        setFormulaire({
+            ...formulaire,
+            [name]: value
+        });
+    };
+
+    const handleProductTypeChange = (e) => {
+        setTypeProduit(e.target.value);
+        setProduitActuel(null);
+
+
+        setFormulaire({ designation: '', marque: '', image: '' });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const method = produitActuel ? 'PUT' : 'POST';
+        const url = produitActuel ? `https://${localhost}/${typeProduit}/update/${produitActuel.id}` : `https://${localhost}/${typeProduit}/add`;
+
+        fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formulaire)
+        })
+   
+            .then(response => response.json())
+            .then(updatedProduit => {
+                if (produitActuel) {
+                    setProduits(produits.map(produit => produit.id === updatedProduit.id ? updatedProduit : produit));
+                
+                } else {
+                    setProduits([...produits, updatedProduit]);
+                
+
+                }
+                resetForm();
+
+
+            })
+            .catch(error => console.error('Erreur update', error));
+            
+    };
+
+    const handleEdit = (produit) => {
+        setProduitActuel(produit);
+        setFormulaire({
+            designation: produit.designation,
+            marque: produit.marque,
+            image: produit.image
+        });
+    };
+
+    const handleDelete = (id) => {
+
+
+        fetch(`https://${localhost}/${typeProduit}/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+
+                    throw new Error('Erreur delete 1');
+                }
+                setProduits(produits.filter(produit => produit.id !== id));
+
+            })
+
+
+            .catch(error => console.error('Erreur delete', error));
+    };
+
+
+
+    const resetForm = () => {
+        setProduitActuel(null);
+        setFormulaire({ designation: '', marque: '', image: '' });
+
+    };
 
     return (
-        <div>          
-           <form>
-            <label>designation</label>
-            <input type='text'></input>
-            <label>marque</label>
-            <input type='text'></input>
-            <label>image</label>
-            <input type='text'></input>
-            <button type='submit'>Ajouter</button>
-           </form>
-            {
-                array.map((itme) => {
-                    return (
-                        <div  key={itme.id}>
-                            <span> 
-                            <p>{itme.id} | {itme.designation} | {itme.marque}</p> 
-                                <button >Edit</button>
-                               <button onClick={() => Deleted(itme.id)}>Supprimer</button>
-                            </span>
-                            {/* <img src={itme.imageUrl} alt={itme.designation} /> */}
-
-                        </div>
-                    )
-                })
-            }
+        <div>
+            <h1>Panneau d'administration</h1>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Type de produit:
+                    <select value={typeProduit} onChange={handleProductTypeChange}>
+                        <option value="boitier">Boitier</option>
+                        <option value="aio">AIO</option>
+                    </select>
+                </label>
+    
+                {typeProduit === 'boitier' && (
+                    <>
+                        <label>
+                            Désignation: <input type='text' name='designation' value={formulaire.designation} onChange={handleInputChange} />
+                        </label>
+                        <label>
+                            Marque: <input type='text' name='marque' value={formulaire.marque} onChange={handleInputChange} />
+                        </label>
+                        <label>
+                            Image: <input type='text' name='image' value={formulaire.image} onChange={handleInputChange} />
+                        </label>
+                        <label>
+                            Taille: <input type='text' name='taille' value={formulaire.taille || ''} onChange={handleInputChange} />
+                        </label>
+                        <label>
+                            Poids: <input type='text' name='poids' value={formulaire.poids || ''} onChange={handleInputChange} />
+                        </label>
+                    </>
+                )}
+    
+                {typeProduit === 'aio' && (
+                    <>
+                        <label>
+                            Désignation: <input type='text' name='designation' value={formulaire.designation} onChange={handleInputChange} />
+                        </label>
+                        <label>
+                            Marque: <input type='text' name='marque' value={formulaire.marque} onChange={handleInputChange} />
+                        </label>
+                        <label>
+                            Image: <input type='text' name='image' value={formulaire.image} onChange={handleInputChange} />
+                        </label>
+                    </>
+                )}
+    
+                <button type='submit'>{produitActuel ? 'Mettre à jour' : 'Ajouter'}</button>
+                {produitActuel && <button type='button' onClick={resetForm}>Annuler</button>}
+            </form>
+            <ul>
+                {produits.map(produit => (
+                    <li key={produit.id}>
+                        {produit.designation} | {produit.marque} | <img src={produit.image} alt={produit.designation} />
+                        <button onClick={() => handleEdit(produit)}>Éditer</button>
+                        <button onClick={() => handleDelete(produit.id)}>Supprimer</button>
+                    </li>
+                ))}
+            </ul>
         </div>
-
-    )
+    );
+    
 }
 
-export default Admin
+export default Admin;

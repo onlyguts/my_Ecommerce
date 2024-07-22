@@ -17,7 +17,7 @@ function Nav() {
                 <li><a href="test">Barrette RAM</a></li>
                 <li><a href="test">Stockage</a></li>
                 <li><a href="test">Boîtier</a></li>
-                <li><a onClick={handleClick}>Panel Admin</a></li>
+            
             </ul>
         </nav>
     );
