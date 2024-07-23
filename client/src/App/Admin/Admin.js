@@ -143,10 +143,10 @@ function Admin() {
 
     return (
         <div>
-            <h1>Panneau d'administration</h1>
+            <h1>Pannel Admin</h1>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Type de produit:
+                    Type de produit :
                     <select value={typeProduit} onChange={handleProductTypeChange}>
                         <option value="boitier">Boitier</option>
                         <option value="aio">AIO</option>
@@ -156,19 +156,19 @@ function Admin() {
                 {typeProduit === 'boitier' && (
                     <>
                         <label>
-                            Désignation: <input type='text' name='designation' value={formulaire.designation} onChange={handleInputChange} />
+                            Designation : <input type='text' name='designation' value={formulaire.designation} onChange={handleInputChange} />
                         </label>
                         <label>
-                            Marque: <input type='text' name='marque' value={formulaire.marque} onChange={handleInputChange} />
+                            Marque : <input type='text' name='marque' value={formulaire.marque} onChange={handleInputChange} />
                         </label>
                         <label>
-                            Image: <input type='text' name='image' value={formulaire.image} onChange={handleInputChange} />
+                            Image URL : <input type='text' name='image' value={formulaire.image} onChange={handleInputChange} />
                         </label>
                         <label>
-                            Taille: <input type='text' name='taille' value={formulaire.taille || ''} onChange={handleInputChange} />
+                            Taille : <input type='text' name='taille' value={formulaire.taille || ''} onChange={handleInputChange} />
                         </label>
                         <label>
-                            Poids: <input type='text' name='poids' value={formulaire.poids || ''} onChange={handleInputChange} />
+                            Poids : <input type='text' name='poids' value={formulaire.poids || ''} onChange={handleInputChange} />
                         </label>
                     </>
                 )}

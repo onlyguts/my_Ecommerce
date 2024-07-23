@@ -4,8 +4,9 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Admin from './App/Admin/Admin'
 import Homes from './App/Homes'
-import Boitier from './App/produits/Boitier'
-import BoitierId from './App/produits/BoitierId'
+import ProduitsList from './App/produits/ProduitsList'
+import ProduitList from './App/produits/ProduitList'
+import Produits from './App/produits/Produits'
 
 import Login from './App/Login/Login'
 import Register from './App/Login/Register'
@@ -15,8 +16,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<Homes />}></Route>
                 <Route path="/admin" element={<Admin />}></Route>
-                <Route path="/boitier" element={<Boitier />}></Route>
-                <Route path="/boitier/:id" element={<BoitierId />}></Route>
+                <Route path="/produits" element={<Produits />}></Route>
+                <Route path="/produits/:id" element={<ProduitsList />}></Route>
+                <Route path="/produit/:id" element={<ProduitList />}></Route>
                 <Route path="/Login" element={<Login />}></Route>
                 <Route path="/Register" element={<Register />}></Route>
 
