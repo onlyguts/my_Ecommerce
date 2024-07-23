@@ -29,7 +29,7 @@ function Register() {
 
         console.log(email, password)
 
-        const response = await fetch('https://'+local+'/users/post', {
+        const response = await fetch('https://localhost:8000/users/post', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

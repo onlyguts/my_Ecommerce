@@ -38,6 +38,7 @@ class UsersController extends AbstractController
         // );
 
         $Users->setPassword($formData['password']);
+        $Users->setGroupe(0);
         $entityManager->persist($Users);
 
         $entityManager->flush();
