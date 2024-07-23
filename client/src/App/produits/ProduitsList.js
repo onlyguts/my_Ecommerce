@@ -9,7 +9,7 @@ function Produits() {
 
   console.log(id)
   useEffect(() => {
-    fetch("https://localhost:8000/produits/" + id) // Assurez-vous que l'URL correspond à votre route API
+    fetch("https://localhost:8000/produits/" + id) 
       .then(response => response.json())
       .then(data => setProduits(data))
       .catch(error => console.error('Error fetching products:', error));

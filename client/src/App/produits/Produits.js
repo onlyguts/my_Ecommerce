@@ -5,7 +5,7 @@ function Produits() {
   const [produits, setProduits] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("https://localhost:8000/categorie") // Assurez-vous que l'URL correspond à votre route API
+    fetch("https://localhost:8000/categorie") 
       .then(response => response.json())
       .then(data => setProduits(data))
       .catch(error => console.error('Error fetching products:', error));
