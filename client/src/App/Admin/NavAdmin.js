@@ -10,7 +10,9 @@ function NavAdmin() {
             navigate("/");
         }
     }, [navigate]);
-
+    const Home = () => {
+        navigate('/')
+    }
     const Ajouter = () => {
         navigate('/admin')
     }
@@ -20,11 +22,16 @@ function NavAdmin() {
     const List = () => {
         navigate('/admin/list')
     }
+    const ListC = () => {
+        navigate('/admin/listc')
+    }
   return (
     <div>
+        <button onClick={() => Home()}>HOME</button>
         <button onClick={() => Ajouter()}>AJOUTER PRODUIT</button>
         <button onClick={() => AjouterC()}>AJOUTER CATEGORIE</button>
         <button onClick={() => List()}>LISTE PRODUIT</button>
+        <button onClick={() => ListC()}>LISTE CATEGORIE</button>
     </div>
   )
 }

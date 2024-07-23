@@ -25,7 +25,7 @@ class ProduitsController extends AbstractController
 
 
 
-    #[Route('/produits/{id}', name: 'app_boitier', methods: ['GET', 'HEAD'])]
+    #[Route('/produits/{id}', name: 'app_produit', methods: ['GET', 'HEAD'])]
     public function indexFind(EntityManagerInterface $entityManager, int $id): Response
     {
         $produits = $entityManager->getRepository(Produits::class)->findBy(['id_categorie' => $id]);
@@ -44,7 +44,7 @@ class ProduitsController extends AbstractController
 
         return $this->json($produit);
     }
-    #[Route('/produit/{id}', name: 'app_produit_update', methods: ['PUT'])]
+    #[Route('/produit/update/{id}', name: 'app_produit_update', methods: ['PUT'])]
     public function update(EntityManagerInterface $entityManager, Request $request, int $id): Response
     {
         $data = json_decode($request->getContent(), true);
@@ -91,5 +91,20 @@ class ProduitsController extends AbstractController
         $entityManager->flush();
 
         return $this->json(['success' => 'Produit add', 'id' => $produit->getId()], Response::HTTP_CREATED);
+    }
+    #[Route('/produits/delete/{id}', name: 'app_produits_delete', methods: ['DELETE'])]
+    public function delete(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $produitRepository = $entityManager->getRepository(Produits::class);
+        $produit = $produitRepository->find($id);
+        
+        if (!$produit) {
+            return $this->json(['error' => 'produit pas trouvé'], Response::HTTP_NOT_FOUND);
+        }
+    
+        $entityManager->remove($produit);
+        $entityManager->flush();
+    
+        return $this->json(['success' => 'produit supprimé']);
     }
 }

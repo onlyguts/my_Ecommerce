@@ -3,14 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Nav from './NavAdmin';
 import localhost from './../Config';
 
-function AdminProduit() {
+function AdminProduitC() {
     const { id } = useParams();
     const [produit, setProduit] = useState([]);
     const navigate = useNavigate();
     const local = localhost;
 
     useEffect(() => {
-        fetch("https://localhost:8000/produit/" + id)
+        fetch("https://localhost:8000/categorie/" + id)
             .then(response => response.json())
             .then(data => setProduit(data))
             .catch(error => console.error('Erreur :', error));
@@ -29,8 +29,7 @@ function AdminProduit() {
     const UpdateProduit = (e) => {
 
         e.preventDefault();
-        
-        fetch("https://localhost:8000/produit/update/" + produit.id, {
+        fetch("https://localhost:8000/categorie/update/" + id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -61,36 +60,8 @@ function AdminProduit() {
                     <label>Nom :</label>
                     <input type="text" name='name' value={produit.name} onChange={formChange} />
         
-                    <label>ID Catégorie :</label>
-                    <input type="text" name='idCategorie' value={produit.idCategorie} onChange={formChange} />
-
-                    <label>Marque:</label>
-                    <input type="text" name='marque' value={produit.marque} onChange={formChange} />
-
-                    <label>Prix:</label>
-                    <input type="number" name='prix' value={produit.prix} onChange={formChange} />
-
                     <label>Image:</label>
                     <input type="text" name='image' value={produit.image} onChange={formChange} />
-
-                    <label>Stock:</label>
-                    <input type="number" name='stock' value={produit.stock} onChange={formChange} />
-                    
-                    <label>Taille:</label>
-                    <input type="text" name='taille' value={produit.taille} onChange={formChange} />
-
-                    <label>Type:</label>
-                    <input type="text" name='type' value={produit.type} onChange={formChange} />
-
-                    <label>Socket:</label>
-                    <input type="text" name='socket' value={produit.socket} onChange={formChange} />
-
-                    <label>Type CPU:</label>
-                    <input type="text" name='typec' value={produit.typec} onChange={formChange} />
-
-
-                    <label>Consommations:</label>
-                    <input type="text" name='consommations' value={produit.consommations} onChange={formChange} />
 
                 <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
             </form>
@@ -98,4 +69,4 @@ function AdminProduit() {
     );
 }
 
-export default AdminProduit;
+export default AdminProduitC;

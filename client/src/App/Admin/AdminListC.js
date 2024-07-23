@@ -3,12 +3,12 @@ import Nav from './NavAdmin';
 import { useNavigate } from "react-router-dom";
 
 
-function AdminList() {
+function AdminListC() {
     const [produits, setProduits] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("https://localhost:8000/produits/")
+        fetch("https://localhost:8000/categorie/")
             .then(reponse => reponse.json())
             .then(data => setProduits(data))
             .catch(erreur => console.error('Erreur: ', erreur));
@@ -16,16 +16,19 @@ function AdminList() {
 
 
     const OpenPorudits = (id_produits) => {
-        navigate('./produit/' + id_produits)
+        navigate('./categorie/' + id_produits)
     }
+
+
     const DeletePorudits = (id_produits) => {
-        fetch("https://localhost:8000/produits/delete/" + id_produits, {
+        fetch("https://localhost:8000/categorie/delete/" + id_produits, {
             method: 'DELETE',
         })
         .then(response => response.json())
         .catch(error => {
             console.error('Erreur:', error);
         });
+        
     };
     
 
@@ -40,7 +43,7 @@ function AdminList() {
 
                     <div key={produit.id}>
 
-                        <span>{produit.id} | {produit.categorie_name} | {produit.name} <button onClick={() => OpenPorudits(produit.id)}>Edit</button> <button  onClick={() => DeletePorudits(produit.id)}>Delete</button></span>
+                        <span>{produit.id} | {produit.name} <button onClick={() => OpenPorudits(produit.id)}>Edit</button> <button  onClick={() => DeletePorudits(produit.id)}>Delete</button></span>
                     </div>
                 ))}
             </div>
@@ -48,4 +51,4 @@ function AdminList() {
     );
 }
 
-export default AdminList;
+export default AdminListC;
