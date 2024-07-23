@@ -29,7 +29,7 @@ class ProduitsController extends AbstractController
     public function indexFind(EntityManagerInterface $entityManager, int $id): Response
     {
         $produits = $entityManager->getRepository(Produits::class)->findBy(['id_categorie' => $id]);
-        
+
         return $this->json($produits);
     }
 
@@ -37,7 +37,7 @@ class ProduitsController extends AbstractController
     public function indexFindOne(EntityManagerInterface $entityManager, int $id): Response
     {
         $produit = $entityManager->getRepository(Produits::class)->find($id);
-        
+
         if (!$produit) {
             return $this->json(['message' => 'Produit non trouvé'], Response::HTTP_NOT_FOUND);
         }
@@ -52,15 +52,21 @@ class ProduitsController extends AbstractController
         $produit = $entityManager->getRepository(Produits::class)->find($id);
 
         if (!$produit) {
-            return $this->json(['message' => 'Produit non trouvé'], Response::HTTP_NOT_FOUND);
+            return $this->json(['message' => 'Erreur : Produit non trouvé'], Response::HTTP_NOT_FOUND);
         }
 
-        if (isset($data['name'])) {
-            $produit->setName($data['name']);
-        }
-        if (isset($data['idCategorie'])) {
-            $produit->setIdCategorie($data['idCategorie']);
-        }
+        $produit->setName($data['name']);
+        $produit->setIdCategorie($data['idCategorie']);
+        $produit->setMarque($data['marque']);
+        $produit->setPrix($data['prix']);
+        $produit->setImage($data['image']);
+        $produit->setStock($data['stock']);
+        $produit->setTaille($data['taille']);
+        $produit->setType($data['type']);
+        $produit->setSocket($data['socket']);
+        $produit->setTypec($data['typec']);
+        $produit->setConsommations($data['consommations']);
+
 
         $entityManager->persist($produit);
         $entityManager->flush();
@@ -73,17 +79,17 @@ class ProduitsController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data['name'], $data['id_categorie'])) {
-            return $this->json(['error' => 'Invalid data'], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'Erreur : Invalid data'], Response::HTTP_BAD_REQUEST);
         }
 
         $produit = new Produits();
         $produit->setName($data['name']);
         $produit->setIdCategorie($data['id_categorie']);
-        
+
 
         $entityManager->persist($produit);
         $entityManager->flush();
 
-        return $this->json(['success' => 'Produit ajouté', 'id' => $produit->getId()], Response::HTTP_CREATED);
+        return $this->json(['success' => 'Produit add', 'id' => $produit->getId()], Response::HTTP_CREATED);
     }
 }

@@ -57,16 +57,40 @@ function AdminProduit() {
         <div>
             <Nav />
             <form>
-          
-                    <label>ID :</label>
-                    <input type="text" name='id' value={produit.id} readOnly />
-            
                     <label>Nom :</label>
                     <input type="text" name='name' value={produit.name} onChange={formChange} />
         
                     <label>ID Catégorie :</label>
                     <input type="text" name='idCategorie' value={produit.idCategorie} onChange={formChange} />
-            
+
+                    <label>Marque:</label>
+                    <input type="text" name='marque' value={produit.marque} onChange={formChange} />
+
+                    <label>Prix:</label>
+                    <input type="number" name='prix' value={produit.prix} onChange={formChange} />
+
+                    <label>Image:</label>
+                    <input type="text" name='image' value={produit.image} onChange={formChange} />
+
+                    <label>Stock:</label>
+                    <input type="number" name='stock' value={produit.stock} onChange={formChange} />
+                    
+                    <label>Taille:</label>
+                    <input type="text" name='taille' value={produit.taille} onChange={formChange} />
+
+                    <label>Type:</label>
+                    <input type="text" name='type' value={produit.type} onChange={formChange} />
+
+                    <label>Socket:</label>
+                    <input type="text" name='socket' value={produit.socket} onChange={formChange} />
+
+                    <label>Type CPU:</label>
+                    <input type="text" name='typec' value={produit.typec} onChange={formChange} />
+
+
+                    <label>Consommations:</label>
+                    <input type="text" name='consommations' value={produit.consommations} onChange={formChange} />
+
                 <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
             </form>
         </div>

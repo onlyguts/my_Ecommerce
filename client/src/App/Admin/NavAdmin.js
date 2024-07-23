@@ -14,12 +14,16 @@ function NavAdmin() {
     const Ajouter = () => {
         navigate('/admin')
     }
+    const AjouterC = () => {
+        navigate('/admin/addc')
+    }
     const List = () => {
         navigate('/admin/list')
     }
   return (
     <div>
         <button onClick={() => Ajouter()}>AJOUTER PRODUIT</button>
+        <button onClick={() => AjouterC()}>AJOUTER CATEGORIE</button>
         <button onClick={() => List()}>LISTE PRODUIT</button>
     </div>
   )
