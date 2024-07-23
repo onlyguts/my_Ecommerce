@@ -6,6 +6,7 @@ function Produits() {
   const { id } = useParams()
   const [produits, setProduits] = useState([]);
   const navigate = useNavigate();
+  const Categorie = localStorage.getItem('categorie');
 
   console.log(id)
   useEffect(() => {
@@ -18,13 +19,20 @@ function Produits() {
   function ProduitsShow(id) {
     navigate("/produit/" + id);
   }
-
+  const Debut = () => {
+    navigate("/produits")
+  }
+  const Mid = (id) => {
+    navigate("/produits/" + id)
+  }
   return (
     <div>
-      <h1>Produits</h1>
+
+    <h1><button onClick={() => Debut()}>Categorie</button>/<button onClick={() => Mid(id)}>{Categorie}</button></h1>
       {produits.length === 0 ? (
         <p>Aucun produit trouvé</p>
       ) : (
+        
         <ul>
           {produits.map(produit => (
             <li key={produit.id}>
