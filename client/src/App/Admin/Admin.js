@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import Nav from './NavAdmin'
 
 function Admin() {
     const navigate = useNavigate();
     const [data, setData] = useState({});
     const [produits, setProduits] = useState([]);
 
-    useEffect(() => {
-        const utilisateurConnecte = localStorage.getItem('users');
-        const utilisateur = utilisateurConnecte ? JSON.parse(utilisateurConnecte) : null;
-        if (!utilisateur || utilisateur.groupe !== 1) {
-            navigate("/");
-        }
-    }, [navigate]);
 
     useEffect(() => {
         fetch("https://localhost:8000/categorie")
             .then(response => response.json())
             .then(data => setProduits(data))
-            .catch(error => console.error('Error fetching products:', error));
+            .catch(error => console.error('Erreur: ', error));
     }, []);
 
     const ChoisirCategorie = (event) => {
@@ -121,7 +115,17 @@ function Admin() {
 
         
     const EnvoyerAPI = () => {
-        console.log('envoyer apiu')
+        fetch("https://localhost:8000/produits/add", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
     };
 
 
@@ -132,11 +136,12 @@ function Admin() {
     return (
         <div>
             <h1>Admin</h1>
+            <Nav />
             {produits.length === 0 ? (
                 <p>Aucun produit trouvé</p>
             ) : (
                 <select onChange={ChoisirCategorie}>
-                    <option value="">Sélectionnez un produit</option>
+                    <option value="">Sélectionnez une categorie</option>
                     {produits.map(produit => (
                         <option key={produit.id} value={produit.id}>
                             {produit.name}

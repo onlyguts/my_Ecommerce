@@ -12,7 +12,7 @@ function Produits() {
     fetch("https://localhost:8000/produits/" + id) 
       .then(response => response.json())
       .then(data => setProduits(data))
-      .catch(error => console.error('Error fetching products:', error));
+      .catch(error => console.error('Erreur: ', error));
   }, []);
 
   function ProduitsShow(id) {
