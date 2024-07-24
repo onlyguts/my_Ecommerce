@@ -12,6 +12,7 @@ import Homes from './App/Homes'
 import ProduitsList from './App/produits/ProduitsList'
 import ProduitList from './App/produits/ProduitList'
 import Produits from './App/produits/Produits'
+import ProduitsAll from './App/produits/ProduitsAll'
 
 import Login from './App/Login/Login'
 import Register from './App/Login/Register'
@@ -27,6 +28,8 @@ function App() {
                 <Route path="/admin/list/produit/:id" element={<AdminListId />}></Route>
                 <Route path="/admin/listc/categorie/:id" element={<AdminListIdC />}></Route>
                 <Route path="/produits" element={<Produits />}></Route>
+                
+                <Route path="/produits/all/:id" element={<ProduitsAll />}></Route>
                 <Route path="/produits/:id" element={<ProduitsList />}></Route>
                 <Route path="/produit/:id" element={<ProduitList />}></Route>
                 <Route path="/Login" element={<Login />}></Route>

@@ -15,7 +15,7 @@ class ProduitsController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $conn = $entityManager->getConnection();
-        $sql = ' SELECT p.id, p.name, p.id_categorie, c.name as categorie_name FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id';
+        $sql = ' SELECT p.id, p.name, p.id_categorie, p.marque, c.name as categorie_name FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id';
 
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
