@@ -115,7 +115,7 @@ function ProduitDetail() {
                           <div className="mulitple-payment">
                               <div className="title-frais">dont 1.05€ de frais</div>
                               <p className="prix-x-fois">
-                                  <span className="span">20.3€</span>
+                                  <span className="span">{Math.round(produit.prix / 3)+1.05}€</span>
                                   <span className="text-wrapper-6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                   <span className="text-wrapper-7">X 3</span>
                               </p>
