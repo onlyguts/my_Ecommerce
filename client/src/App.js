@@ -10,6 +10,7 @@ import AdminListId from './App/Admin/AdminProduit'
 import AdminListIdC from './App/Admin/AdminProduitC'
 import Homes from './App/Homes'
 import ProduitsList from './App/produits/ProduitsList'
+import Build from './App/produits/Algo'
 import ProduitList from './App/produits/ProduitList'
 import Produits from './App/produits/Produits'
 import ProduitsAll from './App/produits/ProduitsAll'
@@ -22,6 +23,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Homes />}></Route>
                 <Route path="/admin" element={<Admin />}></Route>
+                <Route path="/build" element={<Build />}></Route>
                 <Route path="/admin/list" element={<AdminList />}></Route>
                 <Route path="/admin/listc" element={<AdminListC />}></Route>
                 <Route path="/admin/addc" element={<AdminCat />}></Route>

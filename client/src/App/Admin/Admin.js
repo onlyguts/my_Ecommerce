@@ -149,7 +149,7 @@ function Admin() {
                     <option value="">Sélectionnez une categorie</option>
                     {produits.map(produit => (
                         <option key={produit.id} value={produit.id}>
-                            {produit.name}
+                            [ID {produit.id}] {produit.name}
                         </option>
                     ))}
                 </select>
