@@ -10,7 +10,9 @@ import AdminListId from './App/Admin/AdminProduit'
 import AdminListIdC from './App/Admin/AdminProduitC'
 import Homes from './App/Homes'
 import ProduitsList from './App/produits/ProduitsList'
+import ProductBoitier from './App/produits/ProductBoitier'
 import Build from './App/produits/Algo'
+
 import ProduitList from './App/produits/ProduitList'
 import Produits from './App/produits/Produits'
 import ProduitsAll from './App/produits/ProduitsAll'
@@ -34,6 +36,7 @@ function App() {
                 <Route path="/produits/all/:id" element={<ProduitsAll />}></Route>
                 <Route path="/produits/:id" element={<ProduitsList />}></Route>
                 <Route path="/produit/:id" element={<ProduitList />}></Route>
+                <Route path="/produits/test" element={<ProductBoitier />}></Route>
                 <Route path="/Login" element={<Login />}></Route>
                 <Route path="/Register" element={<Register />}></Route>
 

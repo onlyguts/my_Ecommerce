@@ -10,10 +10,10 @@ function ProduitsAll() {
 
 
     useEffect(() => {
-        if (id !== 'null') {
-            setRechercheNom(id)
-        }
-    }, [id]);
+    if (id !== 'null') {
+        setRechercheNom(id)
+    }
+}, []);
     useEffect(() => {
         fetch("https://localhost:8000/produits")
             .then(response => response.json())
