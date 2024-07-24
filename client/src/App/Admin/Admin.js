@@ -122,7 +122,12 @@ function Admin() {
             },
             body: JSON.stringify(data),
         })
-        .then(response => response.json())
+     
+        .then(response => {
+            response.json();
+            alert('Produit Ajouter');
+            navigate('/admin');
+        })
         .catch(error => {
             console.error('Erreur:', error);
         });
@@ -151,29 +156,29 @@ function Admin() {
             )}
              <form>
                 <label>Name:</label>
-                <input type='text' value={data.name} onChange={ChoisirName} />
+                <input type='text' name='name' value={data.name} onChange={ChoisirName} />
                 <label>Marque:</label>
-                <input type='text' value={data.marque} onChange={ChoisirMarque} />
+                <input type='text' name='marque' value={data.marque} onChange={ChoisirMarque} />
                 <label>Prix:</label>
-                <input type='text' value={data.prix} onChange={ChoisirPrix} />
+                <input type='number' name='prix' value={data.prix} onChange={ChoisirPrix} />
                 <label>Image:</label>
-                <input type='text' value={data.image} onChange={ChoisirImage} />
-                <label>Ficher Produits:</label>
-                <input type='text' value={data.fiche} onChange={ChoisirFicher} />
+                <input type='text' name='image' value={data.image} onChange={ChoisirImage} />
+                {/* <label>Ficher Produits:</label>
+                <input type='text' value={data.fiche} onChange={ChoisirFicher} /> */}
                 <label>Stock:</label>
-                <input type='text' value={data.stock} onChange={ChoisirStock} />
+                <input type='number' name='stock' value={data.stock} onChange={ChoisirStock} />
                 <label>taille:</label>
-                <input type='text' value={data.taille} onChange={ChoisirTaille} />
+                <input type='text' name='taille' value={data.taille} onChange={ChoisirTaille} />
                 <label>Type:</label>
-                <input type='text' value={data.type} onChange={ChoisirType} />
+                <input type='text' name='type' value={data.type} onChange={ChoisirType} />
                 <label>Socket:</label>
-                <input type='text' value={data.socket} onChange={ChoisirSocket} />
+                <input type='text' name='socket' value={data.socket} onChange={ChoisirSocket} />
                 <label>Type CPU:</label>
-                <input type='text' value={data.typec} onChange={ChoisirCPUT} />
+                <input type='text' name='typec' value={data.typec} onChange={ChoisirCPUT} />
                 <label>Consomation:</label>
-                <input type='text' value={data.consomation} onChange={ChoisirConso} />
-                <button onClick={() => EnvoyerAPI()}>Créer le produits</button>
+                <input type='number' name='consomation' value={data.consomation} onChange={ChoisirConso} />
             </form>
+                <button onClick={() => EnvoyerAPI()}>Créer le produits</button>
         </div>
     );
 }

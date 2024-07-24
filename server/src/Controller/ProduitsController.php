@@ -121,8 +121,16 @@ class ProduitsController extends AbstractController
 
         $produit = new Produits();
         $produit->setName($data['name']);
-        $produit->setIdCategorie($data['id_categorie']);
-
+        $produit->setIdCategorie((int)$data['id_categorie']);
+        $produit->setMarque($data['marque']);
+        $produit->setPrix((int)$data['prix']);
+        $produit->setImage($data['image']);
+        $produit->setStock((int)$data['stock']);
+        $produit->setTaille($data['taille']);
+        $produit->setType($data['type']);
+        $produit->setSocket($data['socket']);
+        $produit->setTypec($data['typec']);
+        $produit->setConsommations((int)$data['consomation']);
 
         $entityManager->persist($produit);
         $entityManager->flush();

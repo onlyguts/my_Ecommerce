@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 function Produits() {
-  const [produits, setProduits] = useState([]);
+  const [categorie, setProduits] = useState([]);
   const [produitstop, setProduitsTop] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -30,7 +30,7 @@ function Produits() {
   return (
     <div>
       <h1><button onClick={() => Debut()}>Categorie</button></h1>
-      {produits.length === 0 ? (
+      {categorie.length === 0 ? (
         <p>Aucun produit trouvé</p>
       ) : (
         <div>
@@ -45,9 +45,9 @@ function Produits() {
               </ol>
           </div>
           <ul>
-            {produits.map(produit => (
-              <li key={produit.id}>
-                <p onClick={() => ProduitsShow(produit.id, produit.name)}>{produit.name}</p>
+            {categorie.map(categorie => (
+              <li key={categorie.id}>
+                <p onClick={() => ProduitsShow(categorie.id, categorie.name)}>{categorie.name}</p>
               </li>
             ))}
           </ul>
