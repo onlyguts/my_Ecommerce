@@ -61,7 +61,7 @@ function PopularProducts() {
   }
 
   const limitProduit = (min, max) => {
-    return produitstop.filter(produit => produit.name );
+    return produitstop.slice(min - 1, max);
   };
 
   console.log(produitstop)
@@ -75,15 +75,15 @@ function PopularProducts() {
           ))}
         </div>
         <div className="carousel-slide">
-          {limitProduit(4, 7).map(produit => (
+          {limitProduit(4, 6).map(produit => (
             <ProductItemTop key={produit.id} src={produit.image} onClick={() => ProduitsShow(produit.id, produit.name, produit.views)} alt="Produit Populaire 1"  id={produit.id} categorie={produit.categorie_name} views={produit.views} name={produit.name} />
           ))}
         </div>
-        {/* <div className="carousel-slide">
-          {limitProduit(8, 11).map(produit => (
+        <div className="carousel-slide">
+          {limitProduit(6, 9).map(produit => (
             <ProductItemTop key={produit.id} src={produit.image} onClick={() => ProduitsShow(produit.id, produit.name, produit.views)} alt="Produit Populaire 1" id={produit.id} categorie={produit.categorie_name} views={produit.views} name={produit.name} />
           ))}
-        </div> */}
+        </div>
       </Carousel>
     </div>
   );
