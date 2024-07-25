@@ -46,7 +46,7 @@ function AdminCat() {
 
     return (
         <div>
-            <h1>Admin</h1>
+           
             <Nav />
          
              <form>

@@ -34,7 +34,7 @@ function AdminListC() {
 
     return (
         <div>
-            <h1>Admin</h1>
+        
             <Nav />
             <div>
 

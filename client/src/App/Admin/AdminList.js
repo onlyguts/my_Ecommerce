@@ -27,11 +27,15 @@ function AdminList() {
             console.error('Erreur:', error);
         });
     };
-    
+    const EditerProduits  = (id) => {
+ 
+        navigate("/produit/" + id)
+  
+}
 
     return (
         <div>
-            <h1>Admin</h1>
+          
             <Nav />
             <div>
 
@@ -39,7 +43,7 @@ function AdminList() {
 
                     <div key={produit.id}>
 
-                        <span>{produit.id} | {produit.categorie_name} | {produit.name} <button onClick={() => OpenPorudits(produit.id)}>Edit</button> <button  onClick={() => DeletePorudits(produit.id)}>Delete</button></span>
+                        <span>{produit.id} | {produit.categorie_name} | {produit.name} <button onClick={() => OpenPorudits(produit.id)}>Edit</button> <button  onClick={() => DeletePorudits(produit.id)}>Delete</button> <button  onClick={() => EditerProduits(produit.id)}>Views</button></span>
                     </div>
                 ))}
             </div>

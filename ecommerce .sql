@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : jeu. 25 juil. 2024 à 10:17
+-- Généré le : jeu. 25 juil. 2024 à 13:18
 -- Version du serveur : 8.0.37-0ubuntu0.22.04.3
 -- Version de PHP : 8.2.21
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `ecommerce`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `avis`
+--
+
+CREATE TABLE `avis` (
+  `id` int NOT NULL,
+  `id_user` int NOT NULL,
+  `id_produits` int NOT NULL,
+  `rate` int NOT NULL,
+  `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `avis`
+--
+
+INSERT INTO `avis` (`id`, `id_user`, `id_produits`, `rate`, `description`) VALUES
+(3, 79, 23, 5, 'test'),
+(4, 83, 23, 5, 'test');
 
 -- --------------------------------------------------------
 
@@ -80,11 +102,12 @@ CREATE TABLE `produits` (
 --
 
 INSERT INTO `produits` (`id`, `id_categorie`, `name`, `marque`, `prix`, `image`, `stock`, `views`, `taille`, `type`, `socket`, `typec`, `consommations`) VALUES
-(1, 1, 'BOITIER NZXTTt', 'NZXT', 5543, 'https://nzxt.com/assets/cms/34299/1712947673-h7-flow-hero-black.png?auto=format&fit=crop&h=1000&w=1000', 55465230, 142, 'ATX', 'AMD', 'DDR5', 'AM4', 115),
-(2, 2, 'CARTE MERE', NULL, 0, NULL, 0, 3, 'ATX', 'AMD', 'DDR5', 'AM4', 75),
-(3, 5, 'RAMdaaaghjvvhvgblhhjb', 'ddddddddd', 0, 'd', 0, 7, 'd', 'd', 'DDR4', 'd', 25),
-(4, 1, 'BOITIER v852', 'NZXT', 752, 'https://nzxt.com/assets/cms/34299/1654199794-case_h7_solid_w_hero_pl_png.png?ar64=MTox&auto=format&fit=crop&h=400&w=400', 0, 14, 'ATX', 'te', 'te', 'te', 75),
-(5, 5, 'RAM2', NULL, 0, NULL, 0, 2, NULL, NULL, 'DDR4', NULL, 25);
+(23, 1, 'Fractal Design Define R6 Black', 'Fractal', 179, 'https://media.ldlc.com/r1600/ld/products/00/04/76/70/LD0004767017_2.jpg', 15, 89, 'ATX', 'null', 'null', 'null', 0),
+(24, 2, 'ASUS ROG STRIX B550-F GAMING (WI-FI) II', 'ASUS', 200, 'https://media.ldlc.com/r374/ld/products/00/05/91/26/LD0005912640_1.jpg', 55, 3, 'ATX', 'AMD', 'DDR4', 'AM4', 0),
+(25, 4, 'AMD Ryzen 9 5900X (3.7 GHz / 4.8 GHz)', 'AMD', 330, 'https://media.ldlc.com/r374/ld/products/00/05/74/60/LD0005746003_1.jpg', 20, 4, 'null', 'AMD', 'null', 'AM4', 0),
+(26, 5, 'Corsair Vengeance LPX 32go (2x 16 Go) DDR4 3200 MHz', 'Corsair', 100, 'https://media.ldlc.com/r374/ld/products/00/05/31/99/LD0005319901_2.jpg', 10, 4, 'null', 'null', 'DDR4', 'null', 0),
+(27, 10, 'Corsair iCue H115i RGB PRO XT', 'Corsair', 150, 'https://media.ldlc.com/r374/ld/products/00/05/56/74/LD0005567419_2.jpg', 42, 7, 'null', 'null', 'null', 'null', 0),
+(28, 7, 'Samsung 980 PRO', 'Samsung', 100, 'https://media.ldlc.com/r374/ld/products/00/05/79/93/LD0005799307_1.jpg', 55, 12, 'null', 'null', 'null', 'null', 0);
 
 -- --------------------------------------------------------
 
@@ -117,6 +140,14 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `groupe`) VALUES
 --
 
 --
+-- Index pour la table `avis`
+--
+ALTER TABLE `avis`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_produits` (`id_produits`),
+  ADD KEY `id_user` (`id_user`);
+
+--
 -- Index pour la table `categorie`
 --
 ALTER TABLE `categorie`
@@ -141,6 +172,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT pour la table `avis`
+--
+ALTER TABLE `avis`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT pour la table `categorie`
 --
 ALTER TABLE `categorie`
@@ -150,7 +187,7 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `produits`
 --
 ALTER TABLE `produits`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT pour la table `users`
@@ -161,6 +198,13 @@ ALTER TABLE `users`
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `avis`
+--
+ALTER TABLE `avis`
+  ADD CONSTRAINT `avis_ibfk_1` FOREIGN KEY (`id_produits`) REFERENCES `produits` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `avis_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `produits`

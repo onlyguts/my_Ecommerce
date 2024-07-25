@@ -140,7 +140,7 @@ function Admin() {
 
     return (
         <div>
-            <h1>Admin</h1>
+           
             <Nav />
             {produits.length === 0 ? (
                 <p>Aucun produit trouvé</p>

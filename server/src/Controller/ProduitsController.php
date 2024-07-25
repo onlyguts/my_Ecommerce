@@ -22,19 +22,12 @@ class ProduitsController extends AbstractController
         $produits = $resultSet->fetchAllAssociative();
         return $this->json($produits);
     }
-
-
-
     
     #[Route('/produits/top10', name: 'app_top_produits', methods: ['GET', 'HEAD'])]
     public function topProduits(EntityManagerInterface $entityManager): Response
     {
         $conn = $entityManager->getConnection();
-        $sql = 'SELECT p.*, c.name as categorie_name, p.views
-                FROM produits p
-                INNER JOIN categorie c ON p.id_categorie = c.id
-                ORDER BY p.views DESC
-                LIMIT 10';
+        $sql = 'SELECT p.*, c.name as categorie_name, p.views FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id ORDER BY p.views DESC LIMIT 10';
 
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();

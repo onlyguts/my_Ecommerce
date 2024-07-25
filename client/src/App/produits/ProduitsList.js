@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-
+import Header from './../Nav';
 
 function Produits() {
   const { id } = useParams()
@@ -27,7 +27,7 @@ function Produits() {
   }
   return (
     <div>
-
+ <Header />
     <h1><button onClick={() => Debut()}>Home</button>/<button onClick={() => Mid(id)}>{Categorie}</button></h1>
       {produits.length === 0 ? (
         <p>Aucun produit trouvé</p>

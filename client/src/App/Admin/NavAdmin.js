@@ -25,15 +25,19 @@ function NavAdmin() {
     const ListC = () => {
         navigate('/admin/listc')
     }
-  return (
-    <div>
-        <button onClick={() => Home()}>HOME</button>
-        <button onClick={() => Ajouter()}>AJOUTER PRODUIT</button>
-        <button onClick={() => AjouterC()}>AJOUTER CATEGORIE</button>
-        <button onClick={() => List()}>LISTE PRODUIT</button>
-        <button onClick={() => ListC()}>LISTE CATEGORIE</button>
-    </div>
-  )
+    return (
+        <div>
+            <h1>Admin</h1>
+
+            <div>
+                <button onClick={() => Home()}>HOME</button>
+                <button onClick={() => Ajouter()}>AJOUTER PRODUIT</button>
+                <button onClick={() => AjouterC()}>AJOUTER CATEGORIE</button>
+                <button onClick={() => List()}>LISTE PRODUIT</button>
+                <button onClick={() => ListC()}>LISTE CATEGORIE</button>
+            </div>
+        </div>
+    )
 }
 
 export default NavAdmin
