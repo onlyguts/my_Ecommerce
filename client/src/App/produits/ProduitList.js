@@ -179,7 +179,10 @@ function ProduitDetail() {
                 <img className="Marque_Logo2" alt="Nvidia removebg" src={NvidiaLogo} />
               </div>
               <div className="price-section">
-                <div className="price-product">{produit.prix} €</div>
+                {produit.promo != 0 
+                ? <div className="price-product">En promo : {produit.prix * (1 - produit.promo / 100)} €</div>
+              : <div className="price-product">{produit.prix} €</div>
+              }
                 <div className="multiple-payement">
                   <div className="overlap-group">
                     <div className="mulitple-payment">
