@@ -35,6 +35,18 @@ class ProduitsController extends AbstractController
         return $this->json($topProduits);
     }
 
+    #[Route('/produits/promotions', name: 'app_promotions', methods: ['GET', 'HEAD'])]
+    public function Promotions(EntityManagerInterface $entityManager): Response
+    {
+        $conn = $entityManager->getConnection();
+        $sql = 'SELECT p.*, c.name as categorie_name, p.views FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id WHERE p.promo != 0 ORDER BY p.promo DESC LIMIT 10';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        $promotions = $resultSet->fetchAllAssociative();
+        return $this->json($promotions);
+    }
+
 
     #[Route('/produits/{id}', name: 'app_produit', methods: ['GET', 'HEAD'])]
     public function indexFind(EntityManagerInterface $entityManager, int $id): Response

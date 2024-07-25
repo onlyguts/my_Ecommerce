@@ -26,21 +26,24 @@ function App() {
 
 
 function PromoCarousel() {
+  const [promo, setPromo] = useState([]);
+  useEffect(() => {
+    fetch("https://localhost:8000/produits/promotions")
+      .then(response => response.json())
+      .then(data => setPromo(data))
+      .catch(error => console.error('Erreur:', error));
+  }, []);
   return (
     <div className="carousel-container">
       <Carousel showThumbs={false} autoPlay infiniteLoop>
-        <div>
-          <img src={images.cooler} alt="Promo 1" />
-          <p className="legend">Promotion 1</p>
-        </div>
-        <div>
-          <img src={images.storage} alt="Promo 2" />
-          <p className="legend">Promotion 2</p>
-        </div>
-        <div>
-          <img src={images.motherboard} alt="Promo 3" />
-          <p className="legend">Promotion 3</p>
-        </div>
+      {promo.map(produit => (
+        <div key={produit.id}>
+        <img src={produit.image} alt="Promo 1" />
+        <p className="legend">{produit.prix * (1 - produit.promo / 100)}€ au lieu de {produit.prix}€!</p>
+      </div>
+          ))}
+        
+
       </Carousel>
     </div>
   );
@@ -64,7 +67,7 @@ function PopularProducts() {
     return produitstop.slice(min - 1, max);
   };
 
-  console.log(produitstop)
+ 
   return (
     <div className="popular-products">
       <h2>Produits les plus populaires</h2>
