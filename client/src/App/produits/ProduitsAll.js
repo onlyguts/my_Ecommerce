@@ -7,7 +7,7 @@ function ProduitsAll() {
     const [categorie_trier, setcategorie_trier] = useState('');
     const [recherche, setRechercheNom] = useState('');
     const [categorie, setCategorie] = useState([]);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
     if (id !== 'null') {
@@ -35,6 +35,10 @@ function ProduitsAll() {
 
     const RechercheChange = (e) => {
         setRechercheNom(e.target.value);
+    };
+
+    const OpenProduit = (id) => {
+        navigate("/produit/" + id);
     };
 
     const produits_trier = produits.filter(produit =>
@@ -75,7 +79,7 @@ function ProduitsAll() {
             </form>
             <div>
                 {produits_trier.map(produit => (
-                    <ul key={produit.id}>
+                    <ul key={produit.id} onClick={() => OpenProduit(produit.id)} >
                         <li>{produit.name}</li>
                         <li>{produit.categorie_name}</li>
                     </ul>

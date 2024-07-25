@@ -19,7 +19,8 @@ function ProduitDetail() {
   const navigate = useNavigate();
   const [load, setLoad] = useState(false);
   const Categorie = localStorage.getItem('categorie');
-  
+  const Login = localStorage.getItem('users');
+  const loginUser = JSON.parse(Login);
 
   useEffect(() => {
     fetch(`https://localhost:8000/produit/${id}`)
@@ -57,6 +58,10 @@ function ProduitDetail() {
   const End = (id) => {
     navigate("/produit/" + id)
   }
+
+  const EditerProduits = (id) => {
+    navigate("../admin/list/produit/" + id)
+  }
   return (
     // <div>   
     //   {produit ? (
@@ -83,6 +88,13 @@ function ProduitDetail() {
 
           {/*Product Section*/}
           <div className="prodcut-section">
+          {loginUser && (
+            loginUser.groupe === 1 ? (
+              <button className="menu-btn" onClick={() => EditerProduits(produit.id)}>Editer le produit</button>
+            ) : (
+              <p></p>
+            )
+          )}
               <div className="product">
                   <p className="p">{produit.name}</p>
                   <div className="picture">

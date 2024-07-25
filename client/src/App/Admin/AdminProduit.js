@@ -54,6 +54,12 @@ function AdminProduit() {
             .catch(error => console.error('Erreur :', error));
     };
 
+    const EditerProduits  = (id) => {
+ 
+            navigate("/produit/" + id)
+      
+    }
+
     if (!produit) {
         return (
             <div>
@@ -68,6 +74,8 @@ function AdminProduit() {
         <div>
             <Nav />
             <form>
+            <button onClick={() => EditerProduits(produit.id)}>Fiche produit</button>
+
                 <label>Nom :</label>
                 <input type="text" name='name' value={produit.name} onChange={formChange} />
 

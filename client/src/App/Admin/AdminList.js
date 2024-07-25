@@ -35,7 +35,6 @@ function AdminList() {
             <Nav />
             <div>
 
-
                 {produits.map((produit) => (
 
                     <div key={produit.id}>
