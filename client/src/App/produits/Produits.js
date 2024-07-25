@@ -24,12 +24,12 @@ function Produits() {
     localStorage.setItem('categorie', name);
   }
   const Debut = () => {
-    navigate("/produits")
+    navigate("/")
   }
 
   return (
     <div>
-      <h1><button onClick={() => Debut()}>Categorie</button></h1>
+      <h1><button onClick={() => Debut()}>Home</button></h1>
       {categorie.length === 0 ? (
         <p>Aucun produit trouvé</p>
       ) : (

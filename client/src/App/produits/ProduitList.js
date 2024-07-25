@@ -47,7 +47,7 @@ function ProduitDetail() {
   }, [id, load]);
 
   const Debut = () => {
-    navigate("/produits")
+    navigate("/")
   }
 
   console.log(produit)
@@ -79,7 +79,7 @@ function ProduitDetail() {
       <div className="product-boitier">
         {produit ? (
       <div className="div">
-                   <h1><button onClick={() => Debut()}>Categorie</button>/<button onClick={() => Mid(produit.idCategorie)}>{Categorie}</button>/<button onClick={() => End(produit.id)}>{produit.name}</button></h1>
+                   <h1><button onClick={() => Debut()}>Home</button>/<button onClick={() => Mid(produit.idCategorie)}>{Categorie}</button>/<button onClick={() => End(produit.id)}>{produit.name}</button></h1>
 
           {/*Product Section*/}
           <div className="prodcut-section">

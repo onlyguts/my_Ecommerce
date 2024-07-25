@@ -20,7 +20,7 @@ function Produits() {
     navigate("/produit/" + id);
   }
   const Debut = () => {
-    navigate("/produits")
+    navigate("/")
   }
   const Mid = (id) => {
     navigate("/produits/" + id)
@@ -28,7 +28,7 @@ function Produits() {
   return (
     <div>
 
-    <h1><button onClick={() => Debut()}>Categorie</button>/<button onClick={() => Mid(id)}>{Categorie}</button></h1>
+    <h1><button onClick={() => Debut()}>Home</button>/<button onClick={() => Mid(id)}>{Categorie}</button></h1>
       {produits.length === 0 ? (
         <p>Aucun produit trouvé</p>
       ) : (
