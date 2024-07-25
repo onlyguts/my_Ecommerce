@@ -113,6 +113,15 @@ function Admin() {
         }));
     };
 
+
+    const ChoisirPromo = (event) => {
+        const getData = event.target.value;
+        setData(backData => ({
+            ...backData,
+            promo: getData,
+        }));
+    };
+
         
     const EnvoyerAPI = () => {
         fetch("https://localhost:8000/produits/add", {
@@ -177,6 +186,9 @@ function Admin() {
                 <input type='text' name='typec' value={data.typec} onChange={ChoisirCPUT} />
                 <label>Consomation:</label>
                 <input type='number' name='consomation' value={data.consomation} onChange={ChoisirConso} />
+
+                <label>Promo:</label>
+                <input type='number' name='promo' value={data.promo} onChange={ChoisirPromo} />
             </form>
                 <button onClick={() => EnvoyerAPI()}>Créer le produits</button>
         </div>

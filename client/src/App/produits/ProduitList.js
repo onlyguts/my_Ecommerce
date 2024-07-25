@@ -214,7 +214,8 @@ function ProduitDetail() {
                   {produit.stock === 0 ? (
                     <div className="text-wrapper-5">OUT OF STOCK</div>
                   ) : (
-                    <div className="text-wrapper-4">EN STOCK</div>
+                    <div className="text-wrapper-4">EN STOCK<br/>Disponnible : {produit.stock}</div>
+                    
                   )}
 
                 </div>

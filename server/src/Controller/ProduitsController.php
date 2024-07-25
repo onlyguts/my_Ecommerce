@@ -76,6 +76,7 @@ class ProduitsController extends AbstractController
         $produit->setType($data['type']);
         $produit->setSocket($data['socket']);
         $produit->setTypec($data['typec']);
+        $produit->setPromo($data['promo']);
         $produit->setConsommations($data['consommations']);
 
 
@@ -123,6 +124,7 @@ class ProduitsController extends AbstractController
         $produit->setType($data['type']);
         $produit->setSocket($data['socket']);
         $produit->setTypec($data['typec']);
+        $produit->setPromo($data['promo']);
         $produit->setConsommations((int)$data['consomation']);
 
         $entityManager->persist($produit);

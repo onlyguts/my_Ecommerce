@@ -115,7 +115,8 @@ function AdminProduit() {
 
                 <label>Consommations:</label>
                 <input type="text" name='consommations' value={produit.consommations} onChange={formChange} />
-
+                <label>Promo:</label>
+                <input type="text" name='promo' value={produit.promo} onChange={formChange} />
                 <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
             </form>
         </div>

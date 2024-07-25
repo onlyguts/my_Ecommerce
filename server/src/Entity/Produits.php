@@ -49,6 +49,9 @@ class Produits
     #[ORM\Column]
     private ?int $consommations = null;
 
+    #[ORM\Column]
+    private ?int $promo = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -194,6 +197,18 @@ class Produits
     public function setConsommations(int $consommations): static
     {
         $this->consommations = $consommations;
+
+        return $this;
+    }
+
+    public function getPromo(): ?int
+    {
+        return $this->promo;
+    }
+
+    public function setPromo(int $promo): static
+    {
+        $this->promo = $promo;
 
         return $this;
     }

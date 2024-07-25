@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : jeu. 25 juil. 2024 à 13:18
+-- Généré le : jeu. 25 juil. 2024 à 13:29
 -- Version du serveur : 8.0.37-0ubuntu0.22.04.3
 -- Version de PHP : 8.2.21
 
@@ -94,20 +94,22 @@ CREATE TABLE `produits` (
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `socket` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `typec` varchar(255) DEFAULT NULL,
-  `consommations` int DEFAULT NULL
+  `consommations` int DEFAULT NULL,
+  `promo` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `produits`
 --
 
-INSERT INTO `produits` (`id`, `id_categorie`, `name`, `marque`, `prix`, `image`, `stock`, `views`, `taille`, `type`, `socket`, `typec`, `consommations`) VALUES
-(23, 1, 'Fractal Design Define R6 Black', 'Fractal', 179, 'https://media.ldlc.com/r1600/ld/products/00/04/76/70/LD0004767017_2.jpg', 15, 89, 'ATX', 'null', 'null', 'null', 0),
-(24, 2, 'ASUS ROG STRIX B550-F GAMING (WI-FI) II', 'ASUS', 200, 'https://media.ldlc.com/r374/ld/products/00/05/91/26/LD0005912640_1.jpg', 55, 3, 'ATX', 'AMD', 'DDR4', 'AM4', 0),
-(25, 4, 'AMD Ryzen 9 5900X (3.7 GHz / 4.8 GHz)', 'AMD', 330, 'https://media.ldlc.com/r374/ld/products/00/05/74/60/LD0005746003_1.jpg', 20, 4, 'null', 'AMD', 'null', 'AM4', 0),
-(26, 5, 'Corsair Vengeance LPX 32go (2x 16 Go) DDR4 3200 MHz', 'Corsair', 100, 'https://media.ldlc.com/r374/ld/products/00/05/31/99/LD0005319901_2.jpg', 10, 4, 'null', 'null', 'DDR4', 'null', 0),
-(27, 10, 'Corsair iCue H115i RGB PRO XT', 'Corsair', 150, 'https://media.ldlc.com/r374/ld/products/00/05/56/74/LD0005567419_2.jpg', 42, 7, 'null', 'null', 'null', 'null', 0),
-(28, 7, 'Samsung 980 PRO', 'Samsung', 100, 'https://media.ldlc.com/r374/ld/products/00/05/79/93/LD0005799307_1.jpg', 55, 12, 'null', 'null', 'null', 'null', 0);
+INSERT INTO `produits` (`id`, `id_categorie`, `name`, `marque`, `prix`, `image`, `stock`, `views`, `taille`, `type`, `socket`, `typec`, `consommations`, `promo`) VALUES
+(23, 1, 'Fractal Design Define R6 Black', 'Fractal', 179, 'https://media.ldlc.com/r1600/ld/products/00/04/76/70/LD0004767017_2.jpg', 15, 89, 'ATX', 'null', 'null', 'null', 0, 0),
+(24, 2, 'ASUS ROG STRIX B550-F GAMING (WI-FI) II', 'ASUS', 200, 'https://media.ldlc.com/r374/ld/products/00/05/91/26/LD0005912640_1.jpg', 55, 3, 'ATX', 'AMD', 'DDR4', 'AM4', 0, 0),
+(25, 4, 'AMD Ryzen 9 5900X (3.7 GHz / 4.8 GHz)', 'AMD', 330, 'https://media.ldlc.com/r374/ld/products/00/05/74/60/LD0005746003_1.jpg', 20, 4, 'null', 'AMD', 'null', 'AM4', 0, 0),
+(26, 5, 'Corsair Vengeance LPX 32go (2x 16 Go) DDR4 3200 MHz', 'Corsair', 100, 'https://media.ldlc.com/r374/ld/products/00/05/31/99/LD0005319901_2.jpg', 10, 4, 'null', 'null', 'DDR4', 'null', 0, 0),
+(27, 10, 'Corsair iCue H115i RGB PRO XT', 'Corsair', 150, 'https://media.ldlc.com/r374/ld/products/00/05/56/74/LD0005567419_2.jpg', 42, 7, 'null', 'null', 'null', 'null', 0, 0),
+(28, 7, 'Samsung 980 PRO', 'Samsung', 100, 'https://media.ldlc.com/r374/ld/products/00/05/79/93/LD0005799307_1.jpg', 55, 12, 'null', 'null', 'null', 'null', 0, 0),
+(29, 3, 'MSI RTX 3060 TI Ventus 2X 8G OC', 'MSI', 470, 'https://media.ldlc.com/r374/ld/products/00/05/78/85/LD0005788583_1.jpg', 0, 2, 'null', 'null', 'null', 'null', 200, 0);
 
 -- --------------------------------------------------------
 
@@ -187,7 +189,7 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `produits`
 --
 ALTER TABLE `produits`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT pour la table `users`
