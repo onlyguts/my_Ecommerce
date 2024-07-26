@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './../Homes.css';
 import images from '../images.js';
-import PopupForm from '../PopupForm.js';
+
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import { useNavigate, useParams } from "react-router-dom";
