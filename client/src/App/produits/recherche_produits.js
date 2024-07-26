@@ -10,6 +10,7 @@ function Nav_tree() {
     const { id } = useParams();
     const [produits, setProduits] = useState([]);
     const [categorie_trier, setcategorie_trier] = useState('');
+    const [marque, setmarque] = useState('');
     const [recherche, setRechercheNom] = useState('');
     const [categorieshow, setCategorieShow] = useState([]);
     const [categorie, setCategorie] = useState([]);
@@ -72,6 +73,10 @@ function Nav_tree() {
         setcategorie_trier(e.target.value);
     };
 
+    const MarqueChange = (e) => {
+        setmarque(e.target.value);
+    };
+
     const RechercheChange = (e) => {
         setRechercheNom(e.target.value);
     };
@@ -85,7 +90,11 @@ function Nav_tree() {
         (categorie_trier == '' || produit.categorie_name === categorie_trier || produit.marque === categorie_trier) &&
         produit.name.toLowerCase().includes(recherche.toLowerCase())
     );
-
+    const produits2_trier = produits_trier.filter(produit =>
+        (marque == '' || produit.categorie_name === marque || produit.marque === marque) &&
+        produit.name.toLowerCase().includes(recherche.toLowerCase())
+    );
+  
 
     useEffect(() => {
         fetch("https://localhost:8000/categorie")
@@ -173,7 +182,7 @@ function Nav_tree() {
 
                     ))}
                 </select>
-                <select value={categorie_trier} onChange={CategorieChange}>
+                <select value={marque} onChange={MarqueChange}>
 
                     <option value=''> Toutes les marques </option>
 
@@ -192,7 +201,7 @@ function Nav_tree() {
             <div className="popular-products">
 
                 <div className="carousel-slide">
-                    {produits_trier.map(produit => (
+                    {produits2_trier.map(produit => (
 
                         <div className="item">
                             <img src={produit.image} onClick={() => OpenProduit(produit.id, produit.categorie_name)} />
