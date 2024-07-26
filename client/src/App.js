@@ -9,6 +9,7 @@ import AdminCat from './App/PanelAdmin/admin_create_categorie'
 import AdminListId from './App/PanelAdmin/admin_update_produit'
 import AdminListIdAvis from './App/PanelAdmin/admin_avis_produits'
 import AdminListIdC from './App/PanelAdmin/admin_update_categorie'
+import Adminemail from './App/PanelAdmin/admin_email'
 import Homes from './App/Homes'
 import ProduitsList from './App/produits/liste_porduits'
 
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/admin" element={<Admin />}></Route>
                 <Route path="/build" element={<Build />}></Route>
                 <Route path="/admin/list" element={<AdminList />}></Route>
+                <Route path="/admin/email" element={<Adminemail />}></Route>
                 <Route path="/admin/listc" element={<AdminListC />}></Route>
                 <Route path="/admin/addc" element={<AdminCat />}></Route>
                 <Route path="/admin/list/produit/:id" element={<AdminListId />}></Route>

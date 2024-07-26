@@ -16,9 +16,9 @@ function Nav_tree() {
     const navigate = useNavigate();
     const marqueSolo = new Set();
     const Login = localStorage.getItem('users');
- 
+
     const loginUser = JSON.parse(Login);
-    
+
 
 
     const openPopup = () => {
@@ -66,7 +66,7 @@ function Nav_tree() {
             .catch(error => console.error('Erreur: ', error));
     }, []);
 
-    
+
 
     const CategorieChange = (e) => {
         setcategorie_trier(e.target.value);
@@ -86,7 +86,7 @@ function Nav_tree() {
         produit.name.toLowerCase().includes(recherche.toLowerCase())
     );
 
-   
+
     useEffect(() => {
         fetch("https://localhost:8000/categorie")
             .then(response => response.json())
@@ -135,30 +135,30 @@ function Nav_tree() {
                 </div>
             </header>
             <nav>
-            <ul>
-            <li className="dropdown">
-            <div onClick={() => Home()}>
-              <a >Home</a>
-            </div>
-          </li>
-                <li className="dropdown">
-                    <a href="#">Catégorie</a>
-                    <div className="dropdown-content">
-                        {categorieshow.map(categorie => (
-                            <li key={categorie.id}>
-                                <a onClick={() => ProduitsShow(categorie.id, categorie.name)}>{categorie.name}</a>
-                            </li>
-                        ))}
+                <ul>
+                    <li className="dropdown">
+                        <div onClick={() => Home()}>
+                            <a >Home</a>
+                        </div>
+                    </li>
+                    <li className="dropdown">
+                        <a href="#">Catégorie</a>
+                        <div className="dropdown-content">
+                            {categorieshow.map(categorie => (
+                                <li key={categorie.id}>
+                                    <a onClick={() => ProduitsShow(categorie.id, categorie.name)}>{categorie.name}</a>
+                                </li>
+                            ))}
 
-                    </div>
-                </li>
-                <li className="dropdown">
-                    <div onClick={() => AllProduits()}>
-                        <a >Tout Nos Produits</a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+                        </div>
+                    </li>
+                    <li className="dropdown">
+                        <div onClick={() => AllProduits()}>
+                            <a >Tout Nos Produits</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
             <form>
                 {/* <input type='text' placeholder='Rechercher par nom' value={recherche} onChange={RechercheChange} /> */}
                 <select value={categorie_trier} onChange={CategorieChange}>
@@ -189,14 +189,24 @@ function Nav_tree() {
 
                 <button type="button">Envoyer</button>
             </form>
-            <div>
-                {produits_trier.map(produit => (
-                    <ul key={produit.id} onClick={() => OpenProduit(produit.id, produit.categorie_name)} >
-                        <li>{produit.name}</li>
-                        <li>{produit.categorie_name}</li>
-                    </ul>
-                ))}
+            <div className="popular-products">
+
+                <div className="carousel-slide">
+                    {produits_trier.map(produit => (
+
+                        <div className="item">
+                            <img src={produit.image} onClick={() => OpenProduit(produit.id, produit.categorie_name)} />
+                            <span>{produit.name}</span>
+                            <span>marque:{produit.marque}</span>
+                            <span>prix:{produit.prix}€</span>
+                        </div>
+                    ))}
+
+                </div>
+
+
             </div>
+          
         </div>
     );
 }
@@ -206,8 +216,8 @@ function ProduitsAll() {
 
     return (
         <div>
-        
-          
+
+
             <Nav_tree />
         </div>
     );
