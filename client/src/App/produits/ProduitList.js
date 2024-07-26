@@ -24,6 +24,7 @@ function ProduitDetail() {
   const Login = localStorage.getItem('users');
   const loginUser = JSON.parse(Login);
   const [avis, setAvis] = useState([]);
+  const [avissend, setAvisSend] = useState([]);
   const [moyenne, setMoyenne] = useState(0);
   const [nbavis, setNbAvis] = useState(0);
   useEffect(() => {
@@ -68,7 +69,7 @@ function ProduitDetail() {
     navigate("/")
   }
 
-  console.log(produit)
+
   const Mid = (id) => {
     navigate("/produits/" + id)
   }
@@ -79,7 +80,54 @@ function ProduitDetail() {
   const EditerProduits = (id) => {
     navigate("../admin/list/produit/" + id)
   }
-  console.log(moyenne)
+
+
+  const AvisSet = (e) => {
+    const users = localStorage.getItem('users');
+    const id_user = JSON.parse(users)
+
+    setAvisSend(backData => ({
+      ...backData,
+      id_user: id_user.id,
+      id_produit: id,
+      rate: e.target.value,
+    }));
+
+  }
+
+  const AvisSet_2 = (e) => {
+    const users = localStorage.getItem('users');
+    const id_user = JSON.parse(users)
+    setAvisSend(backData => ({
+      ...backData,
+      id_user: id_user.id,
+      id_produit: id,
+      description: e.target.value,
+    }));
+
+  }
+
+  const EnvoyerAvis = () => {
+    console.log('envhyer')
+    fetch("https://localhost:8000/avis/add", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(avissend),
+    })
+
+      .then(response => {
+        response.json();
+        alert('Produit Ajouter');
+        ;
+      })
+      .catch(error => {
+        console.error('Erreur:', error);
+      });
+  }
+
+  console.log(avissend)
   return (
     // <div>   
     //   {produit ? (
@@ -179,10 +227,10 @@ function ProduitDetail() {
                 <img className="Marque_Logo2" alt="Nvidia removebg" src={NvidiaLogo} />
               </div>
               <div className="price-section">
-                {produit.promo != 0 
-                ? <div className="price-product">En promo : {produit.prix * (1 - produit.promo / 100)} €</div>
-              : <div className="price-product">{produit.prix} €</div>
-              }
+                {produit.promo != 0
+                  ? <div className="price-product">En promo : {produit.prix * (1 - produit.promo / 100)} €</div>
+                  : <div className="price-product">{produit.prix} €</div>
+                }
                 <div className="multiple-payement">
                   <div className="overlap-group">
                     <div className="mulitple-payment">
@@ -217,22 +265,37 @@ function ProduitDetail() {
                   {produit.stock === 0 ? (
                     <div className="text-wrapper-5">OUT OF STOCK</div>
                   ) : (
-                    <div className="text-wrapper-4">EN STOCK<br/>Disponnible : {produit.stock}</div>
-                    
+                    <div className="text-wrapper-4">EN STOCK<br />Disponnible : {produit.stock}</div>
+
                   )}
 
                 </div>
+
               </div>
             </div>
             <div>
 
 
             </div>
+
           </div>
 
         ) : (
           <p>Produit non trouvé</p>
         )}
+        <form>
+          <input type='text' onChange={(e) => AvisSet_2(e)}></input>
+          <input type='number' max='5' onChange={(e) => AvisSet(e)}></input>
+          <button type='submit' onClick={() => EnvoyerAvis()}>envoyer</button>
+        </form>
+        {avis.map((produit) => (
+
+          <div key={produit.id}>
+
+            <span>{produit.username} | {produit.rate} | {produit.description} </span>
+          </div>
+
+        ))}
       </div>
     </div>
   );
