@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Nav from './admin_navbar'
 
+import CSS from './Admin.css';
 function Admin() {
     const navigate = useNavigate();
     const [data, setData] = useState({});
@@ -151,7 +152,14 @@ function Admin() {
         <div>
            
             <Nav />
-            {produits.length === 0 ? (
+            <div className='main'>
+         
+             <form className='form'>
+                <div>
+                    <img className='imageEdit' src={data.image}></img>
+                </div>
+                <div>
+             {produits.length === 0 ? (
                 <p>Aucun produit trouvé</p>
             ) : (
                 <select onChange={ChoisirCategorie}>
@@ -163,7 +171,6 @@ function Admin() {
                     ))}
                 </select>
             )}
-             <form>
                 <label>Name:</label>
                 <input type='text' name='name' value={data.name} onChange={ChoisirName} />
                 <label>Marque:</label>
@@ -189,9 +196,14 @@ function Admin() {
 
                 <label>Promo:</label>
                 <input type='number' name='promo' value={data.promo} onChange={ChoisirPromo} />
-            </form>
+           
                 <button onClick={() => EnvoyerAPI()}>Créer le produits</button>
-        </div>
+                </div>
+            </form>
+            
+                </div>
+                </div>
+                
     );
 }
 

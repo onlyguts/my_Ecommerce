@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Nav from './admin_navbar';
 import localhost from '../Config';
 
+import CSS from './Admin.css';
+
 function AdminProduit() {
     const { id } = useParams();
     const [produit, setProduit] = useState([]);
@@ -76,14 +78,22 @@ function AdminProduit() {
 
     return (
         <div>
-            <Nav />
+            <Nav/>
+        <div className='main'>
+       
             <form>
+                <div>
+
+                <h2>{produit.name}</h2>
+            <img className='imageEdit' src={produit.image}/>
+                                
             <button onClick={() => EditerProduits(produit.id)}>Fiche produit</button>
-            <button onClick={() => EditerAvis(produit.id)}>Supprimer les avis</button>
-
-                <label>Nom :</label>
-                <input type="text" name='name' value={produit.name} onChange={formChange} />
-
+            <button onClick={() => EditerAvis(produit.id)}>Editer avis</button>
+            <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
+            <br></br>
+            </div>
+            <div>
+            <label>Categorie :</label>
                 <select name='idCategorie' value={produit.idCategorie} onChange={formChange}>
                     {categorie.map(categorie => (
                         <option key={categorie.id} value={categorie.id}>
@@ -91,6 +101,9 @@ function AdminProduit() {
                         </option>
                     ))}
                 </select>
+                <label>Nom :</label>
+                <input type="text" name='name' value={produit.name} onChange={formChange} />
+
 
 
                 <label>Marque:</label>
@@ -100,6 +113,7 @@ function AdminProduit() {
                 <input type="number" name='prix' value={produit.prix} onChange={formChange} />
 
                 <label>Image:</label>
+                
                 <input type="text" name='image' value={produit.image} onChange={formChange} />
 
                 <label>Stock:</label>
@@ -122,8 +136,10 @@ function AdminProduit() {
                 <input type="text" name='consommations' value={produit.consommations} onChange={formChange} />
                 <label>Promo:</label>
                 <input type="text" name='promo' value={produit.promo} onChange={formChange} />
-                <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
+               
+                </div>
             </form>
+        </div>
         </div>
     );
 }

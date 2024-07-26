@@ -48,7 +48,7 @@ function AdminList() {
 
             <Nav />
             <div>
-                <input className="navBar" type="text" value={recherche} placeholder="Recherche" onChange={(event) => RechercheChange(event)} />
+ <input className="navBar" type="text" value={recherche} placeholder="Recherche" onChange={(event) => RechercheChange(event)} />
                 {produits_trier.map((produit) => (
 
                     <div key={produit.id}>
