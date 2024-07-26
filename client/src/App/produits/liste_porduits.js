@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import Header from './../Nav';
+import Header from '../Nav';
 
 function Produits() {
   const { id } = useParams()

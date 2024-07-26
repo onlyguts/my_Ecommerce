@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Nav from './NavAdmin';
-import localhost from './../Config';
+import Nav from './admin_navbar';
+import localhost from '../Config';
 
 function AdminProduitC() {
     const { id } = useParams();

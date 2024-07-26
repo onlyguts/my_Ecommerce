@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Nav from './NavAdmin';
-import localhost from './../Config';
+import Nav from './admin_navbar';
+import localhost from '../Config';
 
 function AdminProduit() {
     const { id } = useParams();
@@ -59,7 +59,11 @@ function AdminProduit() {
             navigate("/produit/" + id)
       
     }
-
+    const EditerAvis  = (id) => {
+ 
+        navigate("/produit/avis/" + id)
+  
+}
     if (!produit) {
         return (
             <div>
@@ -75,6 +79,7 @@ function AdminProduit() {
             <Nav />
             <form>
             <button onClick={() => EditerProduits(produit.id)}>Fiche produit</button>
+            <button onClick={() => EditerAvis(produit.id)}>Supprimer les avis</button>
 
                 <label>Nom :</label>
                 <input type="text" name='name' value={produit.name} onChange={formChange} />

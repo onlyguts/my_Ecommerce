@@ -12,7 +12,7 @@ import BuyingCart from '../assets/cart.svg'
 import ChevronRight from '../assets/chevron-right.svg'
 import PhotoSpecs from '../assets/Specs.png'
 
-import Header from './../Nav';
+import Header from '../Nav';
 
 
 function ProduitDetail() {
