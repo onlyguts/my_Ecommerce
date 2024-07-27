@@ -35,7 +35,7 @@ function AdminProduit() {
             ...prevState,
             [name]: value
         }));
-        console.log(name, value)
+      
     };
 
     const UpdateProduit = (e) => {
@@ -56,16 +56,29 @@ function AdminProduit() {
             .catch(error => console.error('Erreur :', error));
     };
 
-    const EditerProduits  = (id) => {
- 
-            navigate("/produit/" + id)
-      
+    const EditerProduits = (id) => {
+
+        navigate("/produit/" + id)
+
     }
-    const EditerAvis  = (id) => {
- 
+    const EditerAvis = (id) => {
+
         navigate("/produit/avis/" + id)
-  
-}
+
+    }
+
+    const DeletePorudits = (id_produits) => {
+        fetch("https://localhost:8000/produits/delete/" + id_produits, {
+            method: 'DELETE',
+        })
+            .then(response =>
+                response.json(),
+                navigate('/admin/list')
+            )
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+    };
     if (!produit) {
         return (
             <div>
@@ -78,68 +91,70 @@ function AdminProduit() {
 
     return (
         <div>
-            <Nav/>
-        <div className='main'>
-       
-            <form>
-                <div>
+            <Nav />
+            <div className='main'>
 
-                <h2>{produit.name}</h2>
-            <img className='imageEdit' src={produit.image}/>
-                                
-            <button onClick={() => EditerProduits(produit.id)}>Fiche produit</button>
-            <button onClick={() => EditerAvis(produit.id)}>Editer avis</button>
-            <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
-            <br></br>
+                <form>
+                    <div>
+
+                        <h2>{produit.name}</h2>
+                        <img className='imageEdit' src={produit.image} />
+                     
+                       
+                        <button onClick={() => EditerProduits(produit.id)}>Fiche produit</button>
+                        <button onClick={() => EditerAvis(produit.id)}>Editer avis</button>
+                        <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
+                        <button onClick={() => DeletePorudits(produit.id)}>Supprimer</button>
+                        <br></br>
+                    </div>
+                    <div>
+                        <label>Categorie :</label>
+                        <select name='idCategorie' value={produit.idCategorie} onChange={formChange}>
+                            {categorie.map(categorie => (
+                                <option key={categorie.id} value={categorie.id}>
+                                    [ID {categorie.id}] {categorie.name}
+                                </option>
+                            ))}
+                        </select>
+                        <label>Nom :</label>
+                        <input type="text" name='name' value={produit.name} onChange={formChange} />
+
+
+
+                        <label>Marque:</label>
+                        <input type="text" name='marque' value={produit.marque} onChange={formChange} />
+
+                        <label>Prix:</label>
+                        <input type="number" name='prix' value={produit.prix} onChange={formChange} />
+
+                        <label>Image:</label>
+
+                        <input type="text" name='image' value={produit.image} onChange={formChange} />
+
+                        <label>Stock:</label>
+                        <input type="number" name='stock' value={produit.stock} onChange={formChange} />
+
+                        <label>Taille:</label>
+                        <input type="text" name='taille' value={produit.taille} onChange={formChange} />
+
+                        <label>Type:</label>
+                        <input type="text" name='type' value={produit.type} onChange={formChange} />
+
+                        <label>Socket:</label>
+                        <input type="text" name='socket' value={produit.socket} onChange={formChange} />
+
+                        <label>Type CPU:</label>
+                        <input type="text" name='typec' value={produit.typec} onChange={formChange} />
+
+
+                        <label>Consommations:</label>
+                        <input type="text" name='consommations' value={produit.consommations} onChange={formChange} />
+                        <label>Promo:</label>
+                        <input type="text" name='promo' value={produit.promo} onChange={formChange} />
+
+                    </div>
+                </form>
             </div>
-            <div>
-            <label>Categorie :</label>
-                <select name='idCategorie' value={produit.idCategorie} onChange={formChange}>
-                    {categorie.map(categorie => (
-                        <option key={categorie.id} value={categorie.id}>
-                            [ID {categorie.id}] {categorie.name}
-                        </option>
-                    ))}
-                </select>
-                <label>Nom :</label>
-                <input type="text" name='name' value={produit.name} onChange={formChange} />
-
-
-
-                <label>Marque:</label>
-                <input type="text" name='marque' value={produit.marque} onChange={formChange} />
-
-                <label>Prix:</label>
-                <input type="number" name='prix' value={produit.prix} onChange={formChange} />
-
-                <label>Image:</label>
-                
-                <input type="text" name='image' value={produit.image} onChange={formChange} />
-
-                <label>Stock:</label>
-                <input type="number" name='stock' value={produit.stock} onChange={formChange} />
-
-                <label>Taille:</label>
-                <input type="text" name='taille' value={produit.taille} onChange={formChange} />
-
-                <label>Type:</label>
-                <input type="text" name='type' value={produit.type} onChange={formChange} />
-
-                <label>Socket:</label>
-                <input type="text" name='socket' value={produit.socket} onChange={formChange} />
-
-                <label>Type CPU:</label>
-                <input type="text" name='typec' value={produit.typec} onChange={formChange} />
-
-
-                <label>Consommations:</label>
-                <input type="text" name='consommations' value={produit.consommations} onChange={formChange} />
-                <label>Promo:</label>
-                <input type="text" name='promo' value={produit.promo} onChange={formChange} />
-               
-                </div>
-            </form>
-        </div>
         </div>
     );
 }

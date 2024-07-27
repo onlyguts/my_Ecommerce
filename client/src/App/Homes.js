@@ -88,7 +88,7 @@ function PopularProducts() {
           ))}
         </div>
         <div className="carousel-slide">
-          {limitProduit(6, 9).map(produit => (
+          {limitProduit(6, 8).map(produit => (
             <ProductItemTop key={produit.id} src={produit.image} onClick={() => ProduitsShow(produit.id, produit.name, produit.views)} alt="Produit Populaire 1" id={produit.id} categorie={produit.categorie_name} views={produit.views} name={produit.name} />
           ))}
         </div>

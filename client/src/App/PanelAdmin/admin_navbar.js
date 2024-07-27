@@ -13,8 +13,11 @@ function NavAdmin() {
     const Home = () => {
         navigate('/')
     }
-    const Ajouter = () => {
+    const DASHBOARD = () => {
         navigate('/admin')
+    }
+    const Ajouter = () => {
+        navigate('/admin/add')
     }
     const AjouterC = () => {
         navigate('/admin/addc')
@@ -31,6 +34,7 @@ function NavAdmin() {
 
             <div>
                 <button onClick={() => Home()}>HOME</button>
+                <button onClick={() => DASHBOARD()}>DASHBOARD</button>
                 <button onClick={() => Ajouter()}>AJOUTER PRODUIT</button>
                 <button onClick={() => AjouterC()}>AJOUTER CATEGORIE</button>
                 <button onClick={() => List()}>LISTE PRODUIT</button>
