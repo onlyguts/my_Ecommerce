@@ -27,6 +27,7 @@ function ProduitDetail() {
   const [avissend, setAvisSend] = useState([]);
   const [moyenne, setMoyenne] = useState(0);
   const [nbavis, setNbAvis] = useState(0);
+  const [email, setEmail] = useState();
   useEffect(() => {
     fetch(`https://localhost:8000/produit/${id}`)
       .then(response => response.json())
@@ -127,7 +128,33 @@ function ProduitDetail() {
       });
   }
 
-  console.log(avissend)
+  const writeEmail = (e) => {
+    setEmail(e.target.value)
+  }
+
+  const sendAlert = () => {
+    const userInfos = {
+      id_produit: produit.id,
+      email: email,
+    };
+    fetch("https://localhost:8000/email/add", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userInfos),
+    })
+
+      .then(response => {
+        response.json();
+        alert('Email ajoutée');
+        console.log(userInfos);
+      })
+      .catch(error => {
+        console.error('Erreur:', error);
+      });
+  }
+
   return (
     // <div>   
     //   {produit ? (
@@ -263,12 +290,15 @@ function ProduitDetail() {
                 </div>
                 <div className="stock">
                   {produit.stock === 0 ? (
-                    <div className="text-wrapper-5">OUT OF STOCK</div>
+                    <div><div className="text-wrapper-5">OUT OF STOCK</div>
+                      <form>
+                        <input type="email" placeholder='votre adresse e-mail' onChange={(e) => writeEmail(e)}></input>
+                      </form>
+                      <button type="submit" onClick={() => sendAlert()}>Envoyer</button>
+                    </div>
                   ) : (
                     <div className="text-wrapper-4">EN STOCK<br />Disponnible : {produit.stock}</div>
-
                   )}
-
                 </div>
 
               </div>

@@ -11,6 +11,7 @@ function AdminProduit() {
     const navigate = useNavigate();
     const local = localhost;
     const [categorie, setCategorie] = useState([]);
+    const [userAlertStock, setUserAlertStock] = useState();
 
 
     useEffect(() => {
@@ -26,7 +27,12 @@ function AdminProduit() {
             .then(data => setProduit(data))
             .catch(error => console.error('Erreur :', error));
     }, [id, local]);
-
+    useEffect(() => {
+        fetch("https://localhost:8000/email/produit/" + id)
+            .then(response => response.json())
+            .then(data => setUserAlertStock(data))
+            .catch(error => console.error('Erreur: ', error));
+    }, []);
 
 
     const formChange = (e) => {
@@ -39,7 +45,6 @@ function AdminProduit() {
     };
 
     const UpdateProduit = (e) => {
-
         e.preventDefault();
 
         fetch("https://localhost:8000/produit/update/" + produit.id, {
@@ -50,11 +55,46 @@ function AdminProduit() {
             body: JSON.stringify(produit),
         })
             .then(response => {
-                alert('Produit update');
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la mise à jour du produit');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Produit mis à jour');
+
+                const emailSend = userAlertStock.map(userAlertStock => {
+                    return fetch("https://localhost:8000/email/alert/disponible", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            produitId: produit.id,
+                            userId: userAlertStock.id,
+                            userEmail: userAlertStock.email,
+                            message: `<p>Bonne nouvelle ! Le produit <strong>${produit.name}</strong> que vous attendiez est maintenant disponible en stock. Ne manquez pas votre chance de l'acheter maintenant !</p>`,
+                        }),
+                    })
+                    // .then(response => {
+                    //     if (!response.ok) {
+                    //         throw new Error(`Erreur lors de l'envoi de l'email et de la suppression de l'alerte pour ${userAlertStock.email}`);
+                    //     }
+                    //     return response.json();
+                    // })
+                    // .then(data => {
+                    //     console.log(`Email envoyé et alerte supprimée pour ${userAlertStock.email}:`, data);
+                    // })
+                    // .catch(error => console.error(error));
+                });
+                return Promise.all(emailSend);
+            })
+            .then(() => {
                 navigate('/admin');
             })
             .catch(error => console.error('Erreur :', error));
     };
+
 
     const EditerProduits = (id) => {
 

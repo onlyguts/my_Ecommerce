@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-
+import CSS from './Admin.css'
 import Nav from './admin_navbar'
 
 function AdminDashboard() {
