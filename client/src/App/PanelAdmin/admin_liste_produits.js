@@ -7,7 +7,7 @@ function AdminList() {
     const [produits, setProduits] = useState([]);
     const [recherche, setRechercheNom] = useState('');
     const [categorie, setCategorie] = useState([]);
-       const [marque, setmarque] = useState('');
+    const [marque, setmarque] = useState('');
     const [categorie_trier, setcategorie_trier] = useState('');
     const navigate = useNavigate();
     const marqueSolo = new Set();
@@ -52,7 +52,7 @@ function AdminList() {
         setmarque(e.target.value);
     };
 
-   
+
 
     const EditerProduits = (id) => {
 
@@ -60,7 +60,7 @@ function AdminList() {
 
     }
 
- 
+
     const produits_trier = produits.filter(produit =>
         (categorie_trier == '' || produit.categorie_name === categorie_trier || produit.marque === categorie_trier) &&
         produit.name.toLowerCase().includes(recherche.toLowerCase())
@@ -69,13 +69,18 @@ function AdminList() {
         (marque == '' || produit.categorie_name === marque || produit.marque === marque) &&
         produit.name.toLowerCase().includes(recherche.toLowerCase())
     );
-  
+
 
     return (
         <div>
 
             <Nav />
-            <form>
+          
+            <div className='body'>
+            <table>
+  <caption>
+  <form>
+  <input className="navBar" type="text" value={recherche} placeholder="Recherche" onChange={(event) => RechercheChange(event)} />
                 {/* <input type='text' placeholder='Rechercher par nom' value={recherche} onChange={RechercheChange} /> */}
                 <select value={categorie_trier} onChange={CategorieChange}>
 
@@ -103,17 +108,35 @@ function AdminList() {
                     })}
                 </select>
 
-                <button type="button">Envoyer</button>
-            </form>
-            <div>
- <input className="navBar" type="text" value={recherche} placeholder="Recherche" onChange={(event) => RechercheChange(event)} />
-                {produits2_trier.map((produit) => (
+               
+            </form>     
+  </caption>
+  
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nom produit</th>
+      <th scope="col">Nom de la Catégorie</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Views</th>
+      <th scope="col">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+  {produits2_trier.map((produit) => (
+    <tr key={produit.id}>
+    <td>{produit.id}</td>
+    <td>{produit.name}</td>
+    <td>{produit.categorie_name}</td>
+    <td>{produit.stock}</td>
+    <td>{produit.views}</td>
+    <td><button onClick={() => OpenPorudits(produit.id)}>Edit</button> <button onClick={() => DeletePorudits(produit.id)}>Delete</button> <button onClick={() => EditerProduits(produit.id)}>Views</button></td>
+    </tr>
+        ))}
+  </tbody>
 
-                    <div key={produit.id}>
-
-                        <span>{produit.id} | {produit.categorie_name} | {produit.name} <button onClick={() => OpenPorudits(produit.id)}>Edit</button> <button onClick={() => DeletePorudits(produit.id)}>Delete</button> <button onClick={() => EditerProduits(produit.id)}>Views</button></span>
-                    </div>
-                ))}
+</table>
+             
             </div>
         </div>
     );

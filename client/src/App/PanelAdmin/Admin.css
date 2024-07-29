@@ -1,10 +1,19 @@
 * {
     margin: 0;
     padding: 0;
+
 }
 
 .main {
     display: flex;
+    margin: auto;
+   
+}
+
+.body {
+  
+    display: flex;
+    justify-content: center;
     margin: auto;
 }
 
@@ -45,3 +54,16 @@ form div input {
 .imageEdit {
     width: 500px;
 }
+
+.Navbar {
+    background-color: rgb(255, 184, 126);
+    margin: 10px;
+    padding: 20px;
+}
+
+.Navbar a {
+    margin: 10px;
+    padding-right: 20px;
+    border-right: 1px solid black;
+}
+

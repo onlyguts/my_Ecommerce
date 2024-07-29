@@ -24,28 +24,45 @@ function AdminListC() {
         fetch("https://localhost:8000/categorie/delete/" + id_produits, {
             method: 'DELETE',
         })
-        .then(response => response.json())
-        .catch(error => {
-            console.error('Erreur:', error);
-        });
-        
+            .then(response => response.json())
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+
     };
-    
+
 
     return (
         <div>
-        
+
             <Nav />
-            <div>
+            <div className='body'>
 
+                <table>
+                   
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                {produits.map((produit) => (
+                        {produits.map((produit) => (
 
-                    <div key={produit.id}>
+                             <tr  key={produit.id}>
+                        
+                             <td>{produit.id}</td>
+                             <td>{produit.name}</td>
+                           
+                           <td> <button onClick={() => OpenPorudits(produit.id)}>Edit</button> <button onClick={() => DeletePorudits(produit.id)}>Delete</button></td>
+                         </tr>
+                        ))}
 
-                        <span>{produit.id} | {produit.name} <button onClick={() => OpenPorudits(produit.id)}>Edit</button> <button  onClick={() => DeletePorudits(produit.id)}>Delete</button></span>
-                    </div>
-                ))}
+                    </tbody>
+                   
+                </table>
             </div>
         </div>
     );

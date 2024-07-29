@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import CSS from "./Admin.css"
 
 function NavAdmin() {
     const navigate = useNavigate();
@@ -30,15 +31,15 @@ function NavAdmin() {
     }
     return (
         <div>
-            <h1>Admin</h1>
+ 
 
-            <div>
-                <button onClick={() => Home()}>HOME</button>
-                <button onClick={() => DASHBOARD()}>DASHBOARD</button>
-                <button onClick={() => Ajouter()}>AJOUTER PRODUIT</button>
-                <button onClick={() => AjouterC()}>AJOUTER CATEGORIE</button>
-                <button onClick={() => List()}>LISTE PRODUIT</button>
-                <button onClick={() => ListC()}>LISTE CATEGORIE</button>
+            <div className='Navbar'>
+                <a onClick={() => Home()}>HOME</a>
+                <a onClick={() => DASHBOARD()}>DASHBOARD</a>
+                <a onClick={() => Ajouter()}>AJOUTER PRODUIT</a>
+                <a onClick={() => AjouterC()}>AJOUTER CATEGORIE</a>
+                <a onClick={() => List()}>LISTE PRODUIT</a>
+                <a onClick={() => ListC()}>LISTE CATEGORIE</a>
             </div>
         </div>
     )

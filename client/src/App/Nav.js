@@ -21,8 +21,11 @@ function Nav_one() {
     const navigate = useNavigate();
     const loginUser = JSON.parse(Login);
     const [recherche, setRecherche] = useState('');
+    const [produits, setProduits] = useState([]);
     const [showCart, setShowCart] = useState(false);
     const [quantity, setQuantity] = useState(0);
+        const [categorie, setCategorie] = useState([]);
+    
     useEffect(() => {
         fetch("https://localhost:8000/panier/" + loginUser.id)
             .then(reponse => reponse.json())
@@ -35,6 +38,19 @@ function Nav_one() {
             .catch(erreur => console.error('Erreur: ', erreur));
     }, []);
   
+    useEffect(() => {
+      fetch("https://localhost:8000/produits")
+          .then(response => response.json())
+          .then(data => setProduits(data))
+          .catch(error => console.error('Erreur: ', error));
+  }, []);
+  
+  useEffect(() => {
+    fetch("https://localhost:8000/categorie")
+        .then(response => response.json())
+        .then(data => setCategorie(data))
+        .catch(error => console.error('Erreur: ', error));
+}, []);
     const openPopup = () => {
         navigate('/login')
     };
@@ -50,6 +66,7 @@ function Nav_one() {
   
     const valueInput = (event) => {
       setRecherche(event.target.value)
+      
     }
   
     const sendInput = () => {
@@ -66,6 +83,16 @@ function Nav_one() {
     const toggleCart = () => {
       setShowCart(!showCart);
     };
+// https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+// https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+     const produits_trier = produits.filter(produit => {
+      const produit_trouvee = produit.name.toLowerCase().includes(recherche.toLowerCase());
+      const categorie_trouvee = categorie.some(categorie => categorie.name.toLowerCase() === recherche.toLowerCase() && produit.id_categorie === categorie.id);
+      return produit_trouvee || categorie_trouvee;
+    });
+
+    console.log(produits_trier)
+
   
     return (
       <header>

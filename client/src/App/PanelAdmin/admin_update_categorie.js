@@ -57,6 +57,7 @@ function AdminProduitC() {
         <div>
             <Nav />
             <form>
+                
                     <label>Nom :</label>
                     <input type="text" name='name' value={produit.name} onChange={formChange} />
         
