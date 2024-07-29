@@ -24,10 +24,10 @@ function Nav_tree() {
         fetch("https://localhost:8000/panier/" + loginUser.id)
             .then(reponse => reponse.json())
             .then(data => {
-            
-              const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
-              setQuantity(quantity);
-     
+
+                const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+                setQuantity(quantity);
+
             })
             .catch(erreur => console.error('Erreur: ', erreur));
     }, []);
@@ -105,7 +105,7 @@ function Nav_tree() {
         (marque == '' || produit.categorie_name === marque || produit.marque === marque) &&
         produit.name.toLowerCase().includes(recherche.toLowerCase())
     );
-  
+
 
     useEffect(() => {
         fetch("https://localhost:8000/categorie")
@@ -128,7 +128,10 @@ function Nav_tree() {
     }
     const toggleCart = () => {
         setShowCart(!showCart);
-      };
+    };
+    function Promo() {
+        navigate("/promotions");
+      }
     return (
         <div>
             <header>
@@ -152,7 +155,7 @@ function Nav_tree() {
                                 <p></p>
                             )
                         )}
-                          <button className="menu-btn" onClick={toggleCart}>Cart {quantity}</button>
+                        <button className="menu-btn" onClick={toggleCart}>Cart {quantity}</button>
                     </div>
                 </div>
                 {showCart && <Cart />}
@@ -178,6 +181,11 @@ function Nav_tree() {
                     <li className="dropdown">
                         <div onClick={() => AllProduits()}>
                             <a >Tout Nos Produits</a>
+                        </div>
+                    </li>
+                    <li className="dropdown">
+                        <div onClick={() => Promo()}>
+                            <a >Promotions</a>
                         </div>
                     </li>
                 </ul>
@@ -229,7 +237,7 @@ function Nav_tree() {
 
 
             </div>
-          
+
         </div>
     );
 }
@@ -244,35 +252,35 @@ function Cart() {
         fetch("https://localhost:8000/panier/" + loginUser.id)
             .then(reponse => reponse.json())
             .then(data => {
-              setCartItems(data);
-              const total = data.reduce((sum, item) => sum + (item.prix * item.quantity), 0);
-      
-              setValue(total);
+                setCartItems(data);
+                const total = data.reduce((sum, item) => sum + (item.prix * item.quantity), 0);
+
+                setValue(total);
             })
             .catch(erreur => console.error('Erreur: ', erreur));
     }, []);
-  
-  
-    const PagePanier  = () => {
-      
-      navigate('/panier')
+
+
+    const PagePanier = () => {
+
+        navigate('/panier')
     }
-  
+
     return (
-      <div className='cart'>
-        <h2>Panier</h2>
-        <ul>
-          {cartItems.map(item => (
-            <li key={item.id}>
-              <span>x{item.quantity} - {item.name}</span> - <span>{(item.prix * item.quantity)}€ | x1 {item.prix}€</span>
-            </li>
-          ))}
-          <h2>Prix total : {value}€</h2>
-          <button onClick={() => PagePanier()}>AFFICHEZ LE PANIER</button>
-        </ul>
-      </div>
+        <div className='cart'>
+            <h2>Panier</h2>
+            <ul>
+                {cartItems.map(item => (
+                    <li key={item.id}>
+                        <span>x{item.quantity} - {item.name}</span> - <span>{(item.prix * item.quantity)}€ | x1 {item.prix}€</span>
+                    </li>
+                ))}
+                <h2>Prix total : {value}€</h2>
+                <button onClick={() => PagePanier()}>AFFICHEZ LE PANIER</button>
+            </ul>
+        </div>
     );
-  }
+}
 
 function ProduitsAll() {
 

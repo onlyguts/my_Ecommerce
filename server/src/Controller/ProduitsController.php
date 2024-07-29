@@ -47,6 +47,17 @@ class ProduitsController extends AbstractController
         return $this->json($promotions);
     }
 
+    #[Route('/produits/suggestion', name: 'app_suggestion', methods: ['GET', 'HEAD'])]
+    public function SuggestionT(EntityManagerInterface $entityManager): Response
+    {
+        $connection = $entityManager->getConnection();
+        $Mysql = 'SELECT p.*, c.name as categorie_name FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id WHERE p.suggestion != 0 ';
+
+        $query = $connection->prepare($Mysql);
+        $resultat = $query->executeQuery();
+        $data = $resultat->fetchAllAssociative();
+        return $this->json($data);
+    }
 
     #[Route('/produits/{id}', name: 'app_produit', methods: ['GET', 'HEAD'])]
     public function indexFind(EntityManagerInterface $entityManager, int $id): Response
@@ -90,7 +101,7 @@ class ProduitsController extends AbstractController
         $produit->setTypec($data['typec']);
         $produit->setPromo($data['promo']);
         $produit->setConsommations($data['consommations']);
-
+        $produit->setSuggestion($data['suggestion']);
 
         $entityManager->persist($produit);
         $entityManager->flush();
@@ -144,6 +155,8 @@ class ProduitsController extends AbstractController
 
         return $this->json(['success' => 'Produit add', 'id' => $produit->getId()], Response::HTTP_CREATED);
     }
+
+
     #[Route('/produits/delete/{id}', name: 'app_produits_delete', methods: ['DELETE'])]
     public function delete(EntityManagerInterface $entityManager, int $id): Response
     {
@@ -159,4 +172,7 @@ class ProduitsController extends AbstractController
     
         return $this->json(['success' => 'produit supprimé']);
     }
+
+ 
+
 }

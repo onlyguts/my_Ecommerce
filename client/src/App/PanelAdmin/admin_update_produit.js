@@ -188,9 +188,11 @@ function AdminProduit() {
 
 
                         <label>Consommations:</label>
-                        <input type="text" name='consommations' value={produit.consommations} onChange={formChange} />
+                        <input type="number" name='consommations' value={produit.consommations} onChange={formChange} />
                         <label>Promo:</label>
-                        <input type="text" name='promo' value={produit.promo} onChange={formChange} />
+                        <input type="number" name='promo' value={produit.promo} onChange={formChange} />
+                        <label>Suggestion:</label>
+                        <input type="number" name='suggestion' value={produit.suggestion} onChange={formChange} />
 
                     </div>
                 </form>

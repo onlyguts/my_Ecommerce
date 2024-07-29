@@ -149,6 +149,9 @@ function Nav_two() {
     function Home() {
         navigate("/");
       }
+      function Promo() {
+        navigate("/promotions");
+      }
   
     return (
       <nav>
@@ -172,6 +175,11 @@ function Nav_two() {
           <li className="dropdown">
             <div onClick={() => AllProduits()}>
               <a >Tout Nos Produits</a>
+            </div>
+          </li>
+          <li className="dropdown">
+            <div onClick={() => Promo()}>
+              <a >Promotions</a>
             </div>
           </li>
         </ul>

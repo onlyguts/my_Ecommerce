@@ -52,6 +52,9 @@ class Produits
     #[ORM\Column]
     private ?int $promo = null;
 
+    #[ORM\Column]
+    private ?int $suggestion = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -209,6 +212,18 @@ class Produits
     public function setPromo(int $promo): static
     {
         $this->promo = $promo;
+
+        return $this;
+    }
+
+    public function getSuggestion(): ?int
+    {
+        return $this->suggestion;
+    }
+
+    public function setSuggestion(int $suggestion): static
+    {
+        $this->suggestion = $suggestion;
 
         return $this;
     }

@@ -29,7 +29,7 @@ function PromoCarousel() {
   const [promo, setPromo] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("https://localhost:8000/produits/promotions")
+    fetch("https://localhost:8000/produits/suggestion")
       .then(response => response.json())
       .then(data => setPromo(data))
       .catch(error => console.error('Erreur:', error));
@@ -38,13 +38,15 @@ function PromoCarousel() {
     navigate("/produit/" + id);
     localStorage.setItem('categorie', name);
   }
+  console.log(promo)
   return (
     <div className="carousel-container">
       <Carousel showThumbs={false} autoPlay infiniteLoop>
       {promo.map(produit => (
-        <div key={produit.id} onClick={() => ProduitsShow(produit.id, produit.name, produit.views)}>
+        <div key={produit.id} onClick={() => ProduitsShow(produit.id, produit.categorie_name)}>
         <img src={produit.image} alt="Promo 1" />
-        <p className="legend" >{produit.prix * (1 - produit.promo / 100)}€ au lieu de {produit.prix}€!</p>
+        {/* <p className="legend" >{produit.prix * (1 - produit.promo / 100)}€ au lieu de {produit.prix}€!</p> */}
+            <p className="legend" >{produit.name} pour {produit.prix}€</p>
       </div>
           ))}
         

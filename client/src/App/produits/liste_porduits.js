@@ -27,8 +27,8 @@ function Produits() {
   }
   return (
     <div>
-  <Nav_one />
-  <Nav_two />
+      <Nav_one />
+      <Nav_two />
       <h1><button onClick={() => Debut()}>Home</button>/<button onClick={() => Mid(id)}>{Categorie}</button></h1>
       {produits.length === 0 ? (
         <p>Aucun produit trouvé</p>
@@ -37,13 +37,13 @@ function Produits() {
 
           <div className="carousel-slide">
             {produits.map(produit => (
-      
-              <div  className="item">
-              <img src={produit.image}  onClick={() => ProduitsShow(produit.id)}/>
-              <span>{produit.name}</span>
-              <span>marque:{produit.marque}</span>
-              <span>prix:{produit.prix}€</span>
-            </div>
+
+              <div className="item">
+                <img src={produit.image} onClick={() => ProduitsShow(produit.id)} />
+                <span>{produit.name}</span>
+                <span>marque:{produit.marque}</span>
+                <span>prix:{produit.prix}€</span>
+              </div>
             ))}
 
           </div>
@@ -70,18 +70,18 @@ function Nav_one() {
   const [showCart, setShowCart] = useState(false);
   const [quantity, setQuantity] = useState(0);
   useEffect(() => {
-      fetch("https://localhost:8000/panier/" + loginUser.id)
-          .then(reponse => reponse.json())
-          .then(data => {
-          
-            const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
-            setQuantity(quantity);
-   
-          })
-          .catch(erreur => console.error('Erreur: ', erreur));
+    fetch("https://localhost:8000/panier/" + loginUser.id)
+      .then(reponse => reponse.json())
+      .then(data => {
+
+        const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+        setQuantity(quantity);
+
+      })
+      .catch(erreur => console.error('Erreur: ', erreur));
   }, []);
   const openPopup = () => {
-      navigate('/login')
+    navigate('/login')
   };
 
 
@@ -104,10 +104,10 @@ function Nav_one() {
     } else {
       navigate('/produits/all/null')
     }
-   
+
   }
 
-    
+
   const toggleCart = () => {
     setShowCart(!showCart);
   };
@@ -155,7 +155,7 @@ function Nav_two() {
 
   function ProduitsShow(id, name) {
     localStorage.setItem('categorie', name);
- 
+
     navigate("/produits/" + id);
     window.location.reload();
   }
@@ -165,8 +165,12 @@ function Nav_two() {
   }
 
   function Home() {
-      navigate("/");
-    }
+    navigate("/");
+  }
+
+  function Promo() {
+    navigate("/promotions");
+  }
 
   return (
     <nav>
@@ -192,6 +196,11 @@ function Nav_two() {
             <a >Tout Nos Produits</a>
           </div>
         </li>
+        <li className="dropdown">
+          <div onClick={() => Promo()}>
+            <a >Promotions</a>
+          </div>
+        </li>
       </ul>
     </nav>
   );
@@ -204,20 +213,20 @@ function Cart() {
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
-      fetch("https://localhost:8000/panier/" + loginUser.id)
-          .then(reponse => reponse.json())
-          .then(data => {
-            setCartItems(data);
-            const total = data.reduce((sum, item) => sum + (item.prix * item.quantity), 0);
-    
-            setValue(total);
-          })
-          .catch(erreur => console.error('Erreur: ', erreur));
+    fetch("https://localhost:8000/panier/" + loginUser.id)
+      .then(reponse => reponse.json())
+      .then(data => {
+        setCartItems(data);
+        const total = data.reduce((sum, item) => sum + (item.prix * item.quantity), 0);
+
+        setValue(total);
+      })
+      .catch(erreur => console.error('Erreur: ', erreur));
   }, []);
 
 
-  const PagePanier  = () => {
-    
+  const PagePanier = () => {
+
     navigate('/panier')
   }
 
