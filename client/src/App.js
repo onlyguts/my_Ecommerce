@@ -17,7 +17,7 @@ import Homes from './App/Homes'
 import ProduitsList from './App/produits/liste_porduits'
 
 import Build from './App/produits/Algo'
-
+import Panier from './App/user/Panier'
 import ProduitList from './App/produits/page_produit'
 
 import ProduitsAll from './App/produits/recherche_produits'
@@ -30,6 +30,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Homes />}></Route>
                 <Route path="/admin" element={<Admindash />}></Route>
+                <Route path="/panier" element={<Panier />}></Route>
                 <Route path="/admin/add" element={<Admin />}></Route>
                 <Route path="/build" element={<Build />}></Route>
                 <Route path="/admin/list" element={<AdminList />}></Route>

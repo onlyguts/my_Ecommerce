@@ -1,5 +1,5 @@
 .product-boitier {
-    background-color: #fbfbfe;
+    background-color: #F0E2D3;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -7,16 +7,19 @@
 }
 
 .product-boitier .div {
-    background-color: #fbfbfe;
+    background-color: #F0E2D3;
     height: 2160px;
     position: relative;
     width: 1440px;
+    margin: auto;
 }
 
 .product-boitier .specs-img {
-    height: 1440px;
+    margin: auto;
+    width: 1440px;
+    height: 65%;
     position: absolute;
-    bottom: 0;
+    bottom: -10px;
 
 }
 
@@ -29,7 +32,7 @@
 }
 
 .product-boitier .price-section {
-    background-color: #c782834c;
+    background-color: #DBB996;
     height: 492px;
     left: 1082px;
     position: absolute;
@@ -72,7 +75,7 @@
 }
 
 .product-boitier .buy-now-button {
-    background-color: #c78283;
+    background-color: #376D5F;
     border-radius: 20px;
     height: 57px;
     left: 42px;
@@ -83,7 +86,7 @@
 }
 
 .product-boitier .buy-now-title {
-    color: #ffffff;
+    color: white;
     font-family: "Inter-Bold", Helvetica;
     font-size: 16px;
     font-weight: 700;
@@ -106,7 +109,7 @@
 }
 
 .product-boitier .add-basket-button {
-    background-color: #c78283;
+    background-color: #376D5F;
     border-radius: 20px;
     height: 57px;
     left: 42px;
@@ -148,7 +151,7 @@
 }
 
 .product-boitier .quantity-selector {
-    background-color: #c78283;
+    background-color: #CC8857;
     border-radius: 20px;
     height: 38px;
     left: 109px;
@@ -181,7 +184,7 @@
 }
 
 .product-boitier .title-quantity {
-    color: #bb4430;
+    color: #CC8857;
     font-family: "Inter-Bold", Helvetica;
     font-size: 16px;
     font-weight: 700;
@@ -209,7 +212,7 @@
 
 .product-boitier .mulitple-payment {
     border: 2px solid;
-    border-color: #bb4430;
+    border-color: #376D5F;
     border-radius: 20px;
     height: 80px;
     left: 0;
@@ -220,7 +223,7 @@
 }
 
 .product-boitier .title-frais {
-    color: #5c6d70;
+    color: gray;
     font-family: "Inter-SemiBold", Helvetica;
     font-size: 12px;
     font-weight: 600;
@@ -246,23 +249,17 @@
 }
 
 .product-boitier .span {
-    color: #1e817e;
+    color: #FAFAFA;
     font-weight: 700;
 }
 
-.product-boitier .text-wrapper-6 {
-    color: #000000;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 12px;
-}
-
 .product-boitier .text-wrapper-7 {
-    color: #bb4430;
+    color: #CC8857;
     font-weight: 700;
 }
 
 .product-boitier .multiple-payment {
-    background-color: #bb4430;
+    background-color: #376D5F;
     border-radius: 20px;
     height: 17px;
     left: 35px;
@@ -288,7 +285,7 @@
 }
 
 .product-boitier .price-product {
-    color: #bb4430;
+    color: #376D5F;
     font-family: "Inter-Bold", Helvetica;
     font-size: 36px;
     font-weight: 700;
@@ -436,7 +433,7 @@
 }
 
 .product-boitier .product {
-    background-color: #ffffff80;
+    background-color: #F0E2D3;
     border-radius: 50px;
     height: 505px;
     left: 25px;
@@ -461,7 +458,7 @@
 }
 
 .product-boitier .picture {
-    background-color: #ffffff;
+    background-color: #F0E2D3;
     border-radius: 50px;
     height: 300px;
     left: 68px;
@@ -479,32 +476,4 @@
     top: 0;
     width: 400px;
     object-fit: contain;
-}
-
-.product-boitier .header {
-    background-color: #000000;
-    border-bottom-style: solid;
-    border-bottom-width: 3px;
-    border-color: #8d8686;
-    border-left-style: none;
-    border-right-style: none;
-    border-top-style: none;
-    height: 180px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 1440px;
-}
-
-.product-boitier .text-wrapper-8 {
-    color: #ffffff;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 128px;
-    font-weight: 400;
-    left: 465px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    text-align: center;
-    top: 10px;
 }

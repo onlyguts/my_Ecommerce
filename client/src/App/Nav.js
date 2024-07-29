@@ -21,7 +21,19 @@ function Nav_one() {
     const navigate = useNavigate();
     const loginUser = JSON.parse(Login);
     const [recherche, setRecherche] = useState('');
-  
+    const [showCart, setShowCart] = useState(false);
+    const [quantity, setQuantity] = useState(0);
+    useEffect(() => {
+        fetch("https://localhost:8000/panier/" + loginUser.id)
+            .then(reponse => reponse.json())
+            .then(data => {
+            
+              const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+              setQuantity(quantity);
+     
+            })
+            .catch(erreur => console.error('Erreur: ', erreur));
+    }, []);
   
     const openPopup = () => {
         navigate('/login')
@@ -49,6 +61,11 @@ function Nav_one() {
       }
      
     }
+
+    
+    const toggleCart = () => {
+      setShowCart(!showCart);
+    };
   
     return (
       <header>
@@ -72,9 +89,11 @@ function Nav_one() {
                 <p></p>
               )
             )}
-            <button className="menu-btn">Cart</button>
+                <button className="menu-btn" onClick={toggleCart}>Cart {quantity}</button>
+            
           </div>
         </div>
+        {showCart && <Cart />}
       </header>
     );
   }
@@ -133,4 +152,43 @@ function Nav_two() {
     );
   }
 
+  function Cart() {
+    const [cartItems, setCartItems] = useState([]);
+    const Login = localStorage.getItem('users');
+    const loginUser = JSON.parse(Login);
+    const [value, setValue] = useState(0);
+    const navigate = useNavigate();
+    useEffect(() => {
+        fetch("https://localhost:8000/panier/" + loginUser.id)
+            .then(reponse => reponse.json())
+            .then(data => {
+              setCartItems(data);
+              const total = data.reduce((sum, item) => sum + (item.prix * item.quantity), 0);
+      
+              setValue(total);
+            })
+            .catch(erreur => console.error('Erreur: ', erreur));
+    }, []);
+
+ 
+    const PagePanier  = () => {
+      
+      navigate('/panier')
+    }
+
+    return (
+      <div className='cart'>
+        <h2>Panier</h2>
+        <ul>
+          {cartItems.map(item => (
+            <li key={item.id}>
+              <span>x{item.quantity} - {item.name}</span> - <span>{(item.prix * item.quantity)}€ | x1 {item.prix}€</span>
+            </li>
+          ))}
+          <h2>Prix total : {value}€</h2>
+          <button onClick={() => PagePanier()}>AFFICHEZ LE PANIER</button>
+        </ul>
+      </div>
+    );
+  }
 export default Nav

@@ -155,6 +155,34 @@ function ProduitDetail() {
       });
   }
 
+
+  const AddPanier = (id) => {
+    const Login = localStorage.getItem('users');
+    const loginUser = JSON.parse(Login);
+ 
+    const userInfos = {
+      id_produit: id,
+      id_user: loginUser.id,
+    };
+    fetch("https://localhost:8000/panier/add", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userInfos),
+    })
+
+      .then(response => {
+        response.json();
+        window.location.reload()
+   
+     
+      })
+      .catch(error => {
+        console.error('Erreur:', error);
+      });
+  }
+
   return (
     // <div>   
     //   {produit ? (
@@ -282,7 +310,7 @@ function ProduitDetail() {
                 </div>
                 <div className="add-basket-button">
                   <img className="add-basket-icon" alt="Add basket icon" src={BuyingCart} />
-                  <div className="add-basket-title">AJOUTER AU PANIER</div>
+                  <div className="add-basket-title" onClick={() => AddPanier(produit.id)}>AJOUTER AU PANIER</div>
                 </div>
                 <div className="buy-now-button">
                   <div className="buy-now-title">ACHETER MAINTENANT</div>
@@ -290,7 +318,8 @@ function ProduitDetail() {
                 </div>
                 <div className="stock">
                   {produit.stock === 0 ? (
-                    <div><div className="text-wrapper-5">OUT OF STOCK</div>
+                    <div>
+                      <div className="text-wrapper-5">OUT OF STOCK</div>
                       <form>
                         <input type="email" placeholder='votre adresse e-mail' onChange={(e) => writeEmail(e)}></input>
                       </form>
