@@ -20,17 +20,21 @@ function Nav_tree() {
     const [showCart, setShowCart] = useState(false);
     const loginUser = JSON.parse(Login);
     const [quantity, setQuantity] = useState(0);
-    useEffect(() => {
-        fetch("https://localhost:8000/panier/" + loginUser.id)
-            .then(reponse => reponse.json())
-            .then(data => {
 
-                const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
-                setQuantity(quantity);
 
-            })
-            .catch(erreur => console.error('Erreur: ', erreur));
-    }, []);
+   useEffect(() => {
+    if (loginUser) {
+      fetch("https://localhost:8000/panier/" + loginUser.id)
+        .then(reponse => reponse.json())
+        .then(data => {
+
+          const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+          setQuantity(quantity);
+
+        })
+        .catch(erreur => console.error('Erreur: ', erreur));
+    }
+  }, []);
 
 
     const openPopup = () => {
@@ -155,7 +159,14 @@ function Nav_tree() {
                                 <p></p>
                             )
                         )}
-                        <button className="menu-btn" onClick={toggleCart}>Cart {quantity}</button>
+                          {loginUser && (
+            <button className="menu-btn" onClick={toggleCart}>
+              Cart
+              {quantity > 0 && (
+                <span className="quantity-circle">{quantity}</span>
+              )}
+            </button>
+          )}
                     </div>
                 </div>
                 {showCart && <Cart />}
@@ -208,7 +219,7 @@ function Nav_tree() {
 
                     <option value=''> Toutes les marques </option>
 
-                    {produits.map(produit => {
+                    {produits_trier.map(produit => {
                         if (!marqueSolo.has(produit.marque)) {
                             marqueSolo.add(produit.marque);
                             return (

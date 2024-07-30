@@ -25,7 +25,7 @@ function Promotionsproduits() {
             <Nav />
             <div>
             {promo.map(produit => (
-                <div className="item" key={produit.id} onClick={() => ProduitsShow(produit.id, produit.name, produit.views)}>
+                <div className="item" key={produit.id} onClick={() => ProduitsShow(produit.id, produit.categorie_name, produit.views)}>
                     <img src={produit.image} alt="Promo 1" />
                     <p className="legend" >{produit.name}</p>
                     <p className="legend" >{produit.prix * (1 - produit.promo / 100)}€ au lieu de {produit.prix}€!</p>
