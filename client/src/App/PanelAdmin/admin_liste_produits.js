@@ -70,73 +70,81 @@ function AdminList() {
         produit.name.toLowerCase().includes(recherche.toLowerCase())
     );
 
+    const GoProduit = (id) => {
+        navigate('/produit/' + id)
+    }
 
+const Gocate = (id, name) => {
+    navigate('/produits/' + id)
+    localStorage.setItem('categorie', name);
+}
     return (
         <div>
 
             <Nav />
-          
+
             <div className='body'>
-            <table>
-  <caption>
-  <form>
-  <input className="navBar" type="text" value={recherche} placeholder="Recherche" onChange={(event) => RechercheChange(event)} />
-                {/* <input type='text' placeholder='Rechercher par nom' value={recherche} onChange={RechercheChange} /> */}
-                <select value={categorie_trier} onChange={CategorieChange}>
+                <table>
+                    <caption>
+                        <form>
+                            <input className="recherchebar" type="text" value={recherche} placeholder="Recherche" onChange={(event) => RechercheChange(event)} />
+                            {/* <input type='text' placeholder='Rechercher par nom' value={recherche} onChange={RechercheChange} /> */}
+                            <select className="inputbar" value={categorie_trier} onChange={CategorieChange}>
 
-                    <option value=''> Toutes les categories </option>
+                                <option value=''> Toutes les categories </option>
 
-                    {categorie.map(categorie => (
-                        <option key={categorie.id} value={categorie.name}>
-                            {categorie.name}
+                                {categorie.map(categorie => (
+                                    <option key={categorie.id} value={categorie.name}>
+                                        {categorie.name}
 
-                        </option>
+                                    </option>
 
-                    ))}
-                </select>
-                <select value={marque} onChange={MarqueChange}>
+                                ))}
+                            </select>
+                            <select className="inputbar" value={marque} onChange={MarqueChange}>
 
-                    <option value=''> Toutes les marques </option>
+                                <option value=''> Toutes les marques </option>
 
-                    {produits.map(produit => {
-                        if (!marqueSolo.has(produit.marque)) {
-                            marqueSolo.add(produit.marque);
-                            return (
-                                <option key={produit.id} value={produit.marque}>{produit.marque}</option>
-                            );
-                        }
-                    })}
-                </select>
+                                {produits.map(produit => {
+                                    if (!marqueSolo.has(produit.marque)) {
+                                        marqueSolo.add(produit.marque);
+                                        return (
+                                            <option key={produit.id} value={produit.marque}>{produit.marque}</option>
+                                        );
+                                    }
+                                })}
+                            </select>
 
+
+                        </form>
+                    </caption>
+                
+           
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nom produit</th>
+                            <th scope="col">Nom de la Catégorie</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Views</th>
+                            <th scope="col">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {produits2_trier.map((produit) => (
+                            <tr key={produit.id}>
+                                <td>{produit.id}</td>
+                                <td className='gop' onClick={() => GoProduit(produit.id)}>{produit.name}</td>
+                                <td className='gop' onClick={() => Gocate(produit.id_categorie, produit.categorie_name)}>{produit.categorie_name}</td>
+                                <td>{produit.stock}</td>
+                                <td>{produit.views}</td>
+                                <td><button className='edit' onClick={() => OpenPorudits(produit.id)}>Edit</button> <button className='delete' onClick={() => DeletePorudits(produit.id)}>Delete</button> <button className='view' onClick={() => EditerProduits(produit.id)}>Page</button></td>
+                            </tr>
+                        ))}
+                    </tbody>
+
+                </table>
                
-            </form>     
-  </caption>
-  
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Nom produit</th>
-      <th scope="col">Nom de la Catégorie</th>
-      <th scope="col">Stock</th>
-      <th scope="col">Views</th>
-      <th scope="col">Options</th>
-    </tr>
-  </thead>
-  <tbody>
-  {produits2_trier.map((produit) => (
-    <tr key={produit.id}>
-    <td>{produit.id}</td>
-    <td>{produit.name}</td>
-    <td>{produit.categorie_name}</td>
-    <td>{produit.stock}</td>
-    <td>{produit.views}</td>
-    <td><button onClick={() => OpenPorudits(produit.id)}>Edit</button> <button onClick={() => DeletePorudits(produit.id)}>Delete</button> <button onClick={() => EditerProduits(produit.id)}>Views</button></td>
-    </tr>
-        ))}
-  </tbody>
-
-</table>
-             
             </div>
         </div>
     );

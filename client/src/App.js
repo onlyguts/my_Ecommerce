@@ -12,7 +12,7 @@ import AdminListIdC from './App/PanelAdmin/admin_update_categorie'
 import Adminemail from './App/PanelAdmin/admin_email'
 import Admindash from './App/PanelAdmin/admin_dashboard'
 
-
+// import Pro from './App/produits/produits'
 import Homes from './App/Homes'
 import ProduitsList from './App/produits/liste_porduits'
 
@@ -29,6 +29,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Homes />}></Route>
+                {/* <Route path="/test/:id" element={<Pro />}></Route> */}
                 <Route path="/admin" element={<Admindash />}></Route>
                 <Route path="/promotions" element={<Promo />}></Route>
                 <Route path="/panier" element={<Panier />}></Route>

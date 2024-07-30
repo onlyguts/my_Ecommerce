@@ -67,3 +67,52 @@ form div input {
     border-right: 1px solid black;
 }
 
+.edit {
+    background-color: green;
+    /* color: black; */
+}
+
+.delete {
+    background-color: red;
+    /* color: black; */
+}
+
+.view {
+    background-color: rgb(218, 23, 218);
+    
+}
+
+.recherchebar {
+    padding: 10px;
+    width: 50%;
+}
+
+.inputbar {
+    padding: 10px;
+}
+table  {
+    background-color: white;
+    border: 1px solid;
+}
+table tr {
+    background-color: rgb(240, 239, 239);
+    margin: 50px;
+    border: 5px solid black;
+}
+
+table tr th{
+    background-color: rgb(240, 239, 239);
+    padding: 15px;
+    
+}
+
+table tr td{
+    background-color: rgb(240, 239, 239);
+    padding: 15px;
+    
+}
+
+.gop {
+    color: blue;
+    cursor: pointer;
+}
