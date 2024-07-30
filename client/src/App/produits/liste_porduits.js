@@ -67,8 +67,10 @@ function Nav_one() {
   const navigate = useNavigate();
   const loginUser = JSON.parse(Login);
   const [recherche, setRecherche] = useState('');
+  const [produits, setProduits] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [quantity, setQuantity] = useState(0);
+  const [categorie, setCategorie] = useState([]);
   useEffect(() => {
     fetch("https://localhost:8000/panier/" + loginUser.id)
       .then(reponse => reponse.json())
@@ -83,7 +85,19 @@ function Nav_one() {
   const openPopup = () => {
     navigate('/login')
   };
+  useEffect(() => {
+    fetch("https://localhost:8000/produits")
+      .then(response => response.json())
+      .then(data => setProduits(data))
+      .catch(error => console.error('Erreur: ', error));
+  }, []);
 
+  useEffect(() => {
+    fetch("https://localhost:8000/categorie")
+      .then(response => response.json())
+      .then(data => setCategorie(data))
+      .catch(error => console.error('Erreur: ', error));
+  }, []);
 
   const Deconnexion = () => {
     localStorage.removeItem('users')
@@ -106,7 +120,11 @@ function Nav_one() {
     }
 
   }
-
+  const produits_trier = produits.filter(produit => {
+    const produit_trouvee = produit.name.toLowerCase().includes(recherche.toLowerCase());
+    const categorie_trouvee = categorie.some(categorie => categorie.name.toLowerCase() === recherche.toLowerCase() && produit.id_categorie === categorie.id);
+    return produit_trouvee || categorie_trouvee;
+  });
 
   const toggleCart = () => {
     setShowCart(!showCart);
@@ -133,10 +151,31 @@ function Nav_one() {
               <p></p>
             )
           )}
-          <button className="menu-btn" onClick={toggleCart}>Cart {quantity}</button>
+        <button className="menu-btn" onClick={toggleCart}>
+            Cart
+            {quantity > 0 && (
+              <span className="quantity-circle">{quantity}</span>
+            )}
+          </button>
         </div>
       </div>
       {showCart && <Cart />}
+      {recherche && produits_trier.length > 0 && (
+        <div className="produits-trier">
+          <h2>Produits Filtrés</h2>
+          <div className="produits-list">
+            {produits_trier.map(produit => (
+              <div key={produit.id} className="produit-card">
+                <img src={produit.image} alt={produit.name} className="produit-image" />
+                <div className="produit-info">
+                  <h3 className="produit-name">{produit.name}</h3>
+                  <p className="produit-price">{produit.prix}€</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </header>
   );
 }
