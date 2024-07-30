@@ -133,7 +133,7 @@ class ProduitsController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data['name'], $data['id_categorie'])) {
-            return $this->json(['error' => 'Erreur : Invalid data'], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'Erreur'], Response::HTTP_BAD_REQUEST);
         }
 
         $produit = new Produits();

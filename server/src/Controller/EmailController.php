@@ -17,7 +17,7 @@ class EmailController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data['email'], $data['id_produit'])) {
-            return $this->json(['error' => 'Erreur : Invalid data'], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'Erreur'], Response::HTTP_BAD_REQUEST);
         }
 
         $produit = new AlertEmail();

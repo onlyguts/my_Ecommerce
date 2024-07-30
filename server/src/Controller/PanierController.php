@@ -33,7 +33,7 @@ class PanierController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data['id_user'], $data['id_produit'])) {
-            return $this->json(['error' => 'Erreur : Invalid data'], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'Erreur'], Response::HTTP_BAD_REQUEST);
         }
 
         $panier = new Panier();
@@ -45,4 +45,30 @@ class PanierController extends AbstractController
 
         return $this->json(['success' => 'Produit add', 'id' => $panier->getId()], Response::HTTP_CREATED);
     }
+
+   
+
+    #[Route('/panier/delete', name: 'app_panier_remove', methods: ['DELETE'])]
+    public function remvoe(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['id_user'], $data['id_produit'])) {
+            return $this->json(['error' => 'Erreur'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $is_user = (int)$data['id_user'];
+        $id_produit = (int)$data['id_produit'];
+        $panier = $entityManager->getRepository(Panier::class)->findOneBy([
+            'id_user' => $is_user,
+            'id_produit' => $id_produit,
+        ]);
+        $entityManager->remove($panier);
+        $entityManager->flush();
+
+        return $this->json(['success' => 'Produit add', 'id' => $panier->getId()], Response::HTTP_CREATED);
+    }
+
+
+
 }

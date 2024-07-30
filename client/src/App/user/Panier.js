@@ -19,14 +19,70 @@ function Panier() {
             })
             .catch(erreur => console.error('Erreur: ', erreur));
     }, []);
+    const AddProduit = (id) => {
+        const Login = localStorage.getItem('users');
+        const loginUser = JSON.parse(Login);
+     
+        const userInfos = {
+          id_produit: id,
+          id_user: loginUser.id,
+        };
+        fetch("https://localhost:8000/panier/add", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userInfos),
+        })
+    
+          .then(response => {
+            response.json();
+            window.location.reload()
+       
+         
+          })
+          .catch(error => {
+            console.error('Erreur:', error);
+          });
+      }
+  
+  
+      const DeleteProduit = (id) => {
+        const Login = localStorage.getItem('users');
+        const loginUser = JSON.parse(Login);
+     
+        const userInfos = {
+          id_produit: id,
+          id_user: loginUser.id,
+        };
+        fetch("https://localhost:8000/panier/delete", {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userInfos),
+        })
+    
+          .then(response => {
+            response.json();
+            window.location.reload()
+       
+         
+          })
+          .catch(error => {
+            console.error('Erreur:', error);
+          });
+      }
     return (
         <div>
             <Nav/>
             Panier
-            <p>prix total : {prixtotal}</p>
+            <p>prix total : {prixtotal}€</p>
             {value.map(item => (
                 <li key={item.id}>
                     <span>x{item.quantity} - {item.name}</span> - <span>{(item.prix * item.quantity)}€ | x1 {item.prix}€</span>
+                    <button onClick={() => DeleteProduit(item.id)}>-</button>
+              <button onClick={() => AddProduit(item.id)}>+</button>
                 </li>
             ))}
             <button>Acheter</button>
