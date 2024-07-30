@@ -149,7 +149,8 @@ class ProduitsController extends AbstractController
         $produit->setTypec($data['typec']);
         $produit->setPromo($data['promo']);
         $produit->setConsommations((int)$data['consomation']);
-
+        $produit->setSuggestion($data['suggestion']);
+        
         $entityManager->persist($produit);
         $entityManager->flush();
 

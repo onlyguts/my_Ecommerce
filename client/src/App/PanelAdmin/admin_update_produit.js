@@ -191,7 +191,7 @@ function AdminProduit() {
                         <input type="number" name='consommations' value={produit.consommations} onChange={formChange} />
                         <label>Promo:</label>
                         <input type="number" name='promo' value={produit.promo} onChange={formChange} />
-                        <label>Suggestion:</label>
+                        <label>Recommander:</label>
                         <input type="number" name='suggestion' value={produit.suggestion} onChange={formChange} />
 
                     </div>

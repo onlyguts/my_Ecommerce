@@ -123,6 +123,14 @@ function Admin() {
         }));
     };
 
+    const ChoisirSuggestion = (event) => {
+        const getData = event.target.value;
+        setData(backData => ({
+            ...backData,
+            suggestion: getData,
+        }));
+    };
+
         
     const EnvoyerAPI = () => {
         fetch("https://localhost:8000/produits/add", {
@@ -196,7 +204,9 @@ function Admin() {
 
                 <label>Promo:</label>
                 <input type='number' name='promo' value={data.promo} onChange={ChoisirPromo} />
-           
+                
+                <label>Recommander:</label>
+                <input type='number' name='suggestion' value={data.suggestion} onChange={ChoisirSuggestion} />
                 <button onClick={() => EnvoyerAPI()}>Créer le produits</button>
                 </div>
             </form>

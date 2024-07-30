@@ -94,6 +94,11 @@ function Nav_one() {
   console.log(produits_trier)
 
 
+  function ProduitsShow(id, name) {
+    navigate("/produit/" + id);
+    localStorage.setItem('categorie', name);
+  }
+
   return (
     <header>
       <div className='head'>
@@ -135,10 +140,11 @@ function Nav_one() {
           <h2>Produits Filtrés</h2>
           <div className="produits-list">
             {produits_trier.map(produit => (
-              <div key={produit.id} className="produit-card">
+              <div key={produit.id} onClick={() => ProduitsShow(produit.id, produit.categorie_name)} className="produit-card">
                 <img src={produit.image} alt={produit.name} className="produit-image" />
                 <div className="produit-info">
                   <h3 className="produit-name">{produit.name}</h3>
+                  <h2 className="produit-price">{produit.marque}</h2>
                   <p className="produit-price">{produit.prix}€</p>
                 </div>
               </div>

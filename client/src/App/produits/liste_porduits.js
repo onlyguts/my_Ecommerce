@@ -6,9 +6,11 @@ function Produits() {
   const { id } = useParams()
   const [produits, setProduits] = useState([]);
   const navigate = useNavigate();
+  const [recherche, setRecherche] = useState('');
   const Categorie = localStorage.getItem('categorie');
+  const marqueSolo = new Set();
+  const [data, setData] = useState();
 
-  console.log(id)
   useEffect(() => {
     fetch("https://localhost:8000/produits/" + id)
       .then(response => response.json())
@@ -16,6 +18,14 @@ function Produits() {
       .catch(error => console.error('Erreur: ', error));
   }, []);
 
+
+  const ChangeCherche = (e) => {
+    setRecherche(e.target.value)
+
+
+  }
+
+  const type = id === '1' ? 'taille' : id === '2' ? 'taille' : id === '4' ? 'typec' : false; 
   function ProduitsShow(id) {
     navigate("/produit/" + id);
   }
@@ -25,18 +35,43 @@ function Produits() {
   const Mid = (id) => {
     navigate("/produits/" + id)
   }
+  const produits_trier2 = produits.filter(produit => {
+    if (recherche.trim() === '') {
+      return true;
+    }
+    const taille_trouvee = produit[type] ? produit[type] === recherche : false;
+    return taille_trouvee;
+  });
+  console.log(produits_trier2)
   return (
     <div>
       <Nav_one />
       <Nav_two />
       <h1><button onClick={() => Debut()}>Home</button>/<button onClick={() => Mid(id)}>{Categorie}</button></h1>
-      {produits.length === 0 ? (
+
+      <select value={recherche} onChange={(e) => ChangeCherche(e)}>
+
+        <option value=''> Toutes les options </option>
+
+
+
+        {produits.map(produit => {
+         const data = produit[type];
+          if (!marqueSolo.has(data)) {
+            marqueSolo.add(data);
+            return (
+              <option key={data} value={data}>{data}</option>
+            );
+          }
+        })}
+      </select>
+      {produits_trier2.length === 0 ? (
         <p>Aucun produit trouvé</p>
       ) : (
         <div className="popular-products">
 
           <div className="carousel-slide">
-            {produits.map(produit => (
+            {produits_trier2.map(produit => (
 
               <div className="item">
                 <img src={produit.image} onClick={() => ProduitsShow(produit.id)} />
@@ -126,6 +161,8 @@ function Nav_one() {
     return produit_trouvee || categorie_trouvee;
   });
 
+
+
   const toggleCart = () => {
     setShowCart(!showCart);
   };
@@ -151,7 +188,7 @@ function Nav_one() {
               <p></p>
             )
           )}
-        <button className="menu-btn" onClick={toggleCart}>
+          <button className="menu-btn" onClick={toggleCart}>
             Cart
             {quantity > 0 && (
               <span className="quantity-circle">{quantity}</span>
@@ -246,7 +283,8 @@ function Nav_two() {
 }
 
 function Cart() {
-  const [cartItems, setCartItems] = useState([]);
+  const [produits, setProduits] = useState([]);
+
   const Login = localStorage.getItem('users');
   const loginUser = JSON.parse(Login);
   const [value, setValue] = useState(0);
@@ -255,13 +293,14 @@ function Cart() {
     fetch("https://localhost:8000/panier/" + loginUser.id)
       .then(reponse => reponse.json())
       .then(data => {
-        setCartItems(data);
+        setProduits(data);
         const total = data.reduce((sum, item) => sum + (item.prix * item.quantity), 0);
 
         setValue(total);
       })
       .catch(erreur => console.error('Erreur: ', erreur));
   }, []);
+
 
 
   const PagePanier = () => {
@@ -272,8 +311,9 @@ function Cart() {
   return (
     <div className='cart'>
       <h2>Panier</h2>
+
       <ul>
-        {cartItems.map(item => (
+        {produits.map(item => (
           <li key={item.id}>
             <span>x{item.quantity} - {item.name}</span> - <span>{(item.prix * item.quantity)}€ | x1 {item.prix}€</span>
           </li>
