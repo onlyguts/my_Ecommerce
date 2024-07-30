@@ -27,15 +27,17 @@ function Nav_one() {
   const [categorie, setCategorie] = useState([]);
 
   useEffect(() => {
-    fetch("https://localhost:8000/panier/" + loginUser.id)
-      .then(reponse => reponse.json())
-      .then(data => {
+    if (loginUser) {
+      fetch("https://localhost:8000/panier/" + loginUser.id)
+        .then(reponse => reponse.json())
+        .then(data => {
 
-        const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
-        setQuantity(quantity);
+          const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+          setQuantity(quantity);
 
-      })
-      .catch(erreur => console.error('Erreur: ', erreur));
+        })
+        .catch(erreur => console.error('Erreur: ', erreur));
+    }
   }, []);
 
   useEffect(() => {
@@ -126,15 +128,17 @@ function Nav_one() {
               <p></p>
             )
           )}
-          <button className="menu-btn" onClick={toggleCart}>
-            Cart
-            {quantity > 0 && (
-              <span className="quantity-circle">{quantity}</span>
-            )}
-          </button>
+          {loginUser && (
+            <button className="menu-btn" onClick={toggleCart}>
+              Cart
+              {quantity > 0 && (
+                <span className="quantity-circle">{quantity}</span>
+              )}
+            </button>
+          )}
         </div>
       </div>
-      {showCart && <Cart />}
+      {loginUser && showCart && <Cart />}
       {recherche && produits_trier.length > 0 && (
         <div className="produits-trier">
           <h2>Produits Filtrés</h2>
@@ -222,12 +226,12 @@ function Nav_two() {
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [value, setValue] = useState(0);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const UserPanier = () => {
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
-  
+
     fetch("https://localhost:8000/panier/" + loginUser.id)
       .then(response => response.json())
       .then(data => {
@@ -253,55 +257,55 @@ function Cart() {
     const loginUser = JSON.parse(Login);
 
     const userInfos = {
-        id_produit: id,
-        id_user: loginUser.id,
+      id_produit: id,
+      id_user: loginUser.id,
     };
     fetch("https://localhost:8000/panier/add", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userInfos),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userInfos),
     })
 
-        .then(response => {
-            response.json();
-            UserPanier()
+      .then(response => {
+        response.json();
+        UserPanier()
 
 
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-        });
-}
+      })
+      .catch(error => {
+        console.error('Erreur:', error);
+      });
+  }
 
 
-const DeleteProduit = (id) => {
+  const DeleteProduit = (id) => {
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
 
     const userInfos = {
-        id_produit: id,
-        id_user: loginUser.id,
+      id_produit: id,
+      id_user: loginUser.id,
     };
     fetch("https://localhost:8000/panier/delete", {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userInfos),
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userInfos),
     })
 
-        .then(response => {
-            response.json();
-            UserPanier()
+      .then(response => {
+        response.json();
+        UserPanier()
 
 
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-        });
-}
+      })
+      .catch(error => {
+        console.error('Erreur:', error);
+      });
+  }
 
   return (
     <div className='cart'>
