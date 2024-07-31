@@ -108,7 +108,7 @@
     flex-shrink: 0;
 }
 
-.notation .star-stat {
+.notation .star-stat2 {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -117,7 +117,7 @@
     margin-right: 1%;
 }
 
-.star-stat img {
+.star-stat2 img {
     width: 5%;
     margin-right: 1%;
 }

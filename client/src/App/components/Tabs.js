@@ -26,12 +26,14 @@ const Tabs = () => {
                 setAvis(data)
                 const totalavis = data.reduce((sum, avis) => sum + avis.rate, 0);
                 const moyenne = data.length > 0 ? totalavis / data.length : 0;
-                setMoyenne(moyenne);
+                setMoyenne(data.rate);
     
             })
             .catch(error => console.error('Erreur:', error));
     }
 
+
+    
     useEffect(() => {
         Api(id)
     }, [id]);
@@ -106,7 +108,7 @@ const Tabs = () => {
 
     const renderStars = (count) => {
         return Array(count).fill().map((_, index) => (
-            <img key={index} className="star-rate" alt="Star" src={StarProduit} />
+            <img key={index} className="star-rate2" alt="Star" src={StarProduit} />
         ));
     };
 
@@ -135,13 +137,13 @@ const Tabs = () => {
                         {avis.map((produit) => (
 
                             <article className="avis" key={produit.id}>
-                                 <div className="star-stat">
-                                        {moyenne === 0 && <p>Aucune évaluation</p>}
-                                        {moyenne >= 1 && moyenne < 2 && renderStars(1)}
-                                        {moyenne >= 2 && moyenne < 3 && renderStars(2)}
-                                        {moyenne >= 3 && moyenne < 4 && renderStars(3)}
-                                        {moyenne >= 4 && moyenne < 5 && renderStars(4)}
-                                        {moyenne >= 5 && renderStars(5)}
+                                 <div className="star-stat2">
+                                        {produit.rate === 0 && <p>Aucune évaluation</p>}
+                                        {produit.rate >= 1 && produit.rate < 2 && renderStars(1)}
+                                        {produit.rate >= 2 && produit.rate < 3 && renderStars(2)}
+                                        {produit.rate >= 3 && produit.rate < 4 && renderStars(3)}
+                                        {produit.rate >= 4 && produit.rate < 5 && renderStars(4)}
+                                        {produit.rate >= 5 && renderStars(5)}
                                     </div>
                                <br/> <h2>{produit.username} </h2>
                                 <p> Commentaire :  <br/>  {produit.description} </p>

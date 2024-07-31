@@ -52,6 +52,7 @@ export const ProductBoitier = () => {
             .catch(error => console.error('Erreur:', error));
     }, [id]);
 
+    console.log(moyenne)
     useEffect(() => {
         if (load) {
             fetch(`https://localhost:8000/produit/updateView/${id}`, {
@@ -229,6 +230,7 @@ export const ProductBoitier = () => {
                                         <p className="avis-texte">{nbavis} avis client</p>
                                     </div>
                                     <div className="star-stat">
+                         
                                         {moyenne === 0 && <p>Aucune évaluation</p>}
                                         {moyenne >= 1 && moyenne < 2 && renderStars(1)}
                                         {moyenne >= 2 && moyenne < 3 && renderStars(2)}
