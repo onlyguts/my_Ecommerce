@@ -26,7 +26,12 @@ function Nav_one() {
   const [quantity, setQuantity] = useState(0);
   const [categorie, setCategorie] = useState([]);
 
+ 
+
   useEffect(() => {
+    // if (loginUser.verification === 0) {
+    //   navigate("/")
+    // }
     if (loginUser) {
       fetch("https://localhost:8000/panier/" + loginUser.id)
         .then(reponse => reponse.json())
@@ -92,8 +97,6 @@ function Nav_one() {
     const categorie_trouvee = categorie.some(categorie => categorie.name.toLowerCase() === recherche.toLowerCase() && produit.id_categorie === categorie.id);
     return produit_trouvee || categorie_trouvee;
   });
-
-  console.log(produits_trier)
 
 
   function ProduitsShow(id, name) {

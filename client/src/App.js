@@ -20,6 +20,8 @@ import Build from './App/produits/Algo'
 import Panier from './App/user/Panier'
 import ProduitList from './App/produits/page_produit'
 
+import Conf from './App/user/Confirmation'
+
 import ProduitsAll from './App/produits/recherche_produits'
 import Promo from './App/produits/promotions_produits'
 import Login from './App/Login/Login'
@@ -34,6 +36,7 @@ function App() {
                 <Route path="/promotions" element={<Promo />}></Route>
                 <Route path="/panier" element={<Panier />}></Route>
                 <Route path="/admin/add" element={<Admin />}></Route>
+                <Route path="/confirmation/:token" element={<Conf />}></Route>
                 <Route path="/build" element={<Build />}></Route>
                 <Route path="/admin/list" element={<AdminList />}></Route>
                 <Route path="/admin/email" element={<Adminemail />}></Route>

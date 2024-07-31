@@ -31,7 +31,9 @@ function Login() {
                     const userData = {
                         id:  data[0].id,
                         email: data[0].email,
-                        groupe: data[0].groupe
+                        groupe: data[0].groupe,
+                        token: data[0].token,
+                        verification: data[0].verification
                     };
                     localStorage.setItem('users', JSON.stringify(userData));
                     const storedUser = localStorage.getItem('users');

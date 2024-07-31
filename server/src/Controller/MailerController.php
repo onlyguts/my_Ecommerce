@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Produits;
+use App\Entity\Users;
 use App\Repository\ProduitsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,11 +50,83 @@ class MailerController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
+        $produitId = $data['produitId'];
+        $userId = $data['userId'];
+
+        $produitRepository = $entityManager->getRepository(Produits::class);
+        $produit = $produitRepository->find($produitId);
+
+        $nomProduit = $produit->getName();
+        $ImageProduit = $produit->getImage();
+        $lienProduit = "http://localhost:3000/produit/" . $produitId;
+
+        $messageMail = '
+        <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+            body { margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4; }
+            .header { background-color: #E2B791; color: #ffffff; padding: 20px; text-align: center; border-radius: 10px 10px 0 0px; }
+            .header img { max-width: 150px; }
+            .container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; text-align: center; background-color: #F3E1D1; border: 1px solid #ddd; border-radius: 10px; }
+            .content { padding: 20px; }
+            .content img { max-width: 100%; height: auto; border-radius: 8px; }
+            .button { background-color: #E2B791; color: white; border-radius: 15px; padding: 10px; border: 1px solid white; }
+            a { text-decoration: none; }
+            .button-hover { background-color: rgba(215,147,105, 0.4); }
+            .footer { background-color: #f1f1f1; text-align: center; padding: 10px; font-size: 12px; color: #666; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <img src="http://localhost:3000/logo.png" alt="Logo">
+                    <h1>Bonne nouvelle !</h1>
+                </div>
+                <div class="content">
+                    <p>Bonjour,</p>
+                    <p>Nous avons une excellente nouvelle pour vous !<br>
+                    Le produit que vous attendiez avec impatience est enfin de retour en stock !</p>
+                    <br>
+                    <h2>' . htmlspecialchars($nomProduit) . '</h2>
+                    <img src="' . htmlspecialchars($ImageProduit) . '" alt="' . htmlspecialchars($nomProduit) . '">
+                    <br>
+                    <p>N\'attendez plus pour le commander et profiter de cette opportunité avant qu\'il ne soit à nouveau épuisé.</p>
+                    <br>
+                    <a href="' . htmlspecialchars($lienProduit) . '" class="button">Commander maintenant</a>
+                    <br><br>
+                </div>
+                <div class="footer">
+                    <p>Merci de votre patience et de votre fidélité !</p>
+                    <p>L\'équipe BYP</p>
+                </div>
+            </div>
+        </body>
+        </html>';
+
+        $textMail = "
+        Bonjour,
+
+        Nous avons une excellente nouvelle pour vous !
+        Le produit que vous attendiez avec impatience est enfin de retour en stock !
+
+        Produit : {$nomProduit}
+        Lien vers le produit : {$lienProduit}
+
+        N'attendez plus pour le commander et profiter de cette opportunité avant qu'il ne soit à nouveau épuisé.
+
+        Merci de votre patience et de votre fidélité !
+        L'équipe BYP";
+
+
         $email = (new Email())
             ->from('no-reply@byp.com')
             ->to($data['userEmail'])
             ->subject('Produit disponible!')
-            ->html($data['message']);
+            ->html($messageMail)
+            ->text($textMail);
 
         try {
             $mailer->send($email);

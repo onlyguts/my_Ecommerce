@@ -25,6 +25,12 @@ class Users
     #[ORM\Column]
     private ?int $groupe = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
+
+    #[ORM\Column]
+    private ?int $verification = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +80,30 @@ class Users
     public function setGroupe(int $groupe): static
     {
         $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getVerification(): ?int
+    {
+        return $this->verification;
+    }
+
+    public function setVerification(int $verification): static
+    {
+        $this->verification = $verification;
 
         return $this;
     }

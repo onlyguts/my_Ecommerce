@@ -9,16 +9,30 @@ import { useNavigate } from "react-router-dom";
 import Header from './Nav';
 
 function App() {
+  const Login = localStorage.getItem('users');
+  const loginUser = JSON.parse(Login);
 
-  return (
-    <div className="App">
-      <Header />
+  if (loginUser && loginUser.verification === 0 ) {
+    return (
+      <div className="App">
+         <Header />
+        <PromoCarousel />
+        <PopularProducts />
+        <Main />
+      </div>
+    );
 
-      <PromoCarousel />
-      <PopularProducts />
-      <Main />
-    </div>
-  );
+  } else {
+    return (
+      <div className="App">
+        
+        <Header />
+        <PromoCarousel />
+        <PopularProducts />
+        <Main />
+      </div>
+    );
+  }
 }
 
 

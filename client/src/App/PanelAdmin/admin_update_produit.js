@@ -73,7 +73,6 @@ function AdminProduit() {
                             produitId: produit.id,
                             userId: userAlertStock.id,
                             userEmail: userAlertStock.email,
-                            message: `<p>Bonne nouvelle ! Le produit <strong>${produit.name}</strong> que vous attendiez est maintenant disponible en stock. Ne manquez pas votre chance de l'acheter maintenant !</p>`,
                         }),
                     })
                     // .then(response => {
