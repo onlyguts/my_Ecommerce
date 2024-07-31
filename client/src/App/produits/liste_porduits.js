@@ -25,7 +25,7 @@ function Produits() {
 
   }
 
-  const type = id === '1' ? 'taille' : id === '2' ? 'taille' : id === '4' ? 'typec' : false; 
+  const type = id === '1' ? 'taille' : id === '2' ? 'taille' : id === '4' ? 'typec' : false;
   function ProduitsShow(id) {
     navigate("/produit/" + id);
   }
@@ -56,7 +56,7 @@ function Produits() {
 
 
         {produits.map(produit => {
-         const data = produit[type];
+          const data = produit[type];
           if (!marqueSolo.has(data)) {
             marqueSolo.add(data);
             return (
@@ -107,15 +107,18 @@ function Nav_one() {
   const [quantity, setQuantity] = useState(0);
   const [categorie, setCategorie] = useState([]);
   useEffect(() => {
-    fetch("https://localhost:8000/panier/" + loginUser.id)
-      .then(reponse => reponse.json())
-      .then(data => {
+ 
+    if (loginUser) {
+      fetch("https://localhost:8000/panier/" + loginUser.id)
+        .then(reponse => reponse.json())
+        .then(data => {
 
-        const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
-        setQuantity(quantity);
+          const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+          setQuantity(quantity);
 
-      })
-      .catch(erreur => console.error('Erreur: ', erreur));
+        })
+        .catch(erreur => console.error('Erreur: ', erreur));
+    }
   }, []);
   const openPopup = () => {
     navigate('/login')
@@ -188,12 +191,14 @@ function Nav_one() {
               <p></p>
             )
           )}
-          <button className="menu-btn" onClick={toggleCart}>
-            Cart
-            {quantity > 0 && (
-              <span className="quantity-circle">{quantity}</span>
-            )}
-          </button>
+            {loginUser && (
+            <button className="menu-btn" onClick={toggleCart}>
+              Cart
+              {quantity > 0 && (
+                <span className="quantity-circle">{quantity}</span>
+              )}
+            </button>
+          )}
         </div>
       </div>
       {showCart && <Cart />}

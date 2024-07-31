@@ -239,7 +239,7 @@ function Cart() {
       .then(response => response.json())
       .then(data => {
         setCartItems(data);
-        const total = data.reduce((sum, item) => sum + (item.prix * item.quantity), 0);
+        const total = data.reduce((sum, item) => sum + (item.prix * (1 - item.promo / 100) * item.quantity), 0);
         setValue(total);
       })
       .catch(error => console.error('Erreur: ', error));
@@ -319,7 +319,7 @@ function Cart() {
             <button onClick={() => DeleteProduit(item.id)}>-</button>
             <button >{item.quantity}</button>
             <button onClick={() => AddProduit(item.id)}>+</button>
-            <span> {item.name} - {(item.prix * item.quantity)}€ | x1 {item.prix}€ </span>
+            <span> {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€ </span>
           </li>
         ))}
         <h2>Prix total : {value}€</h2>

@@ -15,7 +15,8 @@ function Panier() {
             .then(reponse => reponse.json())
             .then(data => {
                 setValue(data);
-                const total = data.reduce((sum, item) => sum + (item.prix * item.quantity), 0);
+                const total = data.reduce((sum, item) => sum + ((item.prix * (1 - item.promo / 100)) * item.quantity), 0);
+
 
                 setPriceTotal(total);
             })
@@ -124,7 +125,7 @@ function Panier() {
                         <button onClick={() => DeleteProduit(item.id)}>-</button>
                         <button >{item.quantity}</button>
                         <button onClick={() => AddProduit(item.id)}>+</button>
-                        <span> {item.name} - {(item.prix * item.quantity)}€ | x1 {item.prix}€ </span>
+                        <span> {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€ </span>
                     </span>
 
                 </li>
