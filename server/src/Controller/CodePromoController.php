@@ -19,5 +19,22 @@ class CodePromoController extends AbstractController
 
         return $this->json($code);
     }
+    #[Route('/code/update_utilisation/{code}', name: 'app_code_update', methods: ['PUT'])]
+    public function updateCode(EntityManagerInterface $entityManager, Request $request, string $code): Response
+    {
+        $data = json_decode($request->getContent(), true);
 
+        $promo = $entityManager->getRepository(CodePromo::class)->findOneBy(['code' => $code]);
+        
+        if (!$promo) {
+            return $this->json(['message' => 'Erreur : code non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        $promo->setUtilisations($promo->getUtilisations() - 1);
+    
+        $entityManager->persist($promo);
+        $entityManager->flush();
+
+        return $this->json(['success' => 'code mis à jour'], Response::HTTP_OK);
+    }
 }

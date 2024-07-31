@@ -8,6 +8,7 @@ function Panier() {
     const [value, setValue] = useState([]);
     const [prixtotal, setPriceTotal] = useState([]);
     const [code, setCode] = useState('');
+    const [promo, setPromo] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         fetch("https://localhost:8000/panier/" + loginUser.id)
@@ -21,16 +22,43 @@ function Panier() {
             .catch(erreur => console.error('Erreur: ', erreur));
     }, []);
     const addCode = (code) => {
-        fetch("https://localhost:8000/code/" + code)
+        if (promo === false ) {
+            fetch("https://localhost:8000/code/" + code)
             .then(reponse => reponse.json())
             .then(data => {
-               console.log(data[0])
-               setPriceTotal(prixtotal * (1 - data[0].promotion / 100)) 
-               setCode('')
+                console.log(data[0])
+                if (data[0].utilisations === 0) {
+                    setCode('')
+                    console.log('code promo fini')
+                    return
+                } else {
+                    setPriceTotal(prixtotal * (1 - data[0].promotion / 100))
+                    setCode('')
+                    CodeUtiliser()
+                    setPromo(true)
+                    return
+                }
             })
             .catch(erreur => console.error('Erreur: ', erreur));
+        }
+       
     }
 
+
+    const CodeUtiliser = () => {
+
+        fetch(`https://localhost:8000/code/update_utilisation/${code}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+           
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Erreur:', error));
+
+    }
 
     const AddProduit = (id) => {
         const Login = localStorage.getItem('users');

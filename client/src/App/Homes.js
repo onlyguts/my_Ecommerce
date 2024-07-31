@@ -15,11 +15,12 @@ function App() {
   if (loginUser && loginUser.verification === 0 ) {
     return (
       <div className="App">
-         <Header />
-        <PromoCarousel />
-        <PopularProducts />
-        <Main />
-      </div>
+      <Header />
+
+      <PromoCarousel />
+      <PopularProducts />
+      <Main />
+    </div>
     );
 
   } else {
@@ -122,12 +123,15 @@ function Main() {
       .catch(error => console.error('Erreur:', error));
   }, []);
   return (
-    <div class="imgback">
+      <div class="">
       <main class="zindex">
         <div className="main-banner">
-          <h1>Build Your PC</h1>
+          <div className='byp-banner'>
+            <img className='marging' src={images.BYP} alt='banniere'/>
+            <button id='button-BYP'>Build Your PC</button>
+          </div>
         </div>
-        <div className="grid-container">
+        <div className="grid-container marging">
           <div id='item-0'>
             <ProductItem src={images.gpu} id='3' alt="Carte graphique" name="Carte graphique" />
           </div>
@@ -138,13 +142,13 @@ function Main() {
             <ProductItem src={images.ram} id='5' alt="Barrette de RAM" name="Barrette de RAM" />
           </div>
           <div id='item-3'>
-            <ProductItem src={images.storage} id='7' alt="Stockage" name="Stockage" />
+            <ProductItem src={images.cpu} id='7' alt="Processeur" name="Processeur" />
           </div>
           <div id='item-4'>
             <ProductItem src={images.psu} id='6' alt="Alimentation" name="Alimentation" />
           </div>
           <div id='item-5'>
-            <ProductItem src={images.cpu} id='4' alt="Processeur" name="Processeur" />
+          <ProductItem src={images.storage} id='7' alt="Stockage" name="Stockage" />
           </div>
           <div id='item-6'>
             <ProductItem src={images.caseImg} id='1' alt="Boîtier" name="Boîtier" />
@@ -168,7 +172,7 @@ function ProductItem({ src, alt, name, id }) {
     localStorage.setItem('categorie', name);
   }
   return (
-    <div  onClick={() => ProduitsShow(id, name)} className="item">
+    <div  onClick={() => ProduitsShow(id, name)} className="item-home">
       <img src={src} alt={alt} />
       <span>{name}</span>
       

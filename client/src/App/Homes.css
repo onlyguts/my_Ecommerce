@@ -6,6 +6,8 @@
     --background-color: #F3E1D1;
     --highlight-color: #F4D5BB;
     --shadow-color: rgba(0, 0, 0, 0.1);
+    --blue: #1d6f5f;
+    --beige: #e1b690;
 }
 
 body {
@@ -25,7 +27,7 @@ body {
     mix-blend-mode: overlay;
 }
 
-.imgback {
+.marging {
     margin-left: 20%;
     margin-right: 20%;
 }
@@ -162,36 +164,51 @@ nav a:hover {
     background-color: var(--accent-color);
 }
 
-main {
-    padding: 20px;
-}
-
 .main-banner {
     background-size: cover;
-    padding: 50px 0;
-    text-align: center;
+    width: 100%;
+
+    background-color: var(--blue);
 }
 
-h1 {
+.main-banner img {
+    mix-blend-mode: overlay;
+    height: auto;
+    max-width: 60%;
+}
+
+.byp-banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    position: relative; 
+}
+
+#button-BYP {
     font-size: 2rem;
     color: white;
+    text-align: center;
     background-color: var(--secondary-color);
-    display: inline-block;
     padding: 10px 20px;
     border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.grid-container {
-    display: grid; 
 
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    
+.grid-container {
+    padding-top: 3%;
+    padding-bottom: 3%;
+    display: grid; 
     gap: 20px;
     height: 100%;
     
 }
 
+/*————————————item general————————————————*/
 .item {
     display: flex;
     flex-direction: column;
@@ -221,9 +238,35 @@ h1 {
 }
 
 
-#item-0 {
+/*—————————————item accueil—————————————————*/
+.item-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    transition: transform 0.2s;
+}
 
-    background-color: #D7B566; 
+.item-home img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    mix-blend-mode: overlay;
+}
+
+.item-home span {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.item-home:hover {
+    transform: scale(1.05);
+}
+
+#item-0 {
+/*Carte graphique*/
+    background-color: var(--beige); 
     grid-row-start: 1;
     grid-column-start: 1;
     grid-row-end: 3;
@@ -231,84 +274,80 @@ h1 {
     
  }
  #item-1 {
- 
-    background-color: #87DD59; 
+ /*Carte mere*/
+    background-color: var(--blue); 
     grid-row-start: 1;
     grid-column-start: 3;
- 
     grid-row-end: 3;
     grid-column-end: 4;
+    align-content: center;
     
  }
  #item-2 {
- 
-    background-color: #BD5567; 
+ /*RAM*/
+    background-color: var(--blue); 
     grid-row-start: 1;
     grid-column-start: 4;
- 
     grid-row-end: 3;
     grid-column-end: 5;
+    align-content: center;
     
  }
  #item-3 {
- 
-    background-color: #B6E59D; 
+ /*Processeur*/
+    background-color: var(--beige); 
     grid-row-start: 3;
     grid-column-start: 3;
- 
     grid-row-end: 5;
     grid-column-end: 5;
     
  }
  #item-4 {
- 
-    background-color: #BDB558; 
+  /*Alimentation*/
+    background-color: var(--blue); 
     grid-row-start: 3;
     grid-column-start: 1;
- 
     grid-row-end: 5;
     grid-column-end: 2;
-    
+    align-content: center;
  }
  #item-5 {
- 
-    background-color: #CB9AEA; 
+ /*Stockage*/
+    background-color: var(--blue); 
     grid-row-start: 3;
     grid-column-start: 2;
- 
     grid-row-end: 5;
     grid-column-end: 3;
+    align-content: center;
     
  }
  #item-6 {
- 
-    background-color: #975B97; 
+ /*Boitié*/
+    background-color: var(--beige); 
     grid-row-start: 5;
     grid-column-start: 1;
- 
     grid-row-end: 7;
     grid-column-end: 3;
-    
+    align-content: center;
  }
+
  #item-7 {
- 
-    background-color: #65B98F; 
+ /*Ventirad*/
+    background-color: var(--blue); 
     grid-row-start: 5;
     grid-column-start: 3;
- 
     grid-row-end: 7;
     grid-column-end: 4;
-    
+    align-content: center;
  }
  #item-8 {
- 
-    background-color: #FF7E78; 
+ /*Watercooling*/
+    background-color: var(--blue); 
     grid-row-start: 5;
     grid-column-start: 4;
- 
     grid-row-end: 7;
     grid-column-end: 5;
-    
+    align-content: center;
  }
 
  /*———————————CAARROUSEL———————————————*/

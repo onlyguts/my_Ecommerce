@@ -8,6 +8,7 @@ import cpu from './assets/processeur.png';
 import caseImg from './assets/boitie.png';
 import cooler from './assets/ventirad.png';
 import aio from './assets/aio.png';
+import BYP from './assets/BYP.png'
 
 const images = {
     logo,
@@ -19,7 +20,8 @@ const images = {
     cpu,
     caseImg,
     cooler,
-    aio
+    aio,
+    BYP
 };
 
 export default images;
