@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\Entity\CodePromo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,7 +84,16 @@ class UsersController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $this->compteVerif($user->getEmail());
+        $code = new CodePromo();
+        $code->setCode($user->getUsername() . '_15');
+        $code->setpromotion(10);
+        $code->setUtilisations(1);
+       
+        
+        $entityManager->persist($code);
+        $entityManager->flush();
+
+        $this->compteVerif($user->getEmail(), $user->getUsername() . '_15');
 
         return $this->json(['success' => 'Utilisateur mis à jour avec la vérification'], Response::HTTP_OK);
     }
@@ -194,7 +204,7 @@ class UsersController extends AbstractController
         $this->mailer->send($email);
     }
 
-    private function compteVerif($emailUser) {
+    private function compteVerif($emailUser, $promo) {
         $emailMessage = '
         <!DOCTYPE html>
         <html lang="fr">
@@ -229,7 +239,7 @@ class UsersController extends AbstractController
                     </p>
                     <div class="promo-box">
                         <p style="font-size: 16px; margin: 0;"><strong>Code Promo Exclusif :</strong> <br>
-                            <span class="promo">[code promo]</span> <br>
+                            <span class="promo">'. htmlspecialchars($promo) .'</span> <br>
                             Obtenez 10% de réduction sur votre première commande ! <br><br>
                             Profitez-en dès maintenant sur notre site !
                         </p>

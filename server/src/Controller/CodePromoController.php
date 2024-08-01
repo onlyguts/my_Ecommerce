@@ -37,4 +37,25 @@ class CodePromoController extends AbstractController
 
         return $this->json(['success' => 'code mis à jour'], Response::HTTP_OK);
     }
+    #[Route('/code/add', name: 'app_code_add', methods: ['POST'])]
+    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['name'], $data['id_categorie'])) {
+            return $this->json(['error' => 'Erreur'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $code = new CodePromo();
+        $code->setCode($data['code']);
+        $code->setpromotion((int)$data['promotion']);
+        $code->setUtilisations((int)$data['utilisations']);
+       
+        
+        $entityManager->persist($code);
+        $entityManager->flush();
+
+        return $this->json(['success' => 'code add', 'id' => $code->getId()], Response::HTTP_CREATED);
+    }
+
 }
