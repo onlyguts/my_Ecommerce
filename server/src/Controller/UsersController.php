@@ -83,6 +83,8 @@ class UsersController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
+        $this->compteVerif($user->getEmail());
+
         return $this->json(['success' => 'Utilisateur mis à jour avec la vérification'], Response::HTTP_OK);
     }
 
@@ -190,5 +192,76 @@ class UsersController extends AbstractController
             ->text($emailText);
 
         $this->mailer->send($email);
+    }
+
+    private function compteVerif($emailUser) {
+        $emailMessage = '
+        <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body { margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4; }
+                .header { background-color: #E2B791; color: #ffffff; padding: 20px; text-align: center; border-radius: 10px 10px 0 0px; }
+                .header img { max-width: 150px; }
+                .header .color { color: #1C6F5E; }
+                .container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; text-align: center; background-color: #F3E1D1; border: 1px solid #ddd; border-radius: 10px; }
+                .content { padding: 20px; }
+                .content img { max-width: 100%; height: auto; border-radius: 8px; }
+                .promo-box { border: 2px solid #1C6F5E; padding: 10px; margin: 20px 0; background-color: #f9f9f9; text-align: center; }
+                .promo-box .promo { color: #E2B791; font-size: 20px; font-weight: bold; }
+                a { text-decoration: none; color: #1C6F5E; }
+                .footer { background-color: #f1f1f1; text-align: center; padding: 10px; font-size: 10px; border-radius: 10px; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <img src="http://localhost:3000/logo.png" alt="Logo BYP">
+                    <h1>Bienvenue chez <span class="color">BYP</span></h1>
+                </div>
+                <div class="content">
+                    <p>Votre compte est validé!</p>
+                    <p>Nous sommes ravis de vous accueillir dans la communauté BYP. <br>
+                        Nous nous engageons à vous fournir le meilleur service possible.
+                        N\'hésitez pas à explorer notre site et à nous contacter si vous avez des questions.
+                    </p>
+                    <div class="promo-box">
+                        <p style="font-size: 16px; margin: 0;"><strong>Code Promo Exclusif :</strong> <br>
+                            <span class="promo">[code promo]</span> <br>
+                            Obtenez 10% de réduction sur votre première commande ! <br><br>
+                            Profitez-en dès maintenant sur notre site !
+                        </p>
+                    </div>
+                    <p> Bien cordialement, <br>
+                        L\'équipe BYP
+                    </p>
+                    <br>
+                    <div class="footer">
+                        <p>Vous recevez cet e-mail car vous vous êtes inscrit sur notre site.
+                            Si vous ne souhaitez plus recevoir ces messages, vous pouvez vous désabonner à tout moment.</p>
+                        <p><a href="https://localhost:3000/">Visiter notre site</a> | <a href="https://localhost:3000/">Contactez-nous</a></p>
+                    </div>
+                </div>
+        </body>
+        </html>';
+
+        $emailText = '
+    Votre compte chez BYP est maintenant validé ! Nous sommes ravis de vous accueillir dans notre communauté.
+    En tant que nouveau membre, nous avons le plaisir de vous offrir un code promo exclusif pour votre première commande. Utilisez le code **[code promo]** pour bénéficier de **10% de réduction**. Ne manquez pas cette opportunité et profitez-en dès maintenant sur notre site !
+
+    Bien cordialement,
+    L\'équipe BYP';
+
+
+        $email = (new Email())
+        ->from('no-reply@byp.com')
+        ->to($emailUser)
+        ->subject('Bonne nouvelle !')
+        ->html($emailMessage)
+        ->text($emailText);
+
+    $this->mailer->send($email);
     }
 }
