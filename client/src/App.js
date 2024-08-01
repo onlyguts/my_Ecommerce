@@ -26,18 +26,22 @@ import ProduitsAll from './App/produits/recherche_produits'
 import Promo from './App/produits/promotions_produits'
 import Login from './App/Login/Login'
 import Register from './App/Login/Register'
+import Password from './App/Login/Password'
+import NewPassword from './App/Login/NewPassword'
 function App() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Homes />}></Route>
                 {/* <Route path="/test/:id" element={<Pro />}></Route> */}
-                <Route path="/admin" element={<Admindash />}></Route>
+         
+
                 <Route path="/promotions" element={<Promo />}></Route>
                 <Route path="/panier" element={<Panier />}></Route>
-                <Route path="/admin/add" element={<Admin />}></Route>
-                <Route path="/confirmation/:token" element={<Conf />}></Route>
                 <Route path="/build" element={<Build />}></Route>
+
+                <Route path="/admin" element={<Admindash />}></Route>
+                <Route path="/admin/add" element={<Admin />}></Route>
                 <Route path="/admin/list" element={<AdminList />}></Route>
                 <Route path="/admin/email" element={<Adminemail />}></Route>
                 <Route path="/admin/listc" element={<AdminListC />}></Route>
@@ -45,12 +49,14 @@ function App() {
                 <Route path="/admin/list/produit/:id" element={<AdminListId />}></Route>
                 <Route path="/admin/list/produit/avis/:id" element={<AdminListIdAvis />}></Route>
                 <Route path="/admin/listc/categorie/:id" element={<AdminListIdC />}></Route>
-        
                
                 <Route path="/produits/all/:id" element={<ProduitsAll />}></Route>
                 <Route path="/produits/:id" element={<ProduitsList />}></Route>
                 <Route path="/produit/:id" element={<ProduitList />}></Route>
-            
+             
+                <Route path="/password" element={<Password />}></Route>
+                <Route path="/confirmation/:token" element={<Conf />}></Route>
+                <Route path="/changepassword/:token" element={<NewPassword />}></Route>
                 <Route path="/Login" element={<Login />}></Route>
                 <Route path="/Register" element={<Register />}></Route>
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import localhost from './../Config';
+import css from './formulaire.css'
 
 function Register() {
     const [email, setEmail] = useState("");
@@ -39,8 +40,9 @@ function Register() {
         console.log(formData);
         if (response.status === 200) {
             const data = await response.json();
-            console.log(data);
-            navigate("/");
+            console.log(data)
+         
+            navigate("/login");
         } else if (response.status === 500) {
             setError("Deja la ");
         } else {
@@ -49,26 +51,22 @@ function Register() {
     };
 
     return (
-        <div>
-            <h1>Register</h1>
-            {error && <p style={{color: 'red'}}>{error}</p>}
+        <div className='wrapper'>
+        <div className='container'>
+            <h2 className='titre'>Inscription</h2>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email:</label>
-                    <input type='text' value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div>
-                    <label>Username:</label>
-                    <input type='text' value={username} onChange={(e) => setUsername(e.target.value)}/>
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-                </div>
-                <button type="submit">Register</button>
+                    <input type='email' name="mail" id="mail" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Adresse e-mail' />
+                    <input type='text' name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Nom d'utilisateur" />
+                    <input type='password' name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Mot de passe'/>
+                <button type="submit">S'inscrire</button>
             </form>
+            <div className='btn'>
+            <button>Accueil</button>
             <button onClick={() => Login()}>Login</button>
+            </div>
         </div>
+    </div>
     );
 }
 

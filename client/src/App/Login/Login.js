@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import localhost from './../Config';
-
+import css from './formulaire.css'
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -48,20 +48,26 @@ function Login() {
             setError("Error");
         }
     }
+
+
+    const PasswordReset = () => {
+        navigate('/password')
+    }
     return (
-        <div>Login
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email:</label>
-                    <input type='text' value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div className='wrapper'>
+            <div className='container'>
+                <h2 className='titre'>Connexion</h2>
+                <form onSubmit={handleSubmit}>
+                    <input type='email' id='mail' name='mail' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Adresse e-mail' />
+                    <input type='password' id='password' name='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Mot de passe' />
+                    <p className='pass' onClick={() => PasswordReset()}>Mot de passe oublié?</p>
+                    <button type="submit">Se connecter</button>
+                </form>
+                <div className='btn'>
+                    <button>Accueil</button>
+                    <button onClick={() => Register()}>Inscription</button>
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            <button onClick={() => Register()}>Register</button>
+            </div>
         </div>
     )
 }
