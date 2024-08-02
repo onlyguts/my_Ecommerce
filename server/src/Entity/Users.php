@@ -1,9 +1,12 @@
-<?php
+<?php 
+// src/Entity/Users.php
 
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 class Users
@@ -30,6 +33,9 @@ class Users
 
     #[ORM\Column]
     private ?int $verification = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTime $createTime = null;
 
     public function getId(): ?int
     {
@@ -106,5 +112,17 @@ class Users
         $this->verification = $verification;
 
         return $this;
+    }
+
+    public function setCreateTime(DateTime $createTime): self
+    {
+        $this->createTime = $createTime;
+
+        return $this;
+    }
+
+    public function getCreateTime(): ?DateTime
+    {
+        return $this->createTime;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use DateTime;
 use App\Entity\Users;
 use App\Entity\CodePromo;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,25 @@ class UsersController extends AbstractController
     {
         $this->mailer = $mailer;
     }
-
+    #[Route('/users', name: 'app_users_get_all')]
+    public function indexx(EntityManagerInterface $entityManager): Response
+    {
+        $user = $entityManager->getRepository(Users::class);
+        return $this->json($user->findAll());
+    }
+    #[Route('/users/date', name: 'app_avis', methods: ['GET', 'HEAD'])]
+    public function users_date(EntityManagerInterface $entityManager): Response
+    {
+        $conn = $entityManager->getConnection();
+    
+        $sql = 'SELECT users.id, DATE_FORMAT(users.create_time, "%d/%m/%Y") AS create_time FROM users ORDER BY users.create_time ASC';
+    
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        $produits = $resultSet->fetchAllAssociative();
+    
+        return $this->json($produits);
+    }
     #[Route('/users/get/{email}', name: 'appget_users')]
     public function indexget(EntityManagerInterface $entityManager, string $email): Response
     {
@@ -37,7 +55,7 @@ class UsersController extends AbstractController
         return $this->json($user->findBy(['token' => $token]));
     }
 
-    #[Route('/users/post', name: 'app_users')]
+    #[Route('/users/post', name: 'app_users_post')]
     public function indexpost(Request $request, EntityManagerInterface $entityManager): Response
     {
         $data = json_decode($request->getContent(), true);
@@ -53,14 +71,15 @@ class UsersController extends AbstractController
         //     $Users,
         //     $formData['password']
         // );
+        $formData = $data["formData"];
         $tokenData = $formData['email'] . ':' . $formData['password'] . ':' . $formData['username'];
         $token = base64_encode($tokenData);
         $Users->setToken($token);
 
         $Users->setPassword($formData['password']);
+        $Users->setCreateTime(new DateTime()); 
         $Users->setGroupe(0);
         $Users->setVerification(0);
-
 
         $entityManager->persist($Users);
         $entityManager->flush();

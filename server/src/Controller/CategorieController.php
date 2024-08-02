@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategorieController extends AbstractController
 {
-    #[Route('/categorie', name: 'app_categorie')]
+    #[Route('/categorie', name: 'app_categories')]
     public function indexx(EntityManagerInterface $entityManager): Response
     {
         $categorie = $entityManager->getRepository(Categorie::class);
