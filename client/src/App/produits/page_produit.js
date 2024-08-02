@@ -39,6 +39,8 @@ export const ProductBoitier = () => {
             .catch(error => console.error('Erreur:', error));
     }, [id]);
 
+ 
+
     useEffect(() => {
         fetch(`https://localhost:8000/avis/${id}`)
             .then(response => response.json())

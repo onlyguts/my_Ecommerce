@@ -250,36 +250,40 @@ function Cart() {
   }, []);
 
 
+
   const PagePanier = () => {
 
     navigate('/panier')
   }
 
-  const AddProduit = (id) => {
-    const Login = localStorage.getItem('users');
-    const loginUser = JSON.parse(Login);
-
-    const userInfos = {
-      id_produit: id,
-      id_user: loginUser.id,
-    };
-    fetch("https://localhost:8000/panier/add", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userInfos),
-    })
-
-      .then(response => {
-        response.json();
-        UserPanier()
-
-
+  const AddProduit = (id, stock, quantity) => {
+   console.log(stock >= quantity)
+    if (stock - 1 >= quantity) {
+      const Login = localStorage.getItem('users');
+      const loginUser = JSON.parse(Login);
+  
+      const userInfos = {
+        id_produit: id,
+        id_user: loginUser.id,
+      };
+      fetch("https://localhost:8000/panier/add", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userInfos),
       })
-      .catch(error => {
-        console.error('Erreur:', error);
-      });
+  
+        .then(response => {
+          response.json();
+          UserPanier()
+  
+  
+        })
+        .catch(error => {
+          console.error('Erreur:', error);
+        });
+    }
   }
 
 
@@ -318,7 +322,7 @@ function Cart() {
           <li key={item.id}>
             <button onClick={() => DeleteProduit(item.id)}>-</button>
             <button >{item.quantity}</button>
-            <button onClick={() => AddProduit(item.id)}>+</button>
+            <button onClick={() => AddProduit(item.id, item.stock, item.quantity)}>+</button>
             <span> {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€ </span>
           </li>
         ))}

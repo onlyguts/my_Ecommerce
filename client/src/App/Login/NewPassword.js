@@ -51,7 +51,7 @@ function NewPassword() {
             {message}
              <input type='text' id='paswword' name='paswword'  value={paswword} onChange={(e) => setPassword(e.target.value)} placeholder='Nouveau mots de passe' />
             <input type='text' id='paswword2' name='paswword2'  value={paswword2} onChange={(e) => setPassword2(e.target.value)} placeholder='retaper le ' />
-            <span onClick={() => Envoyer()}>Envoyer</span>
+            <span className='bouton' onClick={() => Envoyer()}>Envoyer</span>
         </form>
         <div className='btn'>
             <button>Accueil</button>

@@ -26,7 +26,7 @@ class CodePromoController extends AbstractController
 
         return $this->json($code);
     }
-    #[Route('/code/update_utilisation/{code}', name: 'app_code_update', methods: ['PUT'])]
+    #[Route('/code/update_utilisation/{code}', name: 'app_code_update_util', methods: ['PUT'])]
     public function updateCode(EntityManagerInterface $entityManager, Request $request, string $code): Response
     {
         $data = json_decode($request->getContent(), true);
