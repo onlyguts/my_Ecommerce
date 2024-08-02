@@ -439,6 +439,7 @@ nav a:hover {
 
 }
 
+  /*————————————— PRODUIT ——————————————————-*/
 .produit {
     display: flex;
     align-items: center;
@@ -562,3 +563,217 @@ button {
     color: #333;
   }
   
+
+  /*————————————— PANIER ——————————————————-*/
+  
+.cart {
+    position: fixed;
+    right: 0;
+    top: 100px;
+    width: 250px;
+    background-color: var(--primary-color);
+    padding: 20px;
+    box-shadow: 0px 4px 6px var(--shadow-color);
+    z-index: 1000;
+    border-radius: 10px;
+}
+
+.cart-title {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+
+.cart-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cart-item {
+    margin-bottom: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cart-item-button {
+    padding: 5px 10px;
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cart-item-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.cart-item-quantity {
+    font-size: 1rem;
+    padding: 5px 10px;
+    background-color: var(--highlight-color);
+    border-radius: 5px;
+    color: var(--accent-color);
+}
+
+.cart-item-details {
+    font-size: 12px;
+    margin-left: 10px;
+    color: white;
+}
+
+.cart-total {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    margin-top: 15px;
+}
+
+.cart-view-button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.cart-view-button:hover {
+    background-color: var(--blue);
+}
+
+
+  /*—————————————PANIER——————————————————-*/
+
+  .panier-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px var(--shadow-color);
+}
+
+.panier-title {
+    text-align: center;
+    font-size: 2.5em;
+    color: var(--accent-color);
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+.panier-total {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--secondary-color);
+    text-align: right;
+    margin-bottom: 25px;
+}
+
+.promo-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.promo-input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    margin-right: 15px;
+    font-size: 1.1em;
+    background-color: var(--highlight-color);
+    color: var(--accent-color);
+}
+
+.promo-button {
+    padding: 10px 20px;
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.promo-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.panier-items {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+.panier-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0px 0px 15px var(--shadow-color);
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+}
+
+.item-button {
+    padding: 8px;
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 0 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.item-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.item-quantity {
+    font-size: 1.1em;
+    padding: 6px 12px;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    margin: 0 8px;
+    background-color: var(--highlight-color);
+    color: var(--accent-color);
+}
+
+.item-details {
+    font-size: 1.1em;
+    color: var(--accent-color);
+    margin-left: 20px;
+}
+
+.checkout-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.5em;
+    transition: background-color 0.3s ease;
+}
+
+.checkout-button:hover {
+    background-color: var(--primary-color);
+}

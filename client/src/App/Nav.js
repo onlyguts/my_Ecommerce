@@ -314,22 +314,27 @@ function Cart() {
       });
   }
 
+
+  
   return (
     <div className='cart'>
-      <h2>Panier</h2>
-      <ul>
+      <h2 className="cart-title">Panier</h2>
+      <ul className="cart-items">
         {cartItems.map(item => (
-          <li key={item.id}>
-            <button onClick={() => DeleteProduit(item.id)}>-</button>
-            <button >{item.quantity}</button>
-            <button onClick={() => AddProduit(item.id, item.stock, item.quantity)}>+</button>
-            <span> {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€ </span>
+          <li key={item.id} className="cart-item">
+            <button onClick={() => DeleteProduit(item.id)} className="cart-item-button">-</button>
+            <button className="cart-item-quantity">{item.quantity}</button>
+            <button onClick={() => AddProduit(item.id, item.stock, item.quantity)} className="cart-item-button">+</button>
+            <span className="cart-item-details">
+              {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€
+            </span>
           </li>
         ))}
-        <h2>Prix total : {value}€</h2>
-        <button onClick={() => PagePanier()}>AFFICHEZ LE PANIER</button>
       </ul>
+      <h2 className="cart-total">Prix total : {value}€</h2>
+      <button onClick={() => PagePanier()} className="cart-view-button">AFFICHEZ LE PANIER</button>
     </div>
   );
 }
+ 
 export default Nav
