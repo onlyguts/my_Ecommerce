@@ -26,7 +26,7 @@ function Nav_one() {
   const [quantity, setQuantity] = useState(0);
   const [categorie, setCategorie] = useState([]);
 
- 
+
 
   useEffect(() => {
     // if (loginUser.verification === 0) {
@@ -257,11 +257,11 @@ function Cart() {
   }
 
   const AddProduit = (id, stock, quantity) => {
-   console.log(stock >= quantity)
+    console.log(stock >= quantity)
     if (stock - 1 >= quantity) {
       const Login = localStorage.getItem('users');
       const loginUser = JSON.parse(Login);
-  
+
       const userInfos = {
         id_produit: id,
         id_user: loginUser.id,
@@ -273,12 +273,12 @@ function Cart() {
         },
         body: JSON.stringify(userInfos),
       })
-  
+
         .then(response => {
           response.json();
           UserPanier()
-  
-  
+
+
         })
         .catch(error => {
           console.error('Erreur:', error);
@@ -315,7 +315,7 @@ function Cart() {
   }
 
 
-  
+
   return (
     <div className='cart'>
       <h2 className="cart-title">Panier</h2>
@@ -336,5 +336,5 @@ function Cart() {
     </div>
   );
 }
- 
+
 export default Nav

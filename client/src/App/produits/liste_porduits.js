@@ -287,23 +287,28 @@ function Nav_two() {
   );
 }
 
-function Cart() {
-  const [produits, setProduits] = useState([]);
 
-  const Login = localStorage.getItem('users');
-  const loginUser = JSON.parse(Login);
+function Cart() {
+  const [cartItems, setCartItems] = useState([]);
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
-  useEffect(() => {
-    fetch("https://localhost:8000/panier/" + loginUser.id)
-      .then(reponse => reponse.json())
-      .then(data => {
-        setProduits(data);
-        const total = data.reduce((sum, item) => sum + (item.prix * item.quantity), 0);
 
+  const UserPanier = () => {
+    const Login = localStorage.getItem('users');
+    const loginUser = JSON.parse(Login);
+
+    fetch("https://localhost:8000/panier/" + loginUser.id)
+      .then(response => response.json())
+      .then(data => {
+        setCartItems(data);
+        const total = data.reduce((sum, item) => sum + (item.prix * (1 - item.promo / 100) * item.quantity), 0);
         setValue(total);
       })
-      .catch(erreur => console.error('Erreur: ', erreur));
+      .catch(error => console.error('Erreur: ', error));
+  };
+
+  useEffect(() => {
+    UserPanier()
   }, []);
 
 
@@ -313,19 +318,83 @@ function Cart() {
     navigate('/panier')
   }
 
+  const AddProduit = (id, stock, quantity) => {
+    console.log(stock >= quantity)
+    if (stock - 1 >= quantity) {
+      const Login = localStorage.getItem('users');
+      const loginUser = JSON.parse(Login);
+
+      const userInfos = {
+        id_produit: id,
+        id_user: loginUser.id,
+      };
+      fetch("https://localhost:8000/panier/add", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userInfos),
+      })
+
+        .then(response => {
+          response.json();
+          UserPanier()
+
+
+        })
+        .catch(error => {
+          console.error('Erreur:', error);
+        });
+    }
+  }
+
+
+  const DeleteProduit = (id) => {
+    const Login = localStorage.getItem('users');
+    const loginUser = JSON.parse(Login);
+
+    const userInfos = {
+      id_produit: id,
+      id_user: loginUser.id,
+    };
+    fetch("https://localhost:8000/panier/delete", {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userInfos),
+    })
+
+      .then(response => {
+        response.json();
+        UserPanier()
+
+
+      })
+      .catch(error => {
+        console.error('Erreur:', error);
+      });
+  }
+
+
+
   return (
     <div className='cart'>
-      <h2>Panier</h2>
-
-      <ul>
-        {produits.map(item => (
-          <li key={item.id}>
-            <span>x{item.quantity} - {item.name}</span> - <span>{(item.prix * item.quantity)}€ | x1 {item.prix}€</span>
+      <h2 className="cart-title">Panier</h2>
+      <ul className="cart-items">
+        {cartItems.map(item => (
+          <li key={item.id} className="cart-item">
+            <button onClick={() => DeleteProduit(item.id)} className="cart-item-button">-</button>
+            <button className="cart-item-quantity">{item.quantity}</button>
+            <button onClick={() => AddProduit(item.id, item.stock, item.quantity)} className="cart-item-button">+</button>
+            <span className="cart-item-details">
+              {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€
+            </span>
           </li>
         ))}
-        <h2>Prix total : {value}€</h2>
-        <button onClick={() => PagePanier()}>AFFICHEZ LE PANIER</button>
       </ul>
+      <h2 className="cart-total">Prix total : {value}€</h2>
+      <button onClick={() => PagePanier()} className="cart-view-button">AFFICHEZ LE PANIER</button>
     </div>
   );
 }
