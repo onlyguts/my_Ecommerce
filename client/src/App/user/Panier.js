@@ -120,7 +120,7 @@ function Panier() {
             });
     }
 return (
-<div>
+    <div>
     <Nav />
     <div className='panier-container'>
         <h1 className="panier-title">Panier</h1>
@@ -138,11 +138,14 @@ return (
         <ul className="panier-items">
             {value.map(item => (
                 <li key={item.id} className="panier-item">
+                    <img src={item.image} alt={item.name} className="item-image" />
                     <span className="item-info">
                         <button onClick={() => DeleteProduit(item.id)} className="item-button">-</button>
                         <button className="item-quantity">{item.quantity}</button>
-                        <button onClick={() => AddProduit(item.id, item.stock, item.quantity)} className="item-button">+</button>
-                        <span className="item-details">{item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€ </span>
+                        <button onClick={() => AddProduit(item.id)} className="item-button">+</button>
+                        <span className="item-details">
+                            {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€
+                        </span>
                     </span>
                 </li>
             ))}
