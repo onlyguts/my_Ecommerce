@@ -12,11 +12,16 @@ function AdminList() {
     const navigate = useNavigate();
     const marqueSolo = new Set();
 
-    useEffect(() => {
+    const ApiProduit = () => {
         fetch("https://localhost:8000/produits/")
             .then(reponse => reponse.json())
             .then(data => setProduits(data))
             .catch(erreur => console.error('Erreur: ', erreur));
+
+    }
+
+    useEffect(() => {
+        ApiProduit()
     }, []);
 
     useEffect(() => {
@@ -34,7 +39,7 @@ function AdminList() {
         fetch("https://localhost:8000/produits/delete/" + id_produits, {
             method: 'DELETE',
         })
-            .then(response => response.json())
+            .then(response =>  ApiProduit())
             .catch(error => {
                 console.error('Erreur:', error);
             });

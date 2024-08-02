@@ -7,11 +7,16 @@ function AdminListC() {
     const [produits, setProduits] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
+
+    const ApiCategorie = () => {
+
         fetch("https://localhost:8000/categorie/")
             .then(reponse => reponse.json())
             .then(data => setProduits(data))
             .catch(erreur => console.error('Erreur: ', erreur));
+    }
+    useEffect(() => {
+        ApiCategorie()
     }, []);
 
 
@@ -24,7 +29,7 @@ function AdminListC() {
         fetch("https://localhost:8000/categorie/delete/" + id_produits, {
             method: 'DELETE',
         })
-            .then(response => response.json())
+            .then(response => ApiCategorie())
             .catch(error => {
                 console.error('Erreur:', error);
             });
