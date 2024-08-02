@@ -164,31 +164,36 @@ export const ProductBoitier = () => {
     }
 
 
-    const AddPanier = (id) => {
-        const Login = localStorage.getItem('users');
-        const loginUser = JSON.parse(Login);
+    const AddPanier = (id, stock) => {
+        if (stock === 0) {
+            alert('plus de stock')
+        } else {
 
-        const userInfos = {
-            id_produit: id,
-            id_user: loginUser.id,
-        };
-        fetch("https://localhost:8000/panier/add", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userInfos),
-        })
-
-            .then(response => {
-                response.json();
-                window.location.reload()
-
-
+            const Login = localStorage.getItem('users');
+            const loginUser = JSON.parse(Login);
+    
+            const userInfos = {
+                id_produit: id,
+                id_user: loginUser.id,
+            };
+            fetch("https://localhost:8000/panier/add", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userInfos),
             })
-            .catch(error => {
-                console.error('Erreur:', error);
-            });
+    
+                .then(response => {
+                    response.json();
+                    window.location.reload()
+    
+    
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
+        }
     }
 
 
@@ -272,7 +277,7 @@ export const ProductBoitier = () => {
                                     <h3>QUANTITE</h3>
                                     <QuantityPicker min={1} max={10} />
                                 </section>
-                                <section className="add-basket-button" onClick={() => AddPanier(produit.id)}>
+                                <section className="add-basket-button" onClick={() => AddPanier(produit.id, produit.stock)}>
                                     <h2>AJOUTER AU PANIER</h2>
                                     <img src={BuyingCart} alt="Icone Ajout Panier" />
                                 </section>

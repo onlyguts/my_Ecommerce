@@ -149,4 +149,79 @@ class MailerController extends AbstractController
             return new Response('Erreur lors de l\'envoi de l\'email ou de la suppression de l\'alerte.');
         }
     }
+    #[Route('/email/nouveau_mdp', name: 'email_nouveau_mdp', methods: ['POST'])]
+    public function sendEmailMdp(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $UsersRepository = $entityManager->getRepository(Users::class);
+        $user = $UsersRepository->findOneBy(['email' => $data['email']]);
+
+        $username = $user->getUsername();
+        $token = $user->getToken();
+
+        $lien = 'http://localhost:3000/changepassword/' . $token;
+
+        $messageEmail = '
+        <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+            body { margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4; }
+            .header { background-color: #E2B791; color: #ffffff; padding: 20px; text-align: center; border-radius: 10px 10px 0 0px; }
+            .header img { max-width: 150px; }
+            .header .color { color: #1C6F5E; }
+            .container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; text-align: center; background-color: #F3E1D1; border: 1px solid #ddd; border-radius: 10px; }
+            .content { padding: 20px; }
+            .button { background-color: #E2B791; color: white; border-radius: 15px; padding: 10px; border: 1px solid white; }
+            a { text-decoration: none; color: #1C6F5E; }
+            .footer { background-color: #f1f1f1; text-align: center; padding: 10px; font-size: 10px; border-radius: 10px; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <img src="http://localhost:3000/logo.png" alt="">
+                    <h1>Réinitialisation de votre mot de passe</h1>
+                </div>
+                <div class="content">
+                    <p>Bonjour <strong>' . htmlspecialchars($username) .'</strong>,</p>
+                    <p>Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte. <br>
+                    Pour réinitialiser votre mot de passe, veuillez cliquer sur le bouton ci-dessous :</p>
+                    <p><a href="' . htmlspecialchars($lien) . '" class="button">Réinitialiser mon mot de passe</a></p>
+                    <p>Merci de votre confiance. <br>
+                    L\'équipe BYP</p>
+                </div>
+                <div class="footer">
+                    <p>Si vous n\'avez pas demandé cette réinitialisation, veuillez ignorer cet email.</p>
+                    <p><a href="https://localhost:3000/">Visiter notre site</a> | <a
+                        href="https://localhost:3000/">Contactez-nous</a></p>
+                </div>
+            </div>
+        </body>
+        </html>';
+
+        $textEmail = '
+        Bonjour ' . htmlspecialchars($username) . ',
+
+        Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte sur {nom_application}.
+        Pour réinitialiser votre mot de passe, veuillez utiliser le lien suivant :
+        ' . htmlspecialchars($lien) . '
+
+        Merci de votre confiance !
+        L\'équipe BYP';
+
+        $email = (new Email())
+        ->from('no-reply@byp.com')
+        ->to($data['email'])
+        ->subject('Réinitialisation de votre mot de passe')
+        ->html($messageEmail)
+        ->text($textEmail);
+
+        $mailer->send($email);
+
+        return new Response ('Email envoyé avec succès');
+    }
 }
