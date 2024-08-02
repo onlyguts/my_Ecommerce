@@ -87,11 +87,6 @@ const Tabs = () => {
             });
     }
 
-
-    useEffect(() => {
-        scrollToTab(activeTab);
-    }, [activeTab]);
-
     const handleTabChange = (tab) => {
         setActiveTab(tab);
     };

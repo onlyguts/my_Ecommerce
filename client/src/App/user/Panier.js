@@ -6,34 +6,34 @@ function Panier() {
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
     const [value, setValue] = useState([]);
-    const [prixtotal, setPriceTotal] = useState([]);
+    const [prixtotal, setPriceTotal] = useState('');
     const [code, setCode] = useState('');
     const [promo, setPromo] = useState(false);
     const navigate = useNavigate();
+
     useEffect(() => {
         fetch("https://localhost:8000/panier/" + loginUser.id)
             .then(reponse => reponse.json())
             .then(data => {
                 setValue(data);
                 const total = data.reduce((sum, item) => sum + ((item.prix * (1 - item.promo / 100)) * item.quantity), 0);
-
-
                 setPriceTotal(total);
             })
             .catch(erreur => console.error('Erreur: ', erreur));
     }, []);
+
     const addCode = (code) => {
         if (promo === false ) {
             fetch("https://localhost:8000/code/" + code)
             .then(reponse => reponse.json())
             .then(data => {
-                console.log(data[0])
-                if (data[0].utilisations === 0) {
+                console.log(data)
+                if (data.utilisations === 0) {
                     setCode('')
                     console.log('code promo fini')
                     return
                 } else {
-                    setPriceTotal(prixtotal * (1 - data[0].promotion / 100))
+                    setPriceTotal(prixtotal * (1 - data.promotion / 100))
                     setCode('')
                     CodeUtiliser()
                     setPromo(true)
