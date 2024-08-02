@@ -5,8 +5,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Admin from './App/PanelAdmin/admin_create_produits'
 import AdminList from './App/PanelAdmin/admin_liste_produits'
 import AdminListC from './App/PanelAdmin/admin_liste_categroie'
+import AdminListP from './App/PanelAdmin/admin_liste_promo'
 import AdminCat from './App/PanelAdmin/admin_create_categorie'
+import AdminPromo from './App/PanelAdmin/admin_create_promo'
 import AdminListId from './App/PanelAdmin/admin_update_produit'
+import AdminListIdP from './App/PanelAdmin/admin_update_promo'
 import AdminListIdAvis from './App/PanelAdmin/admin_avis_produits'
 import AdminListIdC from './App/PanelAdmin/admin_update_categorie'
 import Adminemail from './App/PanelAdmin/admin_email'
@@ -45,8 +48,11 @@ function App() {
                 <Route path="/admin/list" element={<AdminList />}></Route>
                 <Route path="/admin/email" element={<Adminemail />}></Route>
                 <Route path="/admin/listc" element={<AdminListC />}></Route>
+                <Route path="/admin/listp" element={<AdminListP />}></Route>
                 <Route path="/admin/addc" element={<AdminCat />}></Route>
+                <Route path="/admin/addp" element={<AdminPromo />}></Route>
                 <Route path="/admin/list/produit/:id" element={<AdminListId />}></Route>
+                <Route path="/admin/listp/promo/:id" element={<AdminListIdP />}></Route>
                 <Route path="/admin/list/produit/avis/:id" element={<AdminListIdAvis />}></Route>
                 <Route path="/admin/listc/categorie/:id" element={<AdminListIdC />}></Route>
                

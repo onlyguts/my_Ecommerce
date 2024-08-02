@@ -23,11 +23,17 @@ function NavAdmin() {
     const AjouterC = () => {
         navigate('/admin/addc')
     }
+    const AjouterP = () => {
+        navigate('/admin/addp')
+    }
     const List = () => {
         navigate('/admin/list')
     }
     const ListC = () => {
         navigate('/admin/listc')
+    }
+    const ListP = () => {
+        navigate('/admin/listp')
     }
     return (
         <div>
@@ -38,8 +44,10 @@ function NavAdmin() {
                 <a onClick={() => DASHBOARD()}>DASHBOARD</a>
                 <a onClick={() => Ajouter()}>AJOUTER PRODUIT</a>
                 <a onClick={() => AjouterC()}>AJOUTER CATEGORIE</a>
+                <a onClick={() => AjouterP()}>AJOUTER CODE PROMO</a>
                 <a onClick={() => List()}>LISTE PRODUIT</a>
                 <a onClick={() => ListC()}>LISTE CATEGORIE</a>
+                <a onClick={() => ListP()}>LISTE PROMO</a>
             </div>
         </div>
     )
