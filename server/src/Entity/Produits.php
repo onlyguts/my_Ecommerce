@@ -55,6 +55,20 @@ class Produits
     #[ORM\Column]
     private ?int $suggestion = null;
 
+    #[ORM\Column]
+    private ?int $length = null;
+
+    #[ORM\Column]
+    private ?int $height = null;
+
+    #[ORM\Column]
+    private ?int $width = null;
+
+    #[ORM\Column]
+    private ?int $weight = null;
+
+  
+
     public function getId(): ?int
     {
         return $this->id;
@@ -227,4 +241,54 @@ class Produits
 
         return $this;
     }
+
+    public function getLength(): ?int
+    {
+        return $this->length;
+    }
+
+    public function setLength(int $length): static
+    {
+        $this->length = $length;
+
+        return $this;
+    }
+
+    public function getHeight(): ?int
+    {
+        return $this->height;
+    }
+
+    public function setHeight(int $height): static
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    public function getWidth(): ?int
+    {
+        return $this->width;
+    }
+
+    public function setWidth(int $width): static
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    public function getWeight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(int $weight): static
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+
 }

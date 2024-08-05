@@ -22,7 +22,7 @@ class AvisController extends AbstractController
     //     };
     //     return $this->json($avis);
     // }
-    #[Route('/avis/{id_produits}', name: 'app_avis', methods: ['GET', 'HEAD'])]
+    #[Route('/avis/{id_produits}', name: 'app_avis_get', methods: ['GET', 'HEAD'])]
     public function index(EntityManagerInterface $entityManager, int $id_produits): Response
     {
         $conn = $entityManager->getConnection();

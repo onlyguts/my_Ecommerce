@@ -14,20 +14,46 @@ function Panier() {
     const [paysuser, setPaysUser] = useState('');
     const [message, setMessage] = useState('');
     const [promo, setPromo] = useState(false);
+    const [packages, setPackage] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
+
+    const ApiPanier = () => {
         fetch("https://localhost:8000/panier/" + loginUser.id)
-            .then(reponse => reponse.json())
-            .then(data => {
-                setValue(data);
-                const total = data.reduce((sum, item) => sum + ((item.prix * (1 - item.promo / 100)) * item.quantity), 0);
+        .then(reponse => reponse.json())
+        .then(data => {
+            setValue(data);
+            const total = data.reduce((sum, item) => sum + ((item.prix * (1 - item.promo / 100)) * item.quantity), 0)
+            console.log(data)
 
+        const packageItem = {
+            content: "",
+            weight: 0,
+            width: 0,
+            height: 0,
+            length: 0
+        }
 
-                setPriceTotal(total);
-            })
-            .catch(erreur => console.error('Erreur: ', erreur));
+        data.forEach(item => {
+            packageItem.content += item.name;
+            packageItem.weight += item.weight * item.quantity;
+            packageItem.width += item.width * item.quantity;
+            packageItem.height += item.height * item.quantity;
+            packageItem.length += item.length * item.quantity;
+         
+        });
+       
+        setPackage(packageItem)
+        
+        setPriceTotal(total)
+        })
+        .catch(erreur => console.error('Erreur: ', erreur));
+    }
+
+    useEffect(() => {
+        ApiPanier()
     }, []);
+
 
     useEffect(() => {
         fetch("https://epicareer.epidoc.eu/api/countries")
@@ -48,15 +74,17 @@ const PaysUser = (e) => {
             to: paysuser,
             package: [
                 {
-                    content: "Books",
-                    weight: 1.5,
-                    width: 30,
-                    height: 15,
-                    length: 10
+                    content: packages.content,
+                    weight: packages.weight,
+                    width: packages.width,
+                    height: packages.height,
+                    length: packages.length,
                 }
             ],
             currency: "EUR"
         };
+
+        console.log(userInfos)
 
         fetch("https://epicareer.epidoc.eu/api/package/estimate", {
             method: 'POST',
@@ -68,6 +96,7 @@ const PaysUser = (e) => {
 
             .then(response => {
                 return response.json();
+
             })
             .then(data => {
                 if (data.success) {
@@ -126,7 +155,7 @@ const PaysUser = (e) => {
     }
 
     const AddProduit = (id, stock, quantity) => {
-
+        console.log(stock)
         if (stock - 1 >= quantity) {
 
             const Login = localStorage.getItem('users');
@@ -146,7 +175,7 @@ const PaysUser = (e) => {
 
                 .then(response => {
                     response.json();
-                    window.location.reload()
+              ApiPanier()
                 })
                 .catch(error => {
                     console.error('Erreur:', error);
@@ -175,8 +204,7 @@ const PaysUser = (e) => {
 
             .then(response => {
                 response.json();
-                window.location.reload()
-
+                ApiPanier()
 
             })
             .catch(error => {
@@ -218,7 +246,7 @@ const PaysUser = (e) => {
                             <span className="item-info">
                                 <button onClick={() => DeleteProduit(item.id)} className="item-button">-</button>
                                 <button className="item-quantity">{item.quantity}</button>
-                                <button onClick={() => AddProduit(item.id)} className="item-button">+</button>
+                                <button onClick={() => AddProduit(item.id, item.stock, item.quantity)} className="item-button">+</button>
                                 <span className="item-details">
                                     {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€
                                 </span>
