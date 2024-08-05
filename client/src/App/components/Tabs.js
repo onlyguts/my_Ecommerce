@@ -19,11 +19,12 @@ const Tabs = () => {
     const [text, setText] = useState('');
     const [rate, setRate] = useState('');
 
-    const Api = (id) => {
+    const Api = () => {
         fetch(`https://localhost:8000/avis/${id}`)
             .then(response => response.json())
             .then(data => {
                 setAvis(data)
+                console.log(data)
                 const totalavis = data.reduce((sum, avis) => sum + avis.rate, 0);
                 const moyenne = data.length > 0 ? totalavis / data.length : 0;
                 setMoyenne(data.rate);
@@ -35,8 +36,8 @@ const Tabs = () => {
 
     
     useEffect(() => {
-        Api(id)
-    }, [id]);
+        Api()
+    }, []);
 
 
     const AvisSet = (e) => {

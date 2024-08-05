@@ -1,0 +1,29 @@
+.all-product {
+    height: 100vh;
+}
+
+.all-product .product-grid {
+    background-color: #F0E2D3;
+    height: 88.5vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow-y: auto;
+    padding-top: 2%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.all-product .product-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.product-grid .product-in-grid {
+    background-color: #DBB996;
+    height: 30%;
+    width: 20%;
+    margin-right: 1%;
+    margin-left: 1%;
+    border-radius: 30px;
+}
+

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './../Homes.css';
 import images from '../images.js';
+import "./allProduct.css";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
@@ -22,19 +23,19 @@ function Nav_tree() {
     const [quantity, setQuantity] = useState(0);
 
 
-   useEffect(() => {
-    if (loginUser) {
-      fetch("https://localhost:8000/panier/" + loginUser.id)
-        .then(reponse => reponse.json())
-        .then(data => {
+    useEffect(() => {
+        if (loginUser) {
+            fetch("https://localhost:8000/panier/" + loginUser.id)
+                .then(reponse => reponse.json())
+                .then(data => {
 
-          const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
-          setQuantity(quantity);
+                    const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+                    setQuantity(quantity);
 
-        })
-        .catch(erreur => console.error('Erreur: ', erreur));
-    }
-  }, []);
+                })
+                .catch(erreur => console.error('Erreur: ', erreur));
+        }
+    }, []);
 
 
     const openPopup = () => {
@@ -135,7 +136,7 @@ function Nav_tree() {
     };
     function Promo() {
         navigate("/promotions");
-      }
+    }
     return (
         <div>
             <header>
@@ -159,14 +160,14 @@ function Nav_tree() {
                                 <p></p>
                             )
                         )}
-                          {loginUser && (
-            <button className="menu-btn" onClick={toggleCart}>
-              Cart
-              {quantity > 0 && (
-                <span className="quantity-circle">{quantity}</span>
-              )}
-            </button>
-          )}
+                        {loginUser && (
+                            <button className="menu-btn" onClick={toggleCart}>
+                                Cart
+                                {quantity > 0 && (
+                                    <span className="quantity-circle">{quantity}</span>
+                                )}
+                            </button>
+                        )}
                     </div>
                 </div>
                 {showCart && <Cart />}
@@ -231,23 +232,21 @@ function Nav_tree() {
 
                 <button type="button">Envoyer</button>
             </form>
-            <div className="popular-products">
-
-                <div className="carousel-slide">
+            <div className='all-product'>
+              
+                <div className="product-grid">
                     {produits2_trier.map(produit => (
 
-                        <div className="item">
+                        <div className="product-in-grid">
                             <img src={produit.image} onClick={() => OpenProduit(produit.id, produit.categorie_name)} />
                             <span>{produit.name}</span>
                             <span>marque:{produit.marque}</span>
                             <span>prix:{produit.prix}€</span>
                         </div>
                     ))}
-
                 </div>
-
-
             </div>
+          
 
         </div>
     );
@@ -257,112 +256,112 @@ function Cart() {
     const [cartItems, setCartItems] = useState([]);
     const [value, setValue] = useState(0);
     const navigate = useNavigate();
-  
+
     const UserPanier = () => {
-      const Login = localStorage.getItem('users');
-      const loginUser = JSON.parse(Login);
-  
-      fetch("https://localhost:8000/panier/" + loginUser.id)
-        .then(response => response.json())
-        .then(data => {
-          setCartItems(data);
-          const total = data.reduce((sum, item) => sum + (item.prix * (1 - item.promo / 100) * item.quantity), 0);
-          setValue(total);
-        })
-        .catch(error => console.error('Erreur: ', error));
-    };
-  
-    useEffect(() => {
-      UserPanier()
-    }, []);
-  
-  
-  
-    const PagePanier = () => {
-  
-      navigate('/panier')
-    }
-  
-    const AddProduit = (id, stock, quantity) => {
-      console.log(stock >= quantity)
-      if (stock - 1 >= quantity) {
         const Login = localStorage.getItem('users');
         const loginUser = JSON.parse(Login);
-  
-        const userInfos = {
-          id_produit: id,
-          id_user: loginUser.id,
-        };
-        fetch("https://localhost:8000/panier/add", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userInfos),
-        })
-  
-          .then(response => {
-            response.json();
-            UserPanier()
-  
-  
-          })
-          .catch(error => {
-            console.error('Erreur:', error);
-          });
-      }
+
+        fetch("https://localhost:8000/panier/" + loginUser.id)
+            .then(response => response.json())
+            .then(data => {
+                setCartItems(data);
+                const total = data.reduce((sum, item) => sum + (item.prix * (1 - item.promo / 100) * item.quantity), 0);
+                setValue(total);
+            })
+            .catch(error => console.error('Erreur: ', error));
+    };
+
+    useEffect(() => {
+        UserPanier()
+    }, []);
+
+
+
+    const PagePanier = () => {
+
+        navigate('/panier')
     }
-  
-  
+
+    const AddProduit = (id, stock, quantity) => {
+        console.log(stock >= quantity)
+        if (stock - 1 >= quantity) {
+            const Login = localStorage.getItem('users');
+            const loginUser = JSON.parse(Login);
+
+            const userInfos = {
+                id_produit: id,
+                id_user: loginUser.id,
+            };
+            fetch("https://localhost:8000/panier/add", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userInfos),
+            })
+
+                .then(response => {
+                    response.json();
+                    UserPanier()
+
+
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
+        }
+    }
+
+
     const DeleteProduit = (id) => {
-      const Login = localStorage.getItem('users');
-      const loginUser = JSON.parse(Login);
-  
-      const userInfos = {
-        id_produit: id,
-        id_user: loginUser.id,
-      };
-      fetch("https://localhost:8000/panier/delete", {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userInfos),
-      })
-  
-        .then(response => {
-          response.json();
-          UserPanier()
-  
-  
+        const Login = localStorage.getItem('users');
+        const loginUser = JSON.parse(Login);
+
+        const userInfos = {
+            id_produit: id,
+            id_user: loginUser.id,
+        };
+        fetch("https://localhost:8000/panier/delete", {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userInfos),
         })
-        .catch(error => {
-          console.error('Erreur:', error);
-        });
+
+            .then(response => {
+                response.json();
+                UserPanier()
+
+
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
     }
-  
-  
-  
+
+
+
     return (
-      <div className='cart'>
-        <h2 className="cart-title">Panier</h2>
-        <ul className="cart-items">
-          {cartItems.map(item => (
-            <li key={item.id} className="cart-item">
-              <button onClick={() => DeleteProduit(item.id)} className="cart-item-button">-</button>
-              <button className="cart-item-quantity">{item.quantity}</button>
-              <button onClick={() => AddProduit(item.id, item.stock, item.quantity)} className="cart-item-button">+</button>
-              <span className="cart-item-details">
-                {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€
-              </span>
-            </li>
-          ))}
-        </ul>
-        <h2 className="cart-total">Prix total : {value}€</h2>
-        <button onClick={() => PagePanier()} className="cart-view-button">AFFICHEZ LE PANIER</button>
-      </div>
+        <div className='cart'>
+            <h2 className="cart-title">Panier</h2>
+            <ul className="cart-items">
+                {cartItems.map(item => (
+                    <li key={item.id} className="cart-item">
+                        <button onClick={() => DeleteProduit(item.id)} className="cart-item-button">-</button>
+                        <button className="cart-item-quantity">{item.quantity}</button>
+                        <button onClick={() => AddProduit(item.id, item.stock, item.quantity)} className="cart-item-button">+</button>
+                        <span className="cart-item-details">
+                            {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€
+                        </span>
+                    </li>
+                ))}
+            </ul>
+            <h2 className="cart-total">Prix total : {value}€</h2>
+            <button onClick={() => PagePanier()} className="cart-view-button">AFFICHEZ LE PANIER</button>
+        </div>
     );
-  }
+}
 
 function ProduitsAll() {
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import "./allProduct.css";
 import Nav from './../Nav'
 
 function Promotionsproduits() {
@@ -20,19 +21,18 @@ function Promotionsproduits() {
     }
 
     return (
-        <div>
-
+        <div className="promotions">
             <Nav />
-            <div>
-            {promo.map(produit => (
-                <div className="item" key={produit.id} onClick={() => ProduitsShow(produit.id, produit.categorie_name, produit.views)}>
-                    <img src={produit.image} alt="Promo 1" />
-                    <p className="legend" >{produit.name}</p>
-                    <p className="legend" >{produit.prix * (1 - produit.promo / 100)}€ au lieu de {produit.prix}€!</p>
-                </div>
-            ))}
+            <div className="promotions-grid">
+                {promo.map(produit => (
+                    <div className='promo-in-grid'>
+                        <p className="legend" >{produit.name}</p>
+                        <p className="legend" >{produit.prix * (1 - produit.promo / 100)}€ au lieu de {produit.prix}€!</p>
+                    </div>
+                ))}
             </div>
         </div>
+
     )
 }
 
