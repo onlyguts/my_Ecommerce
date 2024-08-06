@@ -239,7 +239,7 @@ function Cart() {
       .then(response => response.json())
       .then(data => {
         setCartItems(data);
-        const total = data.reduce((sum, item) => sum + (item.prix * (1 - item.promo / 100) * item.quantity), 0);
+        const total = data.reduce((sum, item) => sum + ((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity), 0);
         setValue(total);
       })
       .catch(error => console.error('Erreur: ', error));
@@ -256,7 +256,7 @@ function Cart() {
     navigate('/panier')
   }
 
-  const AddProduit = (id, stock, quantity) => {
+  const AddProduit = (id, stock, quantity, newprice) => {
     console.log(stock >= quantity)
     if (stock - 1 >= quantity) {
       const Login = localStorage.getItem('users');
@@ -264,6 +264,7 @@ function Cart() {
 
       const userInfos = {
         id_produit: id,
+        price_type: newprice,
         id_user: loginUser.id,
       };
       fetch("https://localhost:8000/panier/add", {
@@ -287,13 +288,14 @@ function Cart() {
   }
 
 
-  const DeleteProduit = (id) => {
+  const DeleteProduit = (id, newprice) => {
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
 
     const userInfos = {
       id_produit: id,
       id_user: loginUser.id,
+      price_type: newprice,
     };
     fetch("https://localhost:8000/panier/delete", {
       method: 'DELETE',
@@ -328,14 +330,14 @@ function Cart() {
                               {item.name}
                           </span>
                           <span className="cart-item-info">
-                            {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€
+                           {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
                           </span>
                         </div>
 
                         <div className='cart-PlusMoin'>
-                          <button onClick={() => DeleteProduit(item.id)} className="cart-item-button">-</button>
+                          <button onClick={() => DeleteProduit(item.id, item.price_type)} className="cart-item-button">-</button>
                           <button className="cart-item-quantity">{item.quantity}</button>
-                          <button onClick={() => AddProduit(item.id, item.stock, item.quantity)} className="cart-item-button">+</button>
+                          <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
                         </div>
                     </div>
                 </li>

@@ -19,6 +19,9 @@ class Panier
     #[ORM\Column]
     private ?int $id_produit = null;
 
+    #[ORM\Column]
+    private ?int $price_type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Panier
     public function setIdProduit(int $id_produit): static
     {
         $this->id_produit = $id_produit;
+
+        return $this;
+    }
+
+    public function getPriceType(): ?int
+    {
+        return $this->price_type;
+    }
+
+    public function setPriceType(int $price_type): static
+    {
+        $this->price_type = $price_type;
 
         return $this;
     }

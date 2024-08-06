@@ -301,7 +301,7 @@ function Cart() {
       .then(response => response.json())
       .then(data => {
         setCartItems(data);
-        const total = data.reduce((sum, item) => sum + (item.prix * (1 - item.promo / 100) * item.quantity), 0);
+        const total = data.reduce((sum, item) => sum + ((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity), 0);
         setValue(total);
       })
       .catch(error => console.error('Erreur: ', error));
@@ -318,7 +318,7 @@ function Cart() {
     navigate('/panier')
   }
 
-  const AddProduit = (id, stock, quantity) => {
+  const AddProduit = (id, stock, quantity, newprice) => {
     console.log(stock >= quantity)
     if (stock - 1 >= quantity) {
       const Login = localStorage.getItem('users');
@@ -327,6 +327,7 @@ function Cart() {
       const userInfos = {
         id_produit: id,
         id_user: loginUser.id,
+        price_type: newprice,
       };
       fetch("https://localhost:8000/panier/add", {
         method: 'POST',
@@ -386,9 +387,9 @@ function Cart() {
           <li key={item.id} className="cart-item">
             <button onClick={() => DeleteProduit(item.id)} className="cart-item-button">-</button>
             <button className="cart-item-quantity">{item.quantity}</button>
-            <button onClick={() => AddProduit(item.id, item.stock, item.quantity)} className="cart-item-button">+</button>
+            <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
             <span className="cart-item-details">
-              {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€
+            {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
             </span>
           </li>
         ))}

@@ -23,7 +23,7 @@ function Panier() {
         .then(reponse => reponse.json())
         .then(data => {
             setValue(data);
-            const total = data.reduce((sum, item) => sum + ((item.prix * (1 - item.promo / 100)) * item.quantity), 0)
+            const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
             console.log(data)
 
         const packageItem = {
@@ -154,7 +154,7 @@ const PaysUser = (e) => {
 
     }
 
-    const AddProduit = (id, stock, quantity) => {
+    const AddProduit = (id, stock, quantity, newprice) => {
         console.log(stock)
         if (stock - 1 >= quantity) {
 
@@ -163,6 +163,7 @@ const PaysUser = (e) => {
 
             const userInfos = {
                 id_produit: id,
+                price_type: newprice,
                 id_user: loginUser.id,
             };
             fetch("https://localhost:8000/panier/add", {
@@ -228,7 +229,7 @@ const PaysUser = (e) => {
                     ))}
                 </select>
 
-                <p className="panier-total">Prix total : {prixtotal}€</p>
+                <p className="panier-total">Prix total : {prixtotal }€</p>
                 <div className="promo-container">
                     <input
                         type='text'
@@ -246,9 +247,9 @@ const PaysUser = (e) => {
                             <span className="item-info">
                                 <button onClick={() => DeleteProduit(item.id)} className="item-button">-</button>
                                 <button className="item-quantity">{item.quantity}</button>
-                                <button onClick={() => AddProduit(item.id, item.stock, item.quantity)} className="item-button">+</button>
+                                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="item-button">+</button>
                                 <span className="item-details">
-                                    {item.name} - {(item.prix * (1 - item.promo / 100) * item.quantity)}€ | x1 {item.prix * (1 - item.promo / 100)}€
+                                    {item.name} - {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
                                 </span>
                             </span>
                         </li>

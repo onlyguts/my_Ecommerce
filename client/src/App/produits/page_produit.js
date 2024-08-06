@@ -25,10 +25,12 @@ export const ProductBoitier = () => {
     const loginUser = JSON.parse(Login);
     const [avis, setAvis] = useState([]);
     const [avissend, setAvisSend] = useState([]);
+    const [typeporduit, setTypeProduit] = useState([]);
     const [moyenne, setMoyenne] = useState(0);
     const [nbavis, setNbAvis] = useState(0);
     const [email, setEmail] = useState();
-
+    const [newprice, setNewPrice] = useState(0);
+    
     useEffect(() => {
         fetch(`https://localhost:8000/produit/${id}`)
             .then(response => response.json())
@@ -37,9 +39,16 @@ export const ProductBoitier = () => {
                 setLoad(true);
             })
             .catch(error => console.error('Erreur:', error));
+        fetch(`https://localhost:8000/produit/type/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                setTypeProduit(data);
+                console.log(data)
+            })
+            .catch(error => console.error('Erreur:', error));
     }, [id]);
 
- 
+
 
     useEffect(() => {
         fetch(`https://localhost:8000/avis/${id}`)
@@ -54,7 +63,7 @@ export const ProductBoitier = () => {
             .catch(error => console.error('Erreur:', error));
     }, [id]);
 
-    console.log(moyenne)
+    // console.log(moyenne)
     useEffect(() => {
         if (load) {
             fetch(`https://localhost:8000/produit/updateView/${id}`, {
@@ -87,6 +96,12 @@ export const ProductBoitier = () => {
     }
 
 
+    const Type_Produit = (e) => {
+        const int = parseFloat(e.target.value);
+        setNewPrice(int)
+    } 
+
+
     const AvisSet = (e) => {
         const users = localStorage.getItem('users');
         const id_user = JSON.parse(users)
@@ -113,7 +128,7 @@ export const ProductBoitier = () => {
     }
 
     const EnvoyerAvis = () => {
-        console.log('envhyer')
+        // console.log('envhyer')
         fetch("https://localhost:8000/avis/add", {
             method: 'POST',
             headers: {
@@ -131,12 +146,14 @@ export const ProductBoitier = () => {
                 console.error('Erreur:', error);
             });
     }
-    
+
     const renderStars = (count) => {
         return Array(count).fill().map((_, index) => (
             <img key={index} className="star-rate" alt="Star" src={StarProduit} />
         ));
     };
+
+
 
     const writeEmail = (e) => {
         setEmail(e.target.value)
@@ -158,7 +175,7 @@ export const ProductBoitier = () => {
             .then(response => {
                 response.json();
                 alert('Email ajoutée');
-                console.log(userInfos);
+                // console.log(userInfos);
             })
             .catch(error => {
                 console.error('Erreur:', error);
@@ -173,10 +190,11 @@ export const ProductBoitier = () => {
 
             const Login = localStorage.getItem('users');
             const loginUser = JSON.parse(Login);
-    
+
             const userInfos = {
                 id_produit: id,
                 id_user: loginUser.id,
+                price_type: newprice,
             };
             fetch("https://localhost:8000/panier/add", {
                 method: 'POST',
@@ -185,19 +203,19 @@ export const ProductBoitier = () => {
                 },
                 body: JSON.stringify(userInfos),
             })
-    
+
                 .then(response => {
                     response.json();
                     window.location.reload()
-    
-    
+
+
                 })
                 .catch(error => {
                     console.error('Erreur:', error);
                 });
         }
     }
-
+   
 
     return (
         <div>
@@ -237,7 +255,16 @@ export const ProductBoitier = () => {
                                         <p className="avis-texte">{nbavis} avis client</p>
                                     </div>
                                     <div className="star-stat">
-                         
+                                        <select onChange={(e) => Type_Produit(e)}>
+                                            <option value='0' >
+                                            Basique   
+                                                </option>
+                                            {typeporduit.map(item => (
+                                                <option key={item.id} value={item.price} >
+                                                    {item.type} - {item.outpout}
+                                                </option>
+                                            ))}
+                                        </select>
                                         {moyenne === 0 && <p>Aucune évaluation</p>}
                                         {moyenne >= 1 && moyenne < 2 && renderStars(1)}
                                         {moyenne >= 2 && moyenne < 3 && renderStars(2)}
@@ -266,13 +293,13 @@ export const ProductBoitier = () => {
 
 
                                 {produit.promo != 0
-                                    ? <h2 className="product-price">En promo : <span className='produit-promo'>{produit.prix}€</span> {produit.prix * (1 - produit.promo / 100)} €</h2>
+                                    ? <h2 className="product-price">En promo : <span className='produit-promo'>{produit.prix + newprice}€</span> {produit.prix * (1 - produit.promo / 100)} €</h2>
 
-                                    : <h2 className="product-price">{produit.prix} €</h2>
+                                    : <h2 className="product-price">{produit.prix + newprice} €</h2>
                                 }
                                 <section className="multiple-payement">
                                     <h3>Multiple Payements</h3>
-                                    <p className="time-price">{Math.round(produit.prix / 3) + 1.05} € <span>3 fois</span></p>
+                                    <p className="time-price">{Math.round((produit.prix / 3) + 1.05) + newprice} € <span>3 fois</span></p>
                                     <p className="frais-price">dont 1.05 € de frais</p>
                                 </section>
                                 <section className="product-quantity">
