@@ -25,6 +25,10 @@ class ProduitType
     #[ORM\Column]
     private ?int $price = null;
 
+
+    #[ORM\Column(length: 255)]
+    private ?string $image_type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +78,19 @@ class ProduitType
     public function setPrice(int $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+
+    public function getImageType(): ?string
+    {
+        return $this->image_type;
+    }
+
+    public function setImageType(string $image_type): static
+    {
+        $this->image_type = $image_type;
 
         return $this;
     }

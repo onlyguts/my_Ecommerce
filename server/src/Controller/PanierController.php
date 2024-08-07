@@ -17,7 +17,7 @@ class PanierController extends AbstractController
     {
         $conn = $entityManager->getConnection();
     
-        $sql = 'SELECT ps.id as produit_id, ps.*, price_type,  c.name as categorie_name, COUNT(pr.id_produit) as quantity FROM panier pr JOIN produits ps ON pr.id_produit = ps.id JOIN categorie c ON ps.id_categorie = c.id WHERE pr.id_user = :id GROUP BY produit_id, ps.name, c.name, price_type';
+        $sql = 'SELECT ps.id as produit_id, ps.*, price_type, c.name as categorie_name, COUNT(pr.id_produit) as quantity FROM panier pr JOIN produits ps ON pr.id_produit = ps.id JOIN categorie c ON ps.id_categorie = c.id WHERE pr.id_user = :id GROUP BY produit_id, ps.name, c.name, price_type';
     
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':id', $id);

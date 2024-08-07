@@ -30,12 +30,14 @@ export const ProductBoitier = () => {
     const [nbavis, setNbAvis] = useState(0);
     const [email, setEmail] = useState();
     const [newprice, setNewPrice] = useState(0);
-    
+    const [image, setNewImage] = useState('');
+
     useEffect(() => {
         fetch(`https://localhost:8000/produit/${id}`)
             .then(response => response.json())
             .then(data => {
                 setProduit(data);
+                setNewImage(data.image)
                 setLoad(true);
             })
             .catch(error => console.error('Erreur:', error));
@@ -97,8 +99,10 @@ export const ProductBoitier = () => {
 
 
     const Type_Produit = (e) => {
-        const int = parseFloat(e.target.value);
-        setNewPrice(int)
+        const data = JSON.parse(e.target.value);
+        const int = parseFloat(data.price);
+        setNewPrice(int);
+        setNewImage(data.image);
     } 
 
 
@@ -240,7 +244,7 @@ export const ProductBoitier = () => {
                         <section className="product-section">
                             <section className="product">
                                 <div className="picture">
-                                    <img className="boitier" alt="photo Boitier" src={produit.image} />
+                                    <img className="boitier" alt="photo Boitier" src={image} />
                                 </div>
                                 <p className="p">{produit.name}</p>
                             </section>
@@ -256,15 +260,17 @@ export const ProductBoitier = () => {
                                     </div>
                                     <div className="star-stat">
                                         <select onChange={(e) => Type_Produit(e)}>
-                                            <option value='0' >
+                                            <option value={JSON.stringify({price: 0, image: produit.image})} >
                                             Basique   
                                                 </option>
                                             {typeporduit.map(item => (
-                                                <option key={item.id} value={item.price} >
+                                                <option key={item.id} value={JSON.stringify({price: item.price, image: item.image_type})}>
                                                     {item.type} - {item.outpout}
                                                 </option>
                                             ))}
+                                        
                                         </select>
+                                     
                                         {moyenne === 0 && <p>Aucune évaluation</p>}
                                         {moyenne >= 1 && moyenne < 2 && renderStars(1)}
                                         {moyenne >= 2 && moyenne < 3 && renderStars(2)}
