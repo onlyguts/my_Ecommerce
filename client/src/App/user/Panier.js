@@ -15,39 +15,40 @@ function Panier() {
     const [message, setMessage] = useState('');
     const [promo, setPromo] = useState(false);
     const [packages, setPackage] = useState([]);
+    const [newprix, setNewPrix] = useState(0);
     const navigate = useNavigate();
 
 
     const ApiPanier = () => {
         fetch("https://localhost:8000/panier/" + loginUser.id)
-        .then(reponse => reponse.json())
-        .then(data => {
-            setValue(data);
-            const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
-            console.log(data)
+            .then(reponse => reponse.json())
+            .then(data => {
+                setValue(data);
+                const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
+                console.log(data)
 
-        const packageItem = {
-            content: "",
-            weight: 0,
-            width: 0,
-            height: 0,
-            length: 0
-        }
+                const packageItem = {
+                    content: "",
+                    weight: 0,
+                    width: 0,
+                    height: 0,
+                    length: 0
+                }
 
-        data.forEach(item => {
-            packageItem.content += item.name;
-            packageItem.weight += item.weight * item.quantity;
-            packageItem.width += item.width * item.quantity;
-            packageItem.height += item.height * item.quantity;
-            packageItem.length += item.length * item.quantity;
-         
-        });
-       
-        setPackage(packageItem)
-        
-        setPriceTotal(total)
-        })
-        .catch(erreur => console.error('Erreur: ', erreur));
+                data.forEach(item => {
+                    packageItem.content += item.name;
+                    packageItem.weight += item.weight * item.quantity;
+                    packageItem.width += item.width * item.quantity;
+                    packageItem.height += item.height * item.quantity;
+                    packageItem.length += item.length * item.quantity;
+
+                });
+
+                setPackage(packageItem)
+
+                setPriceTotal(total)
+            })
+            .catch(erreur => console.error('Erreur: ', erreur));
     }
 
     useEffect(() => {
@@ -56,18 +57,22 @@ function Panier() {
 
 
     useEffect(() => {
-        fetch("https://epicareer.epidoc.eu/api/countries")
+        fetch("https://localhost:8000/pays")
             .then(reponse => reponse.json())
             .then(data => {
-                setPays(data.data)
+                setPays(data)
 
             })
             .catch(erreur => console.error('Erreur: ', erreur));
     }, []);
 
-const PaysUser = (e) => {
-    setPaysUser(e.target.value)
-}
+    const PaysUser = (e) => {
+        const int = parseFloat(e.target.value);
+        
+        setNewPrix(int)
+    }
+
+
     const SendColis = () => {
         const userInfos = {
             from: "France",
@@ -85,32 +90,6 @@ const PaysUser = (e) => {
         };
 
         console.log(userInfos)
-
-        fetch("https://epicareer.epidoc.eu/api/package/estimate", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userInfos),
-        })
-
-            .then(response => {
-                return response.json();
-
-            })
-            .then(data => {
-                if (data.success) {
-                    setMessage(data.data.travelTime);
-                    console.log(data.data)
-                    setPriceTotal(prixtotal + data.data.price.total)
-                }
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-            });
-
-
-
     }
 
 
@@ -176,7 +155,7 @@ const PaysUser = (e) => {
 
                 .then(response => {
                     response.json();
-              ApiPanier()
+                    ApiPanier()
                 })
                 .catch(error => {
                     console.error('Erreur:', error);
@@ -223,13 +202,13 @@ const PaysUser = (e) => {
                 <select onChange={(e) => PaysUser(e)}>
                     <option value=''>Toutes les pays</option>
                     {pays.map((country, index) => (
-                        <option key={index} value={country} >
-                            <p value={country}>{country}</p>
+                        <option key={index} value={country.taxe} >
+                            <p value={country.name}>{country.name}</p>
                         </option>
                     ))}
                 </select>
 
-                <p className="panier-total">Prix total : {prixtotal }€</p>
+                <p className="panier-total">Prix total : {prixtotal + newprix}€</p>
                 <div className="promo-container">
                     <input
                         type='text'
