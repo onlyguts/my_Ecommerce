@@ -15,7 +15,8 @@ function Panier() {
     const [message, setMessage] = useState('');
     const [promo, setPromo] = useState(false);
     const [packages, setPackage] = useState([]);
-    const [newprix, setNewPrix] = useState(0);
+    const [prixfrais, setPrixFrais] = useState(0);
+    const [prixpoid, setPrixPoids] = useState(0);
     const navigate = useNavigate();
 
 
@@ -46,6 +47,16 @@ function Panier() {
 
                 setPackage(packageItem)
 
+                const int = parseFloat(prixfrais);
+
+                const prixGramme = 1.5; 
+                const prixGrame = (packageItem.weight / 100) * prixGramme;
+        
+                console.log(prixGrame);
+        
+                setPrixFrais(int)
+                setPrixPoids(prixGrame)
+
                 setPriceTotal(total)
             })
             .catch(erreur => console.error('Erreur: ', erreur));
@@ -61,15 +72,22 @@ function Panier() {
             .then(reponse => reponse.json())
             .then(data => {
                 setPays(data)
-
             })
             .catch(erreur => console.error('Erreur: ', erreur));
     }, []);
 
+
+
     const PaysUser = (e) => {
         const int = parseFloat(e.target.value);
-        
-        setNewPrix(int)
+
+        const prixGramme = 1.5; 
+        const prixGrame = (packages.weight / 100) * prixGramme;
+
+        // console.log(prixGrame);
+
+        setPrixFrais(int)
+        setPrixPoids(prixGrame)
     }
 
 
@@ -208,7 +226,7 @@ function Panier() {
                     ))}
                 </select>
 
-                <p className="panier-total">Prix total : {prixtotal + newprix}€</p>
+                <p className="panier-total">Prix Panier : {prixtotal}€ Prix frais : {prixfrais}€ Prix poid : {prixpoid}€ Prix Total : {(prixtotal + prixfrais) + prixpoid}€</p>
                 <div className="promo-container">
                     <input
                         type='text'
