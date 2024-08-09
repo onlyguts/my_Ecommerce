@@ -14,7 +14,9 @@ function Panier() {
     const [message, setMessage] = useState('');
     const [promo, setPromo] = useState(false);
     const [packages, setPackage] = useState([]);
-    const [packagesPoid, setPackagePoid] = useState([]);
+    const [packageAll, setPackageAll] = useState([]);
+    const [form, setForm] = useState([]);
+    
     const [prixfrais, setPrixFrais] = useState(0);
     const [prixpoid, setPrixPoids] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false); // État pour contrôler la visibilité du modal
@@ -32,7 +34,6 @@ function Panier() {
                 console.log(data)
 
                 const packageItem = {
-                    content: "",
                     weight: 0,
                     width: 0,
                     height: 0,
@@ -41,7 +42,7 @@ function Panier() {
                 }
 
                 data.forEach(item => {
-                    packageItem.content += item.name;
+  
                     packageItem.weight += item.weight * item.quantity;
                     packageItem.width += item.width * item.quantity;
                     packageItem.height += item.height * item.quantity;
@@ -67,7 +68,7 @@ function Panier() {
                 
 
                 setPackage(packageColis)
-                setPackagePoid(packageItem)
+                setPackageAll(packageItem)
                 const int = parseFloat(prixfrais);
 
                 const prixGramme = 1.5;
@@ -103,7 +104,7 @@ function Panier() {
         const int = parseFloat(e.target.value);
 
         const prixGramme = 1.5;
-        const prixGrame = (packagesPoid.weight / 100) * prixGramme;
+        const prixGrame = (packageAll.weight / 100) * prixGramme;
 
         // console.log(prixGrame);
 
@@ -185,6 +186,14 @@ function Panier() {
 
     }
 
+    const formChange = (e) => {
+        const { name, value } = e.target;
+        setForm(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+      
+    };
 
 
     const DeleteProduit = (id) => {
@@ -214,10 +223,11 @@ function Panier() {
     }
     const handlePayment = () => {
         const prixFinal = (prixfrais + prixpoid) + prixtotal
-
+        console.log(packageAll)
         console.log(packages)
         console.log(prixFinal + '€')
         console.log("Payment successful");
+        console.log(form)
     };
     return (
         <div>
@@ -285,15 +295,15 @@ function Panier() {
                                 <h2>Informations de paiement</h2>
                                 <form>
                                     <label>Nom:</label>
-                                    <input type="text" placeholder="Votre nom" required />
+                                    <input type="text" placeholder="Votre nom" required name='nom' onChange={formChange} />
                                     <label>Prénom:</label>
-                                    <input type="text" placeholder="Votre prénom" required />
+                                    <input type="text" placeholder="Votre prénom" required  name='prenom' onChange={formChange}/>
                                     <label>Numéro de carte:</label>
-                                    <input type="text" placeholder="1234 5678 9012 3456" required />
+                                    <input type="text" placeholder="1234 5678 9012 3456" required name='num' onChange={formChange}/>
                                     <label>Date d'expiration:</label>
-                                    <input type="text" placeholder="MM/AA" required />
+                                    <input type="text" placeholder="MM/AA" required name='de' onChange={formChange} />
                                     <label>CVV:</label>
-                                    <input type="text" placeholder="123" required />
+                                    <input type="text" placeholder="123" required name='cvv' onChange={formChange}/>
                                     <button type="button" onClick={() => setStep(3)}>Suivant</button>
                                 </form>
                             </div>
