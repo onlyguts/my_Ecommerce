@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Nav from './../Nav'
-
-
+import CSS from './Panier.css'
 function Panier() {
 
     const Login = localStorage.getItem('users');
@@ -15,8 +14,12 @@ function Panier() {
     const [message, setMessage] = useState('');
     const [promo, setPromo] = useState(false);
     const [packages, setPackage] = useState([]);
+    const [packagesPoid, setPackagePoid] = useState([]);
     const [prixfrais, setPrixFrais] = useState(0);
     const [prixpoid, setPrixPoids] = useState(0);
+    const [isModalOpen, setIsModalOpen] = useState(false); // État pour contrôler la visibilité du modal
+    const [step, setStep] = useState(1); // État pour gérer les étapes du modal
+    const [selectedCountry, setSelectedCountry] = useState(''); // État pour gérer le pays sélectionné
     const navigate = useNavigate();
 
 
@@ -33,7 +36,8 @@ function Panier() {
                     weight: 0,
                     width: 0,
                     height: 0,
-                    length: 0
+                    length: 0,
+                    quantity: 0
                 }
 
                 data.forEach(item => {
@@ -42,18 +46,35 @@ function Panier() {
                     packageItem.width += item.width * item.quantity;
                     packageItem.height += item.height * item.quantity;
                     packageItem.length += item.length * item.quantity;
-
+                    packageItem.quantity += item.quantity;
                 });
 
-                setPackage(packageItem)
+                const packageColis = {
+                    produit: []
+                }
+                
+                data.forEach(item => {
+                    packageColis.produit.push({
+                        name: item.name,
+                        weight: item.weight,
+                        width: item.width,
+                        height: item.height,
+                        length: item.length,
+                        quantity: item.quantity
+                    });
+                });
+                
+                
 
+                setPackage(packageColis)
+                setPackagePoid(packageItem)
                 const int = parseFloat(prixfrais);
 
-                const prixGramme = 1.5; 
+                const prixGramme = 1.5;
                 const prixGrame = (packageItem.weight / 100) * prixGramme;
-        
+
                 console.log(prixGrame);
-        
+
                 setPrixFrais(int)
                 setPrixPoids(prixGrame)
 
@@ -81,8 +102,8 @@ function Panier() {
     const PaysUser = (e) => {
         const int = parseFloat(e.target.value);
 
-        const prixGramme = 1.5; 
-        const prixGrame = (packages.weight / 100) * prixGramme;
+        const prixGramme = 1.5;
+        const prixGrame = (packagesPoid.weight / 100) * prixGramme;
 
         // console.log(prixGrame);
 
@@ -91,24 +112,6 @@ function Panier() {
     }
 
 
-    const SendColis = () => {
-        const userInfos = {
-            from: "France",
-            to: paysuser,
-            package: [
-                {
-                    content: packages.content,
-                    weight: packages.weight,
-                    width: packages.width,
-                    height: packages.height,
-                    length: packages.length,
-                }
-            ],
-            currency: "EUR"
-        };
-
-        console.log(userInfos)
-    }
 
 
 
@@ -209,24 +212,24 @@ function Panier() {
                 console.error('Erreur:', error);
             });
     }
+    const handlePayment = () => {
+        const prixFinal = (prixfrais + prixpoid) + prixtotal
+
+        console.log(packages)
+        console.log(prixFinal + '€')
+        console.log("Payment successful");
+    };
     return (
         <div>
             <Nav />
             <div className='panier-container'>
                 <h1 className="panier-title">Panier</h1>
                 {message}
-                <p onClick={() => SendColis()}>Send</p>
+       
 
-                <select onChange={(e) => PaysUser(e)}>
-                    <option value=''>Toutes les pays</option>
-                    {pays.map((country, index) => (
-                        <option key={index} value={country.taxe} >
-                            <p value={country.name}>{country.name}</p>
-                        </option>
-                    ))}
-                </select>
 
-                <p className="panier-total">Prix Panier : {prixtotal}€ Prix frais : {prixfrais}€ Prix poid : {prixpoid}€ Prix Total : {(prixtotal + prixfrais) + prixpoid}€</p>
+
+                <p className="panier-total">Prix Panier : {prixtotal}€</p>
                 <div className="promo-container">
                     <input
                         type='text'
@@ -252,8 +255,60 @@ function Panier() {
                         </li>
                     ))}
                 </ul>
-                <button className="checkout-button">Acheter</button>
+                <button onClick={() => setIsModalOpen(true)} className="checkout-button">Acheter</button>
             </div>
+            {isModalOpen && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        {step === 1 && (
+                            <div>
+                                <h2>Récapitulatif de la commande</h2>
+
+                                <p>Prix du panier: {prixtotal}€ +</p>
+                                <p>Prix du poids: {prixpoid}€ +</p>
+                                <p>Prix de livraison: {prixfrais}€ +</p>
+                                <p>Prix total: {(prixtotal + prixfrais) + prixpoid}€</p>
+                                <label>Choisissez votre pays :</label>
+                                <select onChange={(e) => PaysUser(e)}>
+                                    <option value=''>Toutes les pays</option>
+                                    {pays.map((country, index) => (
+                                        <option key={index} value={country.taxe} >
+                                            <p value={country.name}>{country.name}</p>
+                                        </option>
+                                    ))}
+                                </select>
+                                <button onClick={() => setStep(2)}>Suivant</button>
+                            </div>
+                        )}
+                        {step === 2 && (
+                            <div>
+                                <h2>Informations de paiement</h2>
+                                <form>
+                                    <label>Nom:</label>
+                                    <input type="text" placeholder="Votre nom" required />
+                                    <label>Prénom:</label>
+                                    <input type="text" placeholder="Votre prénom" required />
+                                    <label>Numéro de carte:</label>
+                                    <input type="text" placeholder="1234 5678 9012 3456" required />
+                                    <label>Date d'expiration:</label>
+                                    <input type="text" placeholder="MM/AA" required />
+                                    <label>CVV:</label>
+                                    <input type="text" placeholder="123" required />
+                                    <button type="button" onClick={() => setStep(3)}>Suivant</button>
+                                </form>
+                            </div>
+                        )}
+                        {step === 3 && (
+                            <div>
+                                <h2>Confirmation de commande</h2>
+                                <p>Votre commande a été confirmée!</p>
+                                <button onClick={() => { handlePayment(); setIsModalOpen(false); }}>OK</button>
+                            </div>
+                        )}
+                        <button className="modal-close-button" onClick={() => setIsModalOpen(false)}>Fermer</button>
+                    </div>
+                </div>
+            )}
         </div>
 
     );

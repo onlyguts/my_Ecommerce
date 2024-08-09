@@ -381,22 +381,33 @@ function Cart() {
 
   return (
     <div className='cart'>
-      <h2 className="cart-title">Panier</h2>
-      <ul className="cart-items">
+    <h2 className="cart-title">Panier</h2>
+    <ul className="cart-items">
         {cartItems.map(item => (
-          <li key={item.id} className="cart-item">
-            <button onClick={() => DeleteProduit(item.id)} className="cart-item-button">-</button>
-            <button className="cart-item-quantity">{item.quantity}</button>
-            <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
-            <span className="cart-item-details">
-            {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
-            </span>
-          </li>
+            <li key={item.id} className="cart-item">
+                <img src={item.image} alt={item.name} className="cart-item-image" />
+                <div className="cart-item-details">
+                    <div className='cart-description'>
+                      <span className="cart-item-info">
+                          {item.name}
+                      </span>
+                      <span className="cart-item-info">
+                       {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
+                      </span>
+                    </div>
+
+                    <div className='cart-PlusMoin'>
+                      <button onClick={() => DeleteProduit(item.id, item.price_type)} className="cart-item-button">-</button>
+                      <button className="cart-item-quantity">{item.quantity}</button>
+                      <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
+                    </div>
+                </div>
+            </li>
         ))}
-      </ul>
-      <h2 className="cart-total">Prix total : {value}€</h2>
-      <button onClick={() => PagePanier()} className="cart-view-button">AFFICHEZ LE PANIER</button>
-    </div>
+    </ul>
+    <h2 className="cart-total">Prix total : {value}€</h2>
+    <button onClick={() => navigate('/panier')} className="cart-view-button">AFFICHEZ LE PANIER</button>
+</div>
   );
 }
 export default Produits;

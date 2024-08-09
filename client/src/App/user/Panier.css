@@ -1,0 +1,135 @@
+:root {
+    --primary-color: #E2B791;
+    --secondary-color: #D8844D;
+    --accent-color: #2E2E2E;
+    --background-color: #F3E1D1;
+    --highlight-color: #F4D5BB;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --blue: #1d6f5f;
+    --beige: #e1b690;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--shadow-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.modal-content {
+    background-color: var(--background-color);
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0px 4px 15px var(--shadow-color);
+    animation: fadeIn 0.3s ease-out;
+    color: var(--accent-color);
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.modal-content h2 {
+    margin: 0 0 20px;
+    font-size: 26px;
+    text-align: center;
+    color: var(--secondary-color);
+}
+
+
+.summary-details p, .confirmation-message p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.summary-details h3 {
+    margin-top: 20px;
+    font-size: 22px;
+    color: var(--secondary-color);
+}
+
+
+.payment-input {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--highlight-color);
+    color: var(--accent-color);
+    box-sizing: border-box;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-close-button, .modal-pay-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+.modal-close-button {
+    background-color: var(--accent-color);
+}
+
+.modal-close-button:hover {
+    background-color: var(--accent-color);
+}
+
+.modal-pay-button {
+    background-color: var(--blue);
+}
+
+.modal-pay-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.payment-select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--highlight-color);
+    color: var(--accent-color);
+    box-sizing: border-box;
+}
+
+.payment-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: var(--accent-color);
+}
