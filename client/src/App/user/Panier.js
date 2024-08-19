@@ -6,6 +6,10 @@ function Panier() {
 
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
+
+    const Panier = localStorage.getItem('panier');
+    const panierUser = JSON.parse(Panier);
+
     const [value, setValue] = useState([]);
     const [prixtotal, setPriceTotal] = useState([]);
     const [code, setCode] = useState('');
@@ -26,62 +30,71 @@ function Panier() {
 
 
     const ApiPanier = () => {
-        fetch("https://localhost:8000/panier/" + loginUser.id)
-            .then(reponse => reponse.json())
-            .then(data => {
-                setValue(data);
-                const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
-                console.log(data)
+        if (!loginUser) {
+            panierUser.forEach(item => {
+              console.log(item)
+              
+            });
 
-                const packageItem = {
-                    weight: 0,
-                    width: 0,
-                    height: 0,
-                    length: 0,
-                    quantity: 0
-                }
+        } else {
 
-                data.forEach(item => {
-  
-                    packageItem.weight += item.weight * item.quantity;
-                    packageItem.width += item.width * item.quantity;
-                    packageItem.height += item.height * item.quantity;
-                    packageItem.length += item.length * item.quantity;
-                    packageItem.quantity += item.quantity;
-                });
-
-                const packageColis = {
-                    produit: []
-                }
-                
-                data.forEach(item => {
-                    packageColis.produit.push({
-                        name: item.name,
-                        weight: item.weight,
-                        width: item.width,
-                        height: item.height,
-                        length: item.length,
-                        quantity: item.quantity
+            fetch("https://localhost:8000/panier/" + loginUser.id)
+                .then(reponse => reponse.json())
+                .then(data => {
+                    setValue(data);
+                    const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
+                    console.log(data)
+    
+                    const packageItem = {
+                        weight: 0,
+                        width: 0,
+                        height: 0,
+                        length: 0,
+                        quantity: 0
+                    }
+    
+                    data.forEach(item => {
+      
+                        packageItem.weight += item.weight * item.quantity;
+                        packageItem.width += item.width * item.quantity;
+                        packageItem.height += item.height * item.quantity;
+                        packageItem.length += item.length * item.quantity;
+                        packageItem.quantity += item.quantity;
                     });
-                });
-                
-                
-
-                setPackage(packageColis)
-                setPackageAll(packageItem)
-                const int = parseFloat(prixfrais);
-
-                const prixGramme = 1.5;
-                const prixGrame = (packageItem.weight / 100) * prixGramme;
-
-                console.log(prixGrame);
-
-                setPrixFrais(int)
-                setPrixPoids(prixGrame)
-
-                setPriceTotal(total)
-            })
-            .catch(erreur => console.error('Erreur: ', erreur));
+    
+                    const packageColis = {
+                        produit: []
+                    }
+                    
+                    data.forEach(item => {
+                        packageColis.produit.push({
+                            name: item.name,
+                            weight: item.weight,
+                            width: item.width,
+                            height: item.height,
+                            length: item.length,
+                            quantity: item.quantity
+                        });
+                    });
+                    
+                    
+    
+                    setPackage(packageColis)
+                    setPackageAll(packageItem)
+                    const int = parseFloat(prixfrais);
+    
+                    const prixGramme = 1.5;
+                    const prixGrame = (packageItem.weight / 100) * prixGramme;
+    
+                    console.log(prixGrame);
+    
+                    setPrixFrais(int)
+                    setPrixPoids(prixGrame)
+    
+                    setPriceTotal(total)
+                })
+                .catch(erreur => console.error('Erreur: ', erreur));
+        }
     }
 
     useEffect(() => {

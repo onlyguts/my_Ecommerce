@@ -41,6 +41,8 @@ class UsersController extends AbstractController
     
         return $this->json($produits);
     }
+ 
+
     #[Route('/users/get/{email}', name: 'appget_users')]
     public function indexget(EntityManagerInterface $entityManager, string $email): Response
     {

@@ -27,6 +27,22 @@ class PanierController extends AbstractController
         return $this->json($produits);
     }
 
+    #[Route('/panier/chercher/{id}', name: 'app_userchercher', methods: ['GET', 'HEAD'])]
+    public function users_chercher(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $conn = $entityManager->getConnection();
+    
+        $sql = 'SELECT u.* FROM panier pr JOIN users u ON u.id = :id';
+
+    
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $resultSet = $stmt->executeQuery();
+        $produits = $resultSet->fetchOne();
+    
+        return $this->json($produits);
+    }
+
     #[Route('/panier/add', name: 'app_panier_add', methods: ['POST'])]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {

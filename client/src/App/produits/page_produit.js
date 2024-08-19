@@ -32,6 +32,8 @@ export const ProductBoitier = () => {
     const [newprice, setNewPrice] = useState(0);
     const [image, setNewImage] = useState('');
 
+
+
     useEffect(() => {
         fetch(`https://localhost:8000/produit/${id}`)
             .then(response => response.json())
@@ -103,7 +105,7 @@ export const ProductBoitier = () => {
         const int = parseFloat(data.price);
         setNewPrice(int);
         setNewImage(data.image);
-    } 
+    }
 
 
     const AvisSet = (e) => {
@@ -194,32 +196,83 @@ export const ProductBoitier = () => {
 
             const Login = localStorage.getItem('users');
             const loginUser = JSON.parse(Login);
-
-            const userInfos = {
-                id_produit: id,
-                id_user: loginUser.id,
-                price_type: newprice,
-            };
-            fetch("https://localhost:8000/panier/add", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userInfos),
-            })
-
-                .then(response => {
-                    response.json();
-                    window.location.reload()
+            const UserAccount = localStorage.getItem('user_no_account');
 
 
+            if (!loginUser) {
+                if (!UserAccount) {
+                    function entierAleatoire(min, max) {
+                        return Math.floor(Math.random() * (max - min + 1)) + min;
+                    }
+                    const id_generate = entierAleatoire(100000, 999999)
+
+                    console.log(id_generate)
+                    localStorage.setItem('user_no_account', id_generate);
+                } else {
+                    console.log(UserAccount)
+                }
+
+                fetch("https://localhost:8000/panier/chercher/" + UserAccount)
+                    .then(reponse => reponse.json())
+                    .then(data => {
+                        if (data === false) {
+                            console.log("Aucun utilisateur trouvé avec cet ID, cela est attendu.");
+                            const userInfos = {
+                                id_produit: id,
+                                id_user: UserAccount,
+                                price_type: newprice,
+                            };
+                            fetch("https://localhost:8000/panier/add", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(userInfos),
+                            })
+
+                                .then(response => {
+                                    response.json();
+                                    window.location.reload()
+
+
+                                })
+                                .catch(error => {
+                                    console.error('Erreur:', error);
+                                });
+                        } else {
+                            AddPanier(id, stock)
+                            console.log("Utilisateur trouvé : ", data);
+                        }
+                    })
+                    .catch(erreur => console.error('Erreur: ', erreur));
+
+            } else {
+                const userInfos = {
+                    id_produit: id,
+                    id_user: loginUser.id,
+                    price_type: newprice,
+                };
+                fetch("https://localhost:8000/panier/add", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userInfos),
                 })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                });
+
+                    .then(response => {
+                        response.json();
+                        window.location.reload()
+
+
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                    });
+            }
         }
     }
-   
+
 
     return (
         <div>
@@ -260,17 +313,17 @@ export const ProductBoitier = () => {
                                     </div>
                                     <div className="star-stat">
                                         <select onChange={(e) => Type_Produit(e)}>
-                                            <option value={JSON.stringify({price: 0, image: produit.image})} >
-                                            Basique   
-                                                </option>
+                                            <option value={JSON.stringify({ price: 0, image: produit.image })} >
+                                                Basique
+                                            </option>
                                             {typeporduit.map(item => (
-                                                <option key={item.id} value={JSON.stringify({price: item.price, image: item.image_type})}>
+                                                <option key={item.id} value={JSON.stringify({ price: item.price, image: item.image_type })}>
                                                     {item.type} - {item.outpout}
                                                 </option>
                                             ))}
-                                        
+
                                         </select>
-                                     
+
                                         {moyenne === 0 && <p>Aucune évaluation</p>}
                                         {moyenne >= 1 && moyenne < 2 && renderStars(1)}
                                         {moyenne >= 2 && moyenne < 3 && renderStars(2)}
