@@ -310,7 +310,51 @@ function Panier() {
         console.log(packages)
         console.log(prixFinal + '€')
         console.log("Payment successful");
-        console.log(form)
+
+        const Login = localStorage.getItem('users');
+        const loginUser = JSON.parse(Login);
+        const UserAccount = localStorage.getItem('user_no_account');
+
+   
+        let userInfos = {}
+        if (loginUser) {
+             userInfos = {
+                id_user: loginUser.id,
+                nom: form.nom,
+                prenom: form.prenom,
+                num: form.num,
+                de: form.de,
+                cvv: form.cvv
+            };
+        } else {
+
+             userInfos = {
+                id_user: UserAccount,
+                nom: form.nom,
+                prenom: form.prenom,
+                num: form.num,
+                de: form.de,
+                cvv: form.cvv
+            };
+        }
+
+        console.log(userInfos)
+        fetch("https://localhost:8000/achat/add", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userInfos),
+        })
+
+            .then(response => {
+                response.json();
+                ApiPanier()
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+
     };
     return (
         <div>

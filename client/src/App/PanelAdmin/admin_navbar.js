@@ -35,6 +35,9 @@ function NavAdmin() {
     const ListP = () => {
         navigate('/admin/listp')
     }
+    const ListPF = () => {
+        navigate('/admin/listpf')
+    }
     return (
         <div>
  
@@ -48,6 +51,7 @@ function NavAdmin() {
                 <a onClick={() => List()}>LISTE PRODUIT</a>
                 <a onClick={() => ListC()}>LISTE CATEGORIE</a>
                 <a onClick={() => ListP()}>LISTE PROMO</a>
+                <a onClick={() => ListPF()}>LISTE PAYS FRAIS</a>
             </div>
         </div>
     )

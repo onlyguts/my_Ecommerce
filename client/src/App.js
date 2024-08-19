@@ -6,10 +6,13 @@ import Admin from './App/PanelAdmin/admin_create_produits'
 import AdminList from './App/PanelAdmin/admin_liste_produits'
 import AdminListC from './App/PanelAdmin/admin_liste_categroie'
 import AdminListP from './App/PanelAdmin/admin_liste_promo'
+import AdminListPF from './App/PanelAdmin/admin_liste_pays'
+
 import AdminCat from './App/PanelAdmin/admin_create_categorie'
 import AdminPromo from './App/PanelAdmin/admin_create_promo'
 import AdminListId from './App/PanelAdmin/admin_update_produit'
 import AdminListIdP from './App/PanelAdmin/admin_update_promo'
+import Adminupdatepays from './App/PanelAdmin/admin_update_pays'
 import AdminListIdAvis from './App/PanelAdmin/admin_avis_produits'
 import AdminListIdC from './App/PanelAdmin/admin_update_categorie'
 import Adminemail from './App/PanelAdmin/admin_email'
@@ -47,8 +50,10 @@ function App() {
                 <Route path="/admin/add" element={<Admin />}></Route>
                 <Route path="/admin/list" element={<AdminList />}></Route>
                 <Route path="/admin/email" element={<Adminemail />}></Route>
+                
                 <Route path="/admin/listc" element={<AdminListC />}></Route>
                 <Route path="/admin/listp" element={<AdminListP />}></Route>
+                <Route path="/admin/listpf" element={<AdminListPF />}></Route>
                 <Route path="/admin/addc" element={<AdminCat />}></Route>
                 <Route path="/admin/addp" element={<AdminPromo />}></Route>
                 <Route path="/admin/list/produit/:id" element={<AdminListId />}></Route>
@@ -56,6 +61,8 @@ function App() {
                 <Route path="/admin/list/produit/avis/:id" element={<AdminListIdAvis />}></Route>
                 <Route path="/admin/listc/categorie/:id" element={<AdminListIdC />}></Route>
                
+                <Route path="/admin/listpf/pays/:id" element={<Adminupdatepays />}></Route>
+
                 <Route path="/produits/all/:id" element={<ProduitsAll />}></Route>
                 <Route path="/produits/:id" element={<ProduitsList />}></Route>
                 <Route path="/produit/:id" element={<ProduitList />}></Route>
