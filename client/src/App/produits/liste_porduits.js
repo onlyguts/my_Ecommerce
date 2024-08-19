@@ -106,10 +106,20 @@ function Nav_one() {
   const [showCart, setShowCart] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const [categorie, setCategorie] = useState([]);
+  const UserAccount = localStorage.getItem('user_no_account');
   useEffect(() => {
- 
     if (loginUser) {
       fetch("https://localhost:8000/panier/" + loginUser.id)
+        .then(reponse => reponse.json())
+        .then(data => {
+
+          const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+          setQuantity(quantity);
+
+        })
+        .catch(erreur => console.error('Erreur: ', erreur));
+    } else {
+      fetch("https://localhost:8000/panier/" + UserAccount)
         .then(reponse => reponse.json())
         .then(data => {
 
@@ -191,14 +201,14 @@ function Nav_one() {
               <p></p>
             )
           )}
-            {loginUser && (
+         
             <button className="menu-btn" onClick={toggleCart}>
               Cart
               {quantity > 0 && (
                 <span className="quantity-circle">{quantity}</span>
               )}
             </button>
-          )}
+          
         </div>
       </div>
       {showCart && <Cart />}
@@ -296,8 +306,10 @@ function Cart() {
   const UserPanier = () => {
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
+    const UserAccount = localStorage.getItem('user_no_account');
 
-    fetch("https://localhost:8000/panier/" + loginUser.id)
+    if (!loginUser) {
+      fetch("https://localhost:8000/panier/" + UserAccount)
       .then(response => response.json())
       .then(data => {
         setCartItems(data);
@@ -305,6 +317,16 @@ function Cart() {
         setValue(total);
       })
       .catch(error => console.error('Erreur: ', error));
+    } else {
+      fetch("https://localhost:8000/panier/" + loginUser.id)
+        .then(response => response.json())
+        .then(data => {
+          setCartItems(data);
+          const total = data.reduce((sum, item) => sum + ((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity), 0);
+          setValue(total);
+        })
+        .catch(error => console.error('Erreur: ', error));
+    }
   };
 
   useEffect(() => {
@@ -323,12 +345,21 @@ function Cart() {
     if (stock - 1 >= quantity) {
       const Login = localStorage.getItem('users');
       const loginUser = JSON.parse(Login);
-
-      const userInfos = {
-        id_produit: id,
-        id_user: loginUser.id,
-        price_type: newprice,
-      };
+      const UserAccount = localStorage.getItem('user_no_account');
+      let userInfos = {}
+      if (loginUser) {
+         userInfos = {
+          id_produit: id,
+          price_type: newprice,
+          id_user: loginUser.id,
+        };
+      } else {
+         userInfos = {
+          id_produit: id,
+          price_type: newprice,
+          id_user: UserAccount,
+        };
+      }
       fetch("https://localhost:8000/panier/add", {
         method: 'POST',
         headers: {
@@ -350,14 +381,25 @@ function Cart() {
   }
 
 
-  const DeleteProduit = (id) => {
+  const DeleteProduit = (id, newprice) => {
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
 
-    const userInfos = {
-      id_produit: id,
-      id_user: loginUser.id,
-    };
+    const UserAccount = localStorage.getItem('user_no_account');
+    let userInfos = {}
+    if (loginUser) {
+       userInfos = {
+        id_produit: id,
+        price_type: newprice,
+        id_user: loginUser.id,
+      };
+    } else {
+       userInfos = {
+        id_produit: id,
+        price_type: newprice,
+        id_user: UserAccount,
+      };
+    }
     fetch("https://localhost:8000/panier/delete", {
       method: 'DELETE',
       headers: {
@@ -378,36 +420,35 @@ function Cart() {
   }
 
 
-
   return (
     <div className='cart'>
-    <h2 className="cart-title">Panier</h2>
-    <ul className="cart-items">
+      <h2 className="cart-title">Panier</h2>
+      <ul className="cart-items">
         {cartItems.map(item => (
-            <li key={item.id} className="cart-item">
-                <img src={item.image} alt={item.name} className="cart-item-image" />
-                <div className="cart-item-details">
-                    <div className='cart-description'>
-                      <span className="cart-item-info">
-                          {item.name}
-                      </span>
-                      <span className="cart-item-info">
-                       {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
-                      </span>
-                    </div>
+          <li key={item.id} className="cart-item">
+            <img src={item.image} alt={item.name} className="cart-item-image" />
+            <div className="cart-item-details">
+              <div className='cart-description'>
+                <span className="cart-item-info">
+                  {item.name}
+                </span>
+                <span className="cart-item-info">
+                  {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
+                </span>
+              </div>
 
-                    <div className='cart-PlusMoin'>
-                      <button onClick={() => DeleteProduit(item.id, item.price_type)} className="cart-item-button">-</button>
-                      <button className="cart-item-quantity">{item.quantity}</button>
-                      <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
-                    </div>
-                </div>
-            </li>
+              <div className='cart-PlusMoin'>
+                <button onClick={() => DeleteProduit(item.id, item.price_type)} className="cart-item-button">-</button>
+                <button className="cart-item-quantity">{item.quantity}</button>
+                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
+              </div>
+            </div>
+          </li>
         ))}
-    </ul>
-    <h2 className="cart-total">Prix total : {value}€</h2>
-    <button onClick={() => navigate('/panier')} className="cart-view-button">AFFICHEZ LE PANIER</button>
-</div>
+      </ul>
+      <h2 className="cart-total">Prix total : {value}€</h2>
+      <button onClick={() => navigate('/panier')} className="cart-view-button">AFFICHEZ LE PANIER</button>
+    </div>
   );
 }
 export default Produits;

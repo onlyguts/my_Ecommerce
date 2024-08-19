@@ -284,12 +284,21 @@ function Cart() {
     if (stock - 1 >= quantity) {
       const Login = localStorage.getItem('users');
       const loginUser = JSON.parse(Login);
-
-      const userInfos = {
-        id_produit: id,
-        price_type: newprice,
-        id_user: loginUser.id,
-      };
+      const UserAccount = localStorage.getItem('user_no_account');
+      let userInfos = {}
+      if (loginUser) {
+         userInfos = {
+          id_produit: id,
+          price_type: newprice,
+          id_user: loginUser.id,
+        };
+      } else {
+         userInfos = {
+          id_produit: id,
+          price_type: newprice,
+          id_user: UserAccount,
+        };
+      }
       fetch("https://localhost:8000/panier/add", {
         method: 'POST',
         headers: {
@@ -315,11 +324,21 @@ function Cart() {
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
 
-    const userInfos = {
-      id_produit: id,
-      id_user: loginUser.id,
-      price_type: newprice,
-    };
+    const UserAccount = localStorage.getItem('user_no_account');
+    let userInfos = {}
+    if (loginUser) {
+       userInfos = {
+        id_produit: id,
+        price_type: newprice,
+        id_user: loginUser.id,
+      };
+    } else {
+       userInfos = {
+        id_produit: id,
+        price_type: newprice,
+        id_user: UserAccount,
+      };
+    }
     fetch("https://localhost:8000/panier/delete", {
       method: 'DELETE',
       headers: {

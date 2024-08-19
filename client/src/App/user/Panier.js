@@ -31,11 +31,63 @@ function Panier() {
 
     const ApiPanier = () => {
         if (!loginUser) {
-            panierUser.forEach(item => {
-              console.log(item)
-              
-            });
+            const UserAccount = localStorage.getItem('user_no_account');
+            fetch("https://localhost:8000/panier/" + UserAccount)
+            .then(reponse => reponse.json())
+            .then(data => {
+                setValue(data);
+                const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
+                console.log(data)
 
+                const packageItem = {
+                    weight: 0,
+                    width: 0,
+                    height: 0,
+                    length: 0,
+                    quantity: 0
+                }
+
+                data.forEach(item => {
+  
+                    packageItem.weight += item.weight * item.quantity;
+                    packageItem.width += item.width * item.quantity;
+                    packageItem.height += item.height * item.quantity;
+                    packageItem.length += item.length * item.quantity;
+                    packageItem.quantity += item.quantity;
+                });
+
+                const packageColis = {
+                    produit: []
+                }
+                
+                data.forEach(item => {
+                    packageColis.produit.push({
+                        name: item.name,
+                        weight: item.weight,
+                        width: item.width,
+                        height: item.height,
+                        length: item.length,
+                        quantity: item.quantity
+                    });
+                });
+                
+                
+
+                setPackage(packageColis)
+                setPackageAll(packageItem)
+                const int = parseFloat(prixfrais);
+
+                const prixGramme = 1.5;
+                const prixGrame = (packageItem.weight / 100) * prixGramme;
+
+                console.log(prixGrame);
+
+                setPrixFrais(int)
+                setPrixPoids(prixGrame)
+
+                setPriceTotal(total)
+            })
+            .catch(erreur => console.error('Erreur: ', erreur));
         } else {
 
             fetch("https://localhost:8000/panier/" + loginUser.id)
@@ -174,12 +226,22 @@ function Panier() {
 
             const Login = localStorage.getItem('users');
             const loginUser = JSON.parse(Login);
+            const UserAccount = localStorage.getItem('user_no_account');
+            let userInfos = {}
+            if (loginUser) {
+                 userInfos = {
+                    id_produit: id,
+                    price_type: newprice,
+                    id_user: loginUser.id,
+                };
+            } else {
 
-            const userInfos = {
-                id_produit: id,
-                price_type: newprice,
-                id_user: loginUser.id,
-            };
+                 userInfos = {
+                    id_produit: id,
+                    price_type: newprice,
+                    id_user: UserAccount,
+                };
+            }
             fetch("https://localhost:8000/panier/add", {
                 method: 'POST',
                 headers: {
@@ -212,11 +274,19 @@ function Panier() {
     const DeleteProduit = (id) => {
         const Login = localStorage.getItem('users');
         const loginUser = JSON.parse(Login);
-
-        const userInfos = {
-            id_produit: id,
-            id_user: loginUser.id,
-        };
+        const UserAccount = localStorage.getItem('user_no_account');
+        let userInfos = {}
+        if (loginUser) {
+             userInfos = {
+               id_produit: id,
+               id_user: loginUser.id,
+           };
+        } else {
+             userInfos = {
+                id_produit: id,
+                id_user: UserAccount,
+            };
+        }       
         fetch("https://localhost:8000/panier/delete", {
             method: 'DELETE',
             headers: {
