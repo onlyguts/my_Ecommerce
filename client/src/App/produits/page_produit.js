@@ -339,10 +339,10 @@ export const ProductBoitier = () => {
                                     configuration performante,
                                     axée vers le jeu et le multimédia.
                                 </p>
-                                <div className="button-create">
+                                {/* <div className="button-create">
                                     <img className="icone-create" alt="Icone create" src={WrenchCreate} />
                                     <p className="texte-create">CREER UN PC AVEC CE PRODUIT</p>
-                                </div>
+                                </div> */}
                                 <div className="marques-produits">
                                     <img className="msi-Logo" alt="Msi removebg preview" src={MSILogo} />
                                     <img className="nvidia-logo" alt="Nvidia removebg" src={NvidiaLogo} />
@@ -356,23 +356,23 @@ export const ProductBoitier = () => {
 
                                     : <h2 className="product-price">{produit.prix + newprice} €</h2>
                                 }
-                                <section className="multiple-payement">
+                                {/* <section className="multiple-payement">
                                     <h3>Multiple Payements</h3>
                                     <p className="time-price">{Math.round((produit.prix / 3) + 1.05) + newprice} € <span>3 fois</span></p>
                                     <p className="frais-price">dont 1.05 € de frais</p>
-                                </section>
-                                <section className="product-quantity">
+                                </section> */}
+                                {/* <section className="product-quantity">
                                     <h3>QUANTITE</h3>
                                     <QuantityPicker min={1} max={10} />
-                                </section>
+                                </section> */}
                                 <section className="add-basket-button" onClick={() => AddPanier(produit.id, produit.stock)}>
                                     <h2>AJOUTER AU PANIER</h2>
                                     <img src={BuyingCart} alt="Icone Ajout Panier" />
                                 </section>
-                                <section className="buy-now-button">
+                                {/* <section className="buy-now-button">
                                     <h2>ACHETER MAINTENANT</h2>
                                     <img src={ChevronRight} alt="Icone Achat Immediat" />
-                                </section>
+                                </section> */}
 
 
                                 {produit.stock === 0 ? (

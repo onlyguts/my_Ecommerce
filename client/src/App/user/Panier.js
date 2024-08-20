@@ -20,7 +20,9 @@ function Panier() {
     const [packages, setPackage] = useState([]);
     const [packageAll, setPackageAll] = useState([]);
     const [form, setForm] = useState([]);
+    const [expedition, setExpedition] = useState([]);
     
+    const [prixexpe, setPrixExpe] = useState(0);
     const [prixfrais, setPrixFrais] = useState(0);
     const [prixpoid, setPrixPoids] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false); // État pour contrôler la visibilité du modal
@@ -163,6 +165,14 @@ function Panier() {
             .catch(erreur => console.error('Erreur: ', erreur));
     }, []);
 
+    useEffect(() => {
+        fetch("https://localhost:8000/expedition")
+            .then(reponse => reponse.json())
+            .then(data => {
+                setExpedition(data)
+            })
+            .catch(erreur => console.error('Erreur: ', erreur));
+    }, []);
 
 
     const PaysUser = (e) => {
@@ -177,7 +187,12 @@ function Panier() {
         setPrixPoids(prixGrame)
     }
 
-
+    const ExpUser = (e) => {
+        const int = parseFloat(e.target.value);
+        // console.log(prixGrame);
+        setPrixExpe(int)
+        
+    }
 
 
 
@@ -404,7 +419,17 @@ function Panier() {
                                 <p>Prix du panier: {prixtotal}€ +</p>
                                 <p>Prix du poids: {prixpoid}€ +</p>
                                 <p>Prix de livraison: {prixfrais}€ +</p>
-                                <p>Prix total: {(prixtotal + prixfrais) + prixpoid}€</p>
+                                <label>Choisissez votre mode d'expedition :</label>
+                                <select onChange={(e) => ExpUser(e)}>
+                                    <option value=''>Mode expe</option>
+                                    {expedition.map((country, index) => (
+                                        <option key={index} value={country.taxe} >
+                                            <p value={country.name}>{country.name}</p>
+                                        </option>
+                                    ))}
+                                </select>
+                                <p>Prix du mode d'expedition: {prixexpe}€ +</p>
+                                <p>Prix total: {(prixtotal + prixfrais) + (prixpoid + prixexpe)}€</p>
                                 <label>Choisissez votre pays :</label>
                                 <select onChange={(e) => PaysUser(e)}>
                                     <option value=''>Toutes les pays</option>

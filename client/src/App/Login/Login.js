@@ -24,7 +24,7 @@ function Login() {
         // console.log(response)
         if (response.status === 200) {
             const data = await response.json();
-        
+            console.log(data)
             if (data[0].email) {
                 if (data[0].password === password) {
                     navigate("/");
