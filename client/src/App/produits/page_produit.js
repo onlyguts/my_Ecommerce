@@ -352,7 +352,7 @@ export const ProductBoitier = () => {
 
 
                                 {produit.promo != 0
-                                    ? <h2 className="product-price">En promo : <span className='produit-promo'>{produit.prix + newprice}€</span> {produit.prix * (1 - produit.promo / 100)} €</h2>
+                                    ? <h2 className="product-price">En promo : <span className='produit-promo'>{produit.prix + newprice}€</span> {((produit.prix) * (1 - produit.promo / 100)) + newprice} €</h2>
 
                                     : <h2 className="product-price">{produit.prix + newprice} €</h2>
                                 }
