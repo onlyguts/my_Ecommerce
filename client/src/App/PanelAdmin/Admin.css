@@ -17,13 +17,6 @@
     margin: auto;
 }
 
-form {
-    display: flex;
-    margin: auto;
-
-    padding: 5em;
-}
-
 .form {
     display: flex;
     margin: auto;
@@ -39,14 +32,14 @@ form {
     padding-left: 20px;
 }
 
-form div {
+.form div {
     display: flex;
     flex-direction: column;
     margin: auto;
     padding-left: 20px;
 }
 
-form div input {
+.form div input {
     width: 500px;
 
 }

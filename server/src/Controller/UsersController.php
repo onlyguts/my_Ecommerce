@@ -158,7 +158,7 @@ class UsersController extends AbstractController
 
     private function emailRegister($emailUser, $username, $token)
     {
-        $lienVerif = 'http://localhost:3000/confirmation/' . htmlspecialchars($token);
+        $lienVerif = 'https://localhost:3000/confirmation/' . htmlspecialchars($token);
         $emailMessage = '
         <!DOCTYPE html>
         <html lang="fr">
@@ -181,7 +181,7 @@ class UsersController extends AbstractController
         <body>
             <div class="container">
                 <div class="header">
-                    <img src="http://localhost:3000/logo.png" alt="Logo">
+                    <img src="https://localhost:3000/logo.png" alt="Logo">
                     <h1>Confirmation de compte</h1>
                 </div>
                 <div class="content">
@@ -249,7 +249,7 @@ class UsersController extends AbstractController
         <body>
             <div class="container">
                 <div class="header">
-                    <img src="http://localhost:3000/logo.png" alt="Logo BYP">
+                    <img src="https://localhost:3000/logo.png" alt="Logo BYP">
                     <h1>Bienvenue chez <span class="color">BYP</span></h1>
                 </div>
                 <div class="content">

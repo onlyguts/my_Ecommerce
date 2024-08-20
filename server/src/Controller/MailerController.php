@@ -58,7 +58,7 @@ class MailerController extends AbstractController
 
         $nomProduit = $produit->getName();
         $ImageProduit = $produit->getImage();
-        $lienProduit = "http://localhost:3000/produit/" . $produitId;
+        $lienProduit = "https://localhost:3000/produit/" . $produitId;
 
         $messageMail = '
         <!DOCTYPE html>
@@ -82,7 +82,7 @@ class MailerController extends AbstractController
         <body>
             <div class="container">
                 <div class="header">
-                    <img src="http://localhost:3000/logo.png" alt="Logo">
+                    <img src="https://localhost:3000/logo.png" alt="Logo">
                     <h1>Bonne nouvelle !</h1>
                 </div>
                 <div class="content">
@@ -160,7 +160,7 @@ class MailerController extends AbstractController
         $username = $user->getUsername();
         $token = $user->getToken();
 
-        $lien = 'http://localhost:3000/changepassword/' . $token;
+        $lien = 'https://localhost:3000/changepassword/' . $token;
 
         $messageEmail = '
         <!DOCTYPE html>
@@ -183,7 +183,7 @@ class MailerController extends AbstractController
         <body>
             <div class="container">
                 <div class="header">
-                    <img src="http://localhost:3000/logo.png" alt="">
+                    <img src="https://localhost:3000/logo.png" alt="">
                     <h1>Réinitialisation de votre mot de passe</h1>
                 </div>
                 <div class="content">

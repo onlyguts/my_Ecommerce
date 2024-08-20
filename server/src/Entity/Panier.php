@@ -22,6 +22,12 @@ class Panier
     #[ORM\Column]
     private ?int $price_type = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $image_type = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $info = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +65,30 @@ class Panier
     public function setPriceType(int $price_type): static
     {
         $this->price_type = $price_type;
+
+        return $this;
+    }
+
+    public function getImageType(): ?string
+    {
+        return $this->image_type;
+    }
+
+    public function setImageType(string $image_type): static
+    {
+        $this->image_type = $image_type;
+
+        return $this;
+    }
+
+    public function getInfo(): ?string
+    {
+        return $this->info;
+    }
+
+    public function setInfo(string $info): static
+    {
+        $this->info = $info;
 
         return $this;
     }

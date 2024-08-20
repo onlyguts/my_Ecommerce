@@ -9,6 +9,14 @@
     --beige: #e1b690;
 }
 
+.body-container {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--accent-color);
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -22,7 +30,6 @@
     z-index: 1000;
 }
 
-
 .modal-content {
     background-color: var(--background-color);
     padding: 30px;
@@ -33,7 +40,6 @@
     animation: fadeIn 0.3s ease-out;
     color: var(--accent-color);
 }
-
 
 @keyframes fadeIn {
     from {
@@ -46,36 +52,159 @@
     }
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+.panier-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
 }
 
-
-.modal-content h2 {
-    margin: 0 0 20px;
-    font-size: 26px;
+.panier-title {
+    font-size: 36px;
+    color: var(--secondary-color);
     text-align: center;
-    color: var(--secondary-color);
+    margin-bottom: 20px;
 }
 
+.panier-total {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-.summary-details p, .confirmation-message p {
+.promo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.promo-input {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--highlight-color);
+    color: var(--accent-color);
+}
+
+.promo-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--blue);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.promo-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.panier-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.panier-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--shadow-color);
+    padding: 10px 0;
+}
+
+.item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.item-button {
+    background-color: var(--blue);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
     font-size: 18px;
-    margin: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 5px;
 }
 
-.summary-details h3 {
+.item-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.item-quantity {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 16px;
+    color: var(--accent-color);
+}
+
+.item-details {
+    margin-left: 15px;
+}
+
+.checkout-button {
+    background-color: var(--blue);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
     margin-top: 20px;
-    font-size: 22px;
-    color: var(--secondary-color);
+    display: block;
+    width: 100%;
 }
 
+.checkout-button:hover {
+    background-color: var(--secondary-color);
+}
 
-.payment-input {
-    width: calc(100% - 20px);
-    padding: 12px;
+.modal-step {
+    margin-bottom: 20px;
+}
+
+.form-group {
     margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: var(--accent-color);
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--highlight-color);
+    color: var(--accent-color);
+    box-sizing: border-box;
+}
+
+.form-select {
+    width: 100%;
+    padding: 10px;
     border: 1px solid var(--primary-color);
     border-radius: 8px;
     font-size: 16px;
@@ -87,49 +216,96 @@ form {
 .modal-buttons {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
-.modal-close-button, .modal-pay-button {
-    padding: 12px 25px;
+.modal-button {
+    padding: 10px 20px;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.modal-button-connect {
+    background-color: var(--blue);
     color: white;
 }
 
-.modal-close-button {
-    background-color: var(--accent-color);
+.modal-button-connect:hover {
+    background-color: var(--secondary-color);
 }
 
-.modal-close-button:hover {
+.modal-button-guest {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.modal-button-guest:hover {
     background-color: var(--accent-color);
 }
 
 .modal-pay-button {
     background-color: var(--blue);
+    color: white;
 }
 
 .modal-pay-button:hover {
     background-color: var(--secondary-color);
 }
 
-.payment-select {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid var(--primary-color);
-    border-radius: 8px;
-    font-size: 16px;
-    background-color: var(--highlight-color);
-    color: var(--accent-color);
-    box-sizing: border-box;
+.modal-close-button {
+    background-color: var(--accent-color);
+    color: white;
 }
 
-.payment-label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 16px;
+.modal-close-button:hover {
+    background-color: var(--accent-color);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--shadow-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--background-color);
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0px 4px 15px var(--shadow-color);
+    animation: fadeIn 0.3s ease-out;
     color: var(--accent-color);
+    position: relative; 
+}
+
+.modal-close-button {
+    border-radius: 50%;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--accent-color);
+    transition: color 0.3s ease;
+}
+
+.modal-close-button:hover {
+    color: var(--primary-color);
+}
+
+.modal-close-button i {
+    font-size: 24px;
 }

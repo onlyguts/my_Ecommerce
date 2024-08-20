@@ -340,7 +340,7 @@ function Cart() {
     navigate('/panier')
   }
 
-  const AddProduit = (id, stock, quantity, newprice) => {
+  const AddProduit = (id, stock, quantity, newprice, image_type, outpout) => {
     console.log(stock >= quantity)
     if (stock - 1 >= quantity) {
       const Login = localStorage.getItem('users');
@@ -348,16 +348,20 @@ function Cart() {
       const UserAccount = localStorage.getItem('user_no_account');
       let userInfos = {}
       if (loginUser) {
-         userInfos = {
+        userInfos = {
           id_produit: id,
           price_type: newprice,
           id_user: loginUser.id,
+          image_type: image_type,
+          info: outpout,
         };
       } else {
-         userInfos = {
+        userInfos = {
           id_produit: id,
           price_type: newprice,
           id_user: UserAccount,
+          image_type: image_type,
+          info: outpout,
         };
       }
       fetch("https://localhost:8000/panier/add", {
@@ -426,11 +430,14 @@ function Cart() {
       <ul className="cart-items">
         {cartItems.map(item => (
           <li key={item.id} className="cart-item">
-            <img src={item.image} alt={item.name} className="cart-item-image" />
+            <img src={item.image_type} alt={item.name} className="cart-item-image" />
             <div className="cart-item-details">
               <div className='cart-description'>
                 <span className="cart-item-info">
-                  {item.name}
+                {item.info != 'null'
+                    ? <span> {item.name} {item.info}  </span>
+                    : <span> {item.name} </span>
+                  }
                 </span>
                 <span className="cart-item-info">
                   {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
@@ -440,7 +447,7 @@ function Cart() {
               <div className='cart-PlusMoin'>
                 <button onClick={() => DeleteProduit(item.id, item.price_type)} className="cart-item-button">-</button>
                 <button className="cart-item-quantity">{item.quantity}</button>
-                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
+                 <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type, item.image_type, item.info)} className="cart-item-button">+</button>
               </div>
             </div>
           </li>

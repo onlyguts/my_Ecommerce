@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Nav from './../Nav'
 import CSS from './Panier.css'
+import '@fortawesome/fontawesome-free/css/all.min.css';
 function Panier() {
 
     const Login = localStorage.getItem('users');
@@ -20,8 +21,9 @@ function Panier() {
     const [packages, setPackage] = useState([]);
     const [packageAll, setPackageAll] = useState([]);
     const [form, setForm] = useState([]);
+    const [form2, setForm2] = useState([]);
     const [expedition, setExpedition] = useState([]);
-    
+
     const [prixexpe, setPrixExpe] = useState(0);
     const [prixfrais, setPrixFrais] = useState(0);
     const [prixpoid, setPrixPoids] = useState(0);
@@ -35,70 +37,12 @@ function Panier() {
         if (!loginUser) {
             const UserAccount = localStorage.getItem('user_no_account');
             fetch("https://localhost:8000/panier/" + UserAccount)
-            .then(reponse => reponse.json())
-            .then(data => {
-                setValue(data);
-                const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
-                console.log(data)
-
-                const packageItem = {
-                    weight: 0,
-                    width: 0,
-                    height: 0,
-                    length: 0,
-                    quantity: 0
-                }
-
-                data.forEach(item => {
-  
-                    packageItem.weight += item.weight * item.quantity;
-                    packageItem.width += item.width * item.quantity;
-                    packageItem.height += item.height * item.quantity;
-                    packageItem.length += item.length * item.quantity;
-                    packageItem.quantity += item.quantity;
-                });
-
-                const packageColis = {
-                    produit: []
-                }
-                
-                data.forEach(item => {
-                    packageColis.produit.push({
-                        name: item.name,
-                        weight: item.weight,
-                        width: item.width,
-                        height: item.height,
-                        length: item.length,
-                        quantity: item.quantity
-                    });
-                });
-                
-                
-
-                setPackage(packageColis)
-                setPackageAll(packageItem)
-                const int = parseFloat(prixfrais);
-
-                const prixGramme = 1.5;
-                const prixGrame = (packageItem.weight / 100) * prixGramme;
-
-                console.log(prixGrame);
-
-                setPrixFrais(int)
-                setPrixPoids(prixGrame)
-
-                setPriceTotal(total)
-            })
-            .catch(erreur => console.error('Erreur: ', erreur));
-        } else {
-
-            fetch("https://localhost:8000/panier/" + loginUser.id)
                 .then(reponse => reponse.json())
                 .then(data => {
                     setValue(data);
                     const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
                     console.log(data)
-    
+
                     const packageItem = {
                         weight: 0,
                         width: 0,
@@ -106,20 +50,20 @@ function Panier() {
                         length: 0,
                         quantity: 0
                     }
-    
+
                     data.forEach(item => {
-      
+
                         packageItem.weight += item.weight * item.quantity;
                         packageItem.width += item.width * item.quantity;
                         packageItem.height += item.height * item.quantity;
                         packageItem.length += item.length * item.quantity;
                         packageItem.quantity += item.quantity;
                     });
-    
+
                     const packageColis = {
                         produit: []
                     }
-                    
+
                     data.forEach(item => {
                         packageColis.produit.push({
                             name: item.name,
@@ -130,21 +74,79 @@ function Panier() {
                             quantity: item.quantity
                         });
                     });
-                    
-                    
-    
+
+
+
                     setPackage(packageColis)
                     setPackageAll(packageItem)
                     const int = parseFloat(prixfrais);
-    
+
                     const prixGramme = 1.5;
                     const prixGrame = (packageItem.weight / 100) * prixGramme;
-    
+
                     console.log(prixGrame);
-    
+
                     setPrixFrais(int)
                     setPrixPoids(prixGrame)
-    
+
+                    setPriceTotal(total)
+                })
+                .catch(erreur => console.error('Erreur: ', erreur));
+        } else {
+
+            fetch("https://localhost:8000/panier/" + loginUser.id)
+                .then(reponse => reponse.json())
+                .then(data => {
+                    setValue(data);
+                    const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
+                    console.log(data)
+
+                    const packageItem = {
+                        weight: 0,
+                        width: 0,
+                        height: 0,
+                        length: 0,
+                        quantity: 0
+                    }
+
+                    data.forEach(item => {
+
+                        packageItem.weight += item.weight * item.quantity;
+                        packageItem.width += item.width * item.quantity;
+                        packageItem.height += item.height * item.quantity;
+                        packageItem.length += item.length * item.quantity;
+                        packageItem.quantity += item.quantity;
+                    });
+
+                    const packageColis = {
+                        produit: []
+                    }
+
+                    data.forEach(item => {
+                        packageColis.produit.push({
+                            name: item.name,
+                            weight: item.weight,
+                            width: item.width,
+                            height: item.height,
+                            length: item.length,
+                            quantity: item.quantity
+                        });
+                    });
+
+
+
+                    setPackage(packageColis)
+                    setPackageAll(packageItem)
+                    const int = parseFloat(prixfrais);
+
+                    const prixGramme = 1.5;
+                    const prixGrame = (packageItem.weight / 100) * prixGramme;
+
+                    console.log(prixGrame);
+
+                    setPrixFrais(int)
+                    setPrixPoids(prixGrame)
+
                     setPriceTotal(total)
                 })
                 .catch(erreur => console.error('Erreur: ', erreur));
@@ -191,7 +193,7 @@ function Panier() {
         const int = parseFloat(e.target.value);
         // console.log(prixGrame);
         setPrixExpe(int)
-        
+
     }
 
 
@@ -235,7 +237,7 @@ function Panier() {
 
     }
 
-    const AddProduit = (id, stock, quantity, newprice) => {
+    const AddProduit = (id, stock, quantity, newprice, image_type, outpout) => {
         console.log(stock)
         if (stock - 1 >= quantity) {
 
@@ -244,17 +246,20 @@ function Panier() {
             const UserAccount = localStorage.getItem('user_no_account');
             let userInfos = {}
             if (loginUser) {
-                 userInfos = {
+                userInfos = {
                     id_produit: id,
                     price_type: newprice,
                     id_user: loginUser.id,
+                    image_type: image_type,
+                    info: outpout,
                 };
             } else {
-
-                 userInfos = {
+                userInfos = {
                     id_produit: id,
                     price_type: newprice,
                     id_user: UserAccount,
+                    image_type: image_type,
+                    info: outpout,
                 };
             }
             fetch("https://localhost:8000/panier/add", {
@@ -282,7 +287,16 @@ function Panier() {
             ...prevState,
             [name]: value
         }));
-      
+
+    };
+
+    const form2Change = (e) => {
+        const { name, value } = e.target;
+        setForm2(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+
     };
 
 
@@ -292,16 +306,16 @@ function Panier() {
         const UserAccount = localStorage.getItem('user_no_account');
         let userInfos = {}
         if (loginUser) {
-             userInfos = {
-               id_produit: id,
-               id_user: loginUser.id,
-           };
+            userInfos = {
+                id_produit: id,
+                id_user: loginUser.id,
+            };
         } else {
-             userInfos = {
+            userInfos = {
                 id_produit: id,
                 id_user: UserAccount,
             };
-        }       
+        }
         fetch("https://localhost:8000/panier/delete", {
             method: 'DELETE',
             headers: {
@@ -330,23 +344,23 @@ function Panier() {
         const loginUser = JSON.parse(Login);
         const UserAccount = localStorage.getItem('user_no_account');
 
-   
+
         let userInfos = {}
         if (loginUser) {
-             userInfos = {
+            userInfos = {
                 id_user: loginUser.id,
-                nom: form.nom,
-                prenom: form.prenom,
+                nom: form2.nom,
+                prenom: form2.prenom,
                 num: form.num,
                 de: form.de,
                 cvv: form.cvv
             };
         } else {
 
-             userInfos = {
+            userInfos = {
                 id_user: UserAccount,
-                nom: form.nom,
-                prenom: form.prenom,
+                nom: form2.nom,
+                prenom: form2.prenom,
                 num: form.num,
                 de: form.de,
                 cvv: form.cvv
@@ -372,14 +386,11 @@ function Panier() {
 
     };
     return (
-        <div>
+        <div className="body-container">
             <Nav />
             <div className='panier-container'>
                 <h1 className="panier-title">Panier</h1>
                 {message}
-       
-
-
 
                 <p className="panier-total">Prix Panier : {prixtotal}€</p>
                 <div className="promo-container">
@@ -395,13 +406,17 @@ function Panier() {
                 <ul className="panier-items">
                     {value.map(item => (
                         <li key={item.id} className="panier-item">
-                            <img src={item.image} alt={item.name} className="item-image" />
+                            <img src={item.image_type} alt={item.name} className="item-image" />
                             <span className="item-info">
                                 <button onClick={() => DeleteProduit(item.id)} className="item-button">-</button>
                                 <button className="item-quantity">{item.quantity}</button>
-                                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="item-button">+</button>
+                                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type, item.image_type, item.info)} className="item-button">+</button>
                                 <span className="item-details">
-                                    {item.name} - {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
+                                    {item.info != 'null'
+                                        ? <span> {item.name} {item.info} - {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€  </span>
+                                        : <span> {item.name} - {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€</span>
+                                    }
+                                    {/* {item.name} - {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€ */}
                                 </span>
                             </span>
                         </li>
@@ -412,68 +427,116 @@ function Panier() {
             {isModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-content">
+                        <button className="modal-close-button" onClick={() => setIsModalOpen(false)}>
+                            <i className="fas fa-times"></i>
+                        </button>
                         {step === 1 && (
-                            <div>
-                                <h2>Récapitulatif de la commande</h2>
-
-                                <p>Prix du panier: {prixtotal}€ +</p>
-                                <p>Prix du poids: {prixpoid}€ +</p>
-                                <p>Prix de livraison: {prixfrais}€ +</p>
-                                <label>Choisissez votre mode d'expedition :</label>
-                                <select onChange={(e) => ExpUser(e)}>
-                                    <option value=''>Mode expe</option>
-                                    {expedition.map((country, index) => (
-                                        <option key={index} value={country.taxe} >
-                                            <p value={country.name}>{country.name}</p>
-                                        </option>
-                                    ))}
-                                </select>
-                                <p>Prix du mode d'expedition: {prixexpe}€ +</p>
-                                <p>Prix total: {(prixtotal + prixfrais) + (prixpoid + prixexpe)}€</p>
-                                <label>Choisissez votre pays :</label>
-                                <select onChange={(e) => PaysUser(e)}>
-                                    <option value=''>Toutes les pays</option>
-                                    {pays.map((country, index) => (
-                                        <option key={index} value={country.taxe} >
-                                            <p value={country.name}>{country.name}</p>
-                                        </option>
-                                    ))}
-                                </select>
-                                <button onClick={() => setStep(2)}>Suivant</button>
+                            <div className="modal-step step-1">
+                                <h2>Bienvenue</h2>
+                                <div className="modal-buttons">
+                                    {/* Link connection */}
+                                    <button onClick={() => navigate('/login')} className="modal-button modal-button-connect">Connexion</button>
+                                    <button onClick={() => navigate('/register')} className="modal-button modal-button-connect">Inscription</button>
+                                    <button onClick={() => setStep(2)} className="modal-button modal-button-guest">Continuer en invité</button>
+                                </div>
                             </div>
                         )}
                         {step === 2 && (
-                            <div>
-                                <h2>Informations de paiement</h2>
+                            <div className="modal-step step-2">
+                                <h2>Informations de livraison</h2>
                                 <form>
-                                    <label>Nom:</label>
-                                    <input type="text" placeholder="Votre nom" required name='nom' onChange={formChange} />
-                                    <label>Prénom:</label>
-                                    <input type="text" placeholder="Votre prénom" required  name='prenom' onChange={formChange}/>
-                                    <label>Numéro de carte:</label>
-                                    <input type="text" placeholder="1234 5678 9012 3456" required name='num' onChange={formChange}/>
-                                    <label>Date d'expiration:</label>
-                                    <input type="text" placeholder="MM/AA" required name='de' onChange={formChange} />
-                                    <label>CVV:</label>
-                                    <input type="text" placeholder="123" required name='cvv' onChange={formChange}/>
-                                    <button type="button" onClick={() => setStep(3)}>Suivant</button>
+                                    <div className="form-group">
+                                        <label className="form-label">Nom:</label>
+                                        <input type="text" placeholder="Votre nom" required name='nom' onChange={form2Change} className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Prénom:</label>
+                                        <input type="text" placeholder="Votre prénom" required name='prenom' onChange={form2Change} className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Numéro de téléphone:</label>
+                                        <input type="text" placeholder="Votre numéro de téléphone" required name='telephone' onChange={form2Change} className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Adresse:</label>
+                                        <input type="text" placeholder="Votre adresse" required name='adresse' onChange={form2Change} className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Code postal:</label>
+                                        <input type="text" placeholder="Votre code postal" required name='codepostal' onChange={form2Change} className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Pays:</label>
+                                        <select onChange={(e) => PaysUser(e)} className="form-select">
+                                            <option value=''>Tous les pays</option>
+                                            {pays.map((country, index) => (
+                                                <option key={index} value={country.taxe}>
+                                                    {country.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <button type="button" onClick={() => setStep(3)} className="modal-button">Suivant</button>
                                 </form>
                             </div>
                         )}
                         {step === 3 && (
-                            <div>
-                                <h2>Confirmation de commande</h2>
-                                <p>Votre commande a été confirmée!</p>
-                                <button onClick={() => { handlePayment(); setIsModalOpen(false); }}>OK</button>
+                            <div className="modal-step step-3">
+                                <h2>Mode de paiement & Récapitulatif</h2>
+                                <form>
+                                    <div className="form-group">
+                                        <label className="form-label">Numéro de carte:</label>
+                                        <input type="text" placeholder="1234 5678 9012 3456" required name='num' onChange={formChange} className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Date d'expiration:</label>
+                                        <input type="text" placeholder="MM/AA" required name='de' onChange={formChange} className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">CVV:</label>
+                                        <input type="text" placeholder="123" required name='cvv' onChange={formChange} className="form-input" />
+                                    </div>
+
+                                    <h2>Récapitulatif de la commande</h2>
+                                    <p>Prix du panier: {prixtotal}€</p>
+                                    <p>Prix du poids: {prixpoid}€</p>
+                                    <p>Prix de livraison: {prixfrais}€</p>
+                                    <div className="form-group">
+                                        <label className="form-label">Choisissez votre mode d'expédition :</label>
+                                        <select onChange={(e) => ExpUser(e)} className="form-select">
+                                            <option value=''>Mode d'expédition</option>
+                                            {expedition.map((mode, index) => (
+                                                <option key={index} value={mode.taxe}>
+                                                    {mode.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <p>Prix du mode d'expédition: {prixexpe}€</p>
+                                    <p>Prix total: {(prixtotal + prixfrais) + (prixpoid + prixexpe)}€</p>
+
+                                    <button type="button" onClick={() => setStep(4)} className="modal-button">Confirmer</button>
+                                </form>
                             </div>
                         )}
-                        <button className="modal-close-button" onClick={() => setIsModalOpen(false)}>Fermer</button>
+                        {step === 4 && (
+                            <div className="modal-step step-4">
+                                <h2>Confirmation de commande</h2>
+                                <p>Votre commande a été confirmée!</p>
+                                <button onClick={() => { handlePayment(); setIsModalOpen(false); }} className="modal-button modal-pay-button">OK</button>
+                            </div>
+                        )}
+                        <button className="modal-close-button" onClick={() => setIsModalOpen(false)}>
+                            <i className="fas fa-times"></i>
+                        </button>
                     </div>
                 </div>
             )}
         </div>
-
     );
+
+
+
 }
 
 export default Panier

@@ -45,17 +45,17 @@ function Nav_one() {
         .catch(erreur => console.error('Erreur: ', erreur));
     } else {
       fetch("https://localhost:8000/panier/" + UserAccount)
-      .then(reponse => reponse.json())
-      .then(data => {
+        .then(reponse => reponse.json())
+        .then(data => {
 
-        const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
-        setQuantity(quantity);
+          const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+          setQuantity(quantity);
 
-      })
-      .catch(erreur => console.error('Erreur: ', erreur));
+        })
+        .catch(erreur => console.error('Erreur: ', erreur));
     }
   }, []);
- 
+
   useEffect(() => {
     fetch("https://localhost:8000/produits")
       .then(response => response.json())
@@ -249,13 +249,13 @@ function Cart() {
 
     if (!loginUser) {
       fetch("https://localhost:8000/panier/" + UserAccount)
-      .then(response => response.json())
-      .then(data => {
-        setCartItems(data);
-        const total = data.reduce((sum, item) => sum + ((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity), 0);
-        setValue(total);
-      })
-      .catch(error => console.error('Erreur: ', error));
+        .then(response => response.json())
+        .then(data => {
+          setCartItems(data);
+          const total = data.reduce((sum, item) => sum + ((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity), 0);
+          setValue(total);
+        })
+        .catch(error => console.error('Erreur: ', error));
     } else {
       fetch("https://localhost:8000/panier/" + loginUser.id)
         .then(response => response.json())
@@ -279,7 +279,7 @@ function Cart() {
     navigate('/panier')
   }
 
-  const AddProduit = (id, stock, quantity, newprice) => {
+  const AddProduit = (id, stock, quantity, newprice, image_type, outpout) => {
     console.log(stock >= quantity)
     if (stock - 1 >= quantity) {
       const Login = localStorage.getItem('users');
@@ -287,16 +287,20 @@ function Cart() {
       const UserAccount = localStorage.getItem('user_no_account');
       let userInfos = {}
       if (loginUser) {
-         userInfos = {
+        userInfos = {
           id_produit: id,
           price_type: newprice,
           id_user: loginUser.id,
+          image_type: image_type,
+          info: outpout,
         };
       } else {
-         userInfos = {
+        userInfos = {
           id_produit: id,
           price_type: newprice,
           id_user: UserAccount,
+          image_type: image_type,
+          info: outpout,
         };
       }
       fetch("https://localhost:8000/panier/add", {
@@ -319,7 +323,7 @@ function Cart() {
     }
   }
 
-
+  console.log(cartItems)
   const DeleteProduit = (id, newprice) => {
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
@@ -327,13 +331,13 @@ function Cart() {
     const UserAccount = localStorage.getItem('user_no_account');
     let userInfos = {}
     if (loginUser) {
-       userInfos = {
+      userInfos = {
         id_produit: id,
         price_type: newprice,
         id_user: loginUser.id,
       };
     } else {
-       userInfos = {
+      userInfos = {
         id_produit: id,
         price_type: newprice,
         id_user: UserAccount,
@@ -365,11 +369,14 @@ function Cart() {
       <ul className="cart-items">
         {cartItems.map(item => (
           <li key={item.id} className="cart-item">
-            <img src={item.image} alt={item.name} className="cart-item-image" />
+            <img src={item.image_type} alt={item.name} className="cart-item-image" />
             <div className="cart-item-details">
               <div className='cart-description'>
                 <span className="cart-item-info">
-                  {item.name}
+                  {item.info != 'null'
+                    ? <span> {item.name} {item.info}  </span>
+                    : <span> {item.name} </span>
+                  }
                 </span>
                 <span className="cart-item-info">
                   {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
@@ -379,7 +386,7 @@ function Cart() {
               <div className='cart-PlusMoin'>
                 <button onClick={() => DeleteProduit(item.id, item.price_type)} className="cart-item-button">-</button>
                 <button className="cart-item-quantity">{item.quantity}</button>
-                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
+                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type, item.image_type, item.info)} className="cart-item-button">+</button>
               </div>
             </div>
           </li>

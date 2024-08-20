@@ -1,0 +1,20 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: "Documentation de l'API"
+            description: "API."
+            version: "1.0.0"
+        servers:
+            - url: 'https://localhost:8000'
+
+    areas:
+        default:
+            path_patterns:
+                - ^/api
+
+    html_config:
+        assets_mode: "cdn"
+        swagger_ui_config:
+            doc_expansion: none
+            display_request_duration: true
+            deep_linking: true

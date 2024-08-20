@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ProduitType;
+use OpenApi\Annotations as OA;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

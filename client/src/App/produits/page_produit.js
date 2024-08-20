@@ -31,6 +31,8 @@ export const ProductBoitier = () => {
     const [email, setEmail] = useState();
     const [newprice, setNewPrice] = useState(0);
     const [image, setNewImage] = useState('');
+    const [outpout, setOutpout] = useState('');
+
 
 
 
@@ -105,6 +107,7 @@ export const ProductBoitier = () => {
         const int = parseFloat(data.price);
         setNewPrice(int);
         setNewImage(data.image);
+        setOutpout(data.type);
     }
 
 
@@ -189,7 +192,7 @@ export const ProductBoitier = () => {
     }
 
 
-    const AddPanier = (id, stock) => {
+    const AddPanier = (id, stock, image, outpout) => {
         if (stock === 0) {
             alert('plus de stock')
         } else {
@@ -216,11 +219,13 @@ export const ProductBoitier = () => {
                     .then(reponse => reponse.json())
                     .then(data => {
                         if (data === false) {
-                            console.log("Aucun utilisateur trouvé avec cet ID, cela est attendu.");
+                        
                             const userInfos = {
                                 id_produit: id,
                                 id_user: UserAccount,
                                 price_type: newprice,
+                                image_type: image,
+                                info: outpout,
                             };
                             fetch("https://localhost:8000/panier/add", {
                                 method: 'POST',
@@ -251,6 +256,8 @@ export const ProductBoitier = () => {
                     id_produit: id,
                     id_user: loginUser.id,
                     price_type: newprice,
+                    image_type: image,
+                    info: outpout,
                 };
                 fetch("https://localhost:8000/panier/add", {
                     method: 'POST',
@@ -313,11 +320,11 @@ export const ProductBoitier = () => {
                                     </div>
                                     <div className="star-stat">
                                         <select onChange={(e) => Type_Produit(e)}>
-                                            <option value={JSON.stringify({ price: 0, image: produit.image })} >
+                                            <option value={JSON.stringify({ price: 0, image: produit.image, type: produit.outpout })} >
                                                 Basique
                                             </option>
                                             {typeporduit.map(item => (
-                                                <option key={item.id} value={JSON.stringify({ price: item.price, image: item.image_type })}>
+                                                <option key={item.id} value={JSON.stringify({ price: item.price, image: item.image_type, type: item.outpout})}>
                                                     {item.type} - {item.outpout}
                                                 </option>
                                             ))}
@@ -365,7 +372,7 @@ export const ProductBoitier = () => {
                                     <h3>QUANTITE</h3>
                                     <QuantityPicker min={1} max={10} />
                                 </section> */}
-                                <section className="add-basket-button" onClick={() => AddPanier(produit.id, produit.stock)}>
+                                <section className="add-basket-button" onClick={() => AddPanier(produit.id, produit.stock, image, outpout)}>
                                     <h2>AJOUTER AU PANIER</h2>
                                     <img src={BuyingCart} alt="Icone Ajout Panier" />
                                 </section>

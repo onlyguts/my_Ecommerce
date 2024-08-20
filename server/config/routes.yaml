@@ -1,3 +1,7 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+swagger_ui:
+    path: /api/doc
+    controller: Nelmio\ApiDocBundle\Controller\SwaggerUiController::index
+    methods: [GET]

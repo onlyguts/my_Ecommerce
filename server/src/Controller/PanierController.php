@@ -17,7 +17,7 @@ class PanierController extends AbstractController
     {
         $conn = $entityManager->getConnection();
     
-        $sql = 'SELECT ps.id as produit_id, ps.*, price_type, c.name as categorie_name, COUNT(pr.id_produit) as quantity FROM panier pr JOIN produits ps ON pr.id_produit = ps.id JOIN categorie c ON ps.id_categorie = c.id WHERE pr.id_user = :id GROUP BY produit_id, ps.name, c.name, price_type';
+        $sql = 'SELECT ps.id as produit_id, ps.*, price_type, image_type, info, c.name as categorie_name, COUNT(pr.id_produit) as quantity FROM panier pr JOIN produits ps ON pr.id_produit = ps.id JOIN categorie c ON ps.id_categorie = c.id WHERE pr.id_user = :id GROUP BY produit_id, ps.name, c.name, price_type, image_type, info';
     
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':id', $id);
@@ -56,6 +56,8 @@ class PanierController extends AbstractController
         $panier->setIdUser((int)$data['id_user']);
         $panier->setIdProduit((int)$data['id_produit']);
         $panier->setPriceType((int)$data['price_type']);
+        $panier->setImageType($data['image_type']);
+        $panier->setInfo($data['info']);
 
         $entityManager->persist($panier);
         $entityManager->flush();
