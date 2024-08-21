@@ -27,6 +27,9 @@ function Panier() {
 
 
     const [bancaire, setBancaire] = useState([]);
+    const [numberCarte, setNumberCarte] = useState(0);
+    const [deCarte, setDeCarte] = useState(0);
+
 
     const [prixexpe, setPrixExpe] = useState(0);
     const [prixfrais, setPrixFrais] = useState(0);
@@ -189,7 +192,7 @@ function Panier() {
 
 
                     data.forEach(item => {
-                  
+
 
                         const allCarte = {
                             carte: []
@@ -198,12 +201,13 @@ function Panier() {
                         data.forEach(item => {
                             let reg = /.{1,15}/
                             let string = item.num;
-    
+
                             const carte_crypter = string.replace(reg, (m) => "*".repeat(m.length));
-    
-    
+
+
                             allCarte.carte.push({
                                 num: carte_crypter,
+                                num_non: item.num,
                                 cvv: item.cvv,
                                 de: item.de,
                             });
@@ -222,7 +226,7 @@ function Panier() {
 
 
 
-    console.log(bancaire)
+
 
 
     useEffect(() => {
@@ -246,6 +250,21 @@ function Panier() {
         setPrixFrais(int)
         setPrixPoids(prixGrame)
     }
+
+
+    const carteChange = (e) => {
+        // setNumberCarte(JSON.parse(value.num_non))
+        if (!e.target.value) {
+            setNumberCarte(0)
+            setDeCarte(0)
+        } else {
+            const value = JSON.parse(e.target.value);
+            setNumberCarte(value.num_non)
+            setDeCarte(value.de)
+        }
+    }
+
+
 
     const ExpUser = (e) => {
         const int = parseFloat(e.target.value);
@@ -340,6 +359,13 @@ function Panier() {
 
     const formChange = (e) => {
         const { name, value } = e.target;
+        if (name === 'num') {
+            setNumberCarte(value)
+        }
+        if (name === 'de') {
+            setDeCarte(value)
+        }
+
         setForm(prevState => ({
             ...prevState,
             [name]: value
@@ -391,6 +417,8 @@ function Panier() {
             });
     }
     const handlePayment = () => {
+
+
         const prixFinal = (prixfrais + prixpoid) + prixtotal
         console.log(packageAll)
         console.log(packages)
@@ -424,7 +452,8 @@ function Panier() {
             };
         }
 
-        console.log(userInfos)
+
+
         fetch("https://localhost:8000/achat/add", {
             method: 'POST',
             headers: {
@@ -527,7 +556,7 @@ function Panier() {
                                         <select onChange={(e) => PaysUser(e)} className="form-select">
                                             <option value=''>Tous les pays</option>
                                             {pays.map((country, index) => (
-                                                <option key={index} value={country.taxe}>
+                                                <option key={index} value={country.taxe} >
                                                     {country.name}
                                                 </option>
                                             ))}
@@ -541,21 +570,21 @@ function Panier() {
                             <div className="modal-step step-3">
                                 <h2>Mode de paiement & Récapitulatif</h2>
                                 <form>
-                                    <select className="form-select">
+                                    <select className="form-select" onChange={(e) => carteChange(e)}>
                                         <option value=''>Tous les carte bancaire</option>
                                         {bancaire.carte.map((banque, index) => (
-                                            <option key={index} value={banque.num}>
+                                            <option key={index} value={JSON.stringify(banque)}  >
                                                 {banque.num}
                                             </option>
                                         ))}
                                     </select>
                                     <div className="form-group">
                                         <label className="form-label">Numéro de carte:</label>
-                                        <input type="text" placeholder="1234 5678 9012 3456" required name='num' onChange={formChange} className="form-input" />
+                                        <input type="text" placeholder="1234 5678 9012 3456" required name='num' value={numberCarte} onChange={formChange} className="form-input" />
                                     </div>
                                     <div className="form-group">
                                         <label className="form-label">Date d'expiration:</label>
-                                        <input type="text" placeholder="MM/AA" required name='de' onChange={formChange} className="form-input" />
+                                        <input type="text" placeholder="MM/AA" required name='de' value={deCarte} onChange={formChange} className="form-input" />
                                     </div>
                                     <div className="form-group">
                                         <label className="form-label">CVV:</label>
