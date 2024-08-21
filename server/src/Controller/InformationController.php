@@ -25,6 +25,9 @@ class InformationController extends AbstractController
         $achat->setIdUser((int)$data['id_user']);
         $achat->setAdress($data['adress']);
         $achat->setPostal($data['postal']);
+        $achat->setNom($data['nom']);
+        $achat->setPrenom($data['prenom']);
+        $achat->setPays($data['pays']);
 
         $entityManager->persist($achat);
         $entityManager->flush();

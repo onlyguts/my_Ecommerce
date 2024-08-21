@@ -24,7 +24,8 @@ function Panier() {
     const [form2, setForm2] = useState([]);
     const [expedition, setExpedition] = useState([]);
 
-
+    
+    const [paysname, setNamePays] = useState('');
 
     const [bancaire, setBancaire] = useState([]);
     const [numberCarte, setNumberCarte] = useState(0);
@@ -33,14 +34,15 @@ function Panier() {
     const [adress, setAdress] = useState([]);
     const [adressText, setAdressP] = useState('');
     const [codeText, setCodeP] = useState('');
-
+    const [prenomText, setPrenomP] = useState('');
+    const [nomText, setNomP] = useState('');
 
     const [prixexpe, setPrixExpe] = useState(0);
     const [prixfrais, setPrixFrais] = useState(0);
     const [prixpoid, setPrixPoids] = useState(0);
-    const [isModalOpen, setIsModalOpen] = useState(false); // État pour contrôler la visibilité du modal
-    const [step, setStep] = useState(1); // État pour gérer les étapes du modal
-    const [selectedCountry, setSelectedCountry] = useState(''); // État pour gérer le pays sélectionné
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [step, setStep] = useState(1);
+    const [selectedCountry, setSelectedCountry] = useState('');
     const navigate = useNavigate();
 
 
@@ -261,8 +263,8 @@ function Panier() {
 
 
     const PaysUser = (e) => {
-        const int = parseFloat(e.target.value);
-
+        const value = JSON.parse(e.target.value)
+        const int = parseFloat(value.taxe);
         const prixGramme = 1.5;
         const prixGrame = (packageAll.weight / 100) * prixGramme;
 
@@ -270,12 +272,12 @@ function Panier() {
 
         setPrixFrais(int)
         setPrixPoids(prixGrame)
+        setNamePays(value.name)
     }
 
 
     const carteChange = (e) => {
         // setNumberCarte(JSON.parse(value.num_non))
-        
         if (!e.target.value) {
             setNumberCarte(0)
             setDeCarte(0)
@@ -288,15 +290,17 @@ function Panier() {
 
     const adressChange = (e) => {
         // setNumberCarte(JSON.parse(value.num_non))
-
-
         if (!e.target.value) {
             setAdressP('')
             setCodeP('')
+            setPrenomP('')
+            setNomP('')
         } else {
             const value = JSON.parse(e.target.value);
             setAdressP(value.adress)
             setCodeP(value.postal)
+            setPrenomP(value.prenom)
+            setNomP(value.nom)
         }
     }
 
@@ -414,6 +418,9 @@ function Panier() {
     const form2Change = (e) => {
         const { name, value } = e.target;
 
+        if (name === 'prenom') {
+            setPrenomP(value)
+        }
         if (name === 'adresse') {
             setAdressP(value)
     
@@ -492,7 +499,11 @@ function Panier() {
                 id_user: loginUser.id,
                 adress: form2.adresse,
                 postal: form2.codepostal,
+                nom: form2.nom,
+                prenom: form2.prenom,
+                pays: paysname,
             };
+            console.log(userInfosAdress)
         } else {
 
             userInfos = {
@@ -507,7 +518,12 @@ function Panier() {
                 id_user: loginUser.id,
                 adress: form2.adresse,
                 postal: form2.codepostal,
+                nom: form2.nom,
+                prenom: form2.prenom,
+                pays: paysname,
             };
+
+            console.log(userInfosAdress)
 
         }
 
@@ -611,11 +627,11 @@ function Panier() {
                                 <form>
                                     <div className="form-group">
                                         <label className="form-label">Nom:</label>
-                                        <input type="text" placeholder="Votre nom" required name='nom' onChange={form2Change} className="form-input" />
+                                        <input type="text" placeholder="Votre nom" required name='nom' value={nomText} onChange={form2Change} className="form-input" />
                                     </div>
                                     <div className="form-group">
                                         <label className="form-label">Prénom:</label>
-                                        <input type="text" placeholder="Votre prénom" required name='prenom' onChange={form2Change} className="form-input" />
+                                        <input type="text" placeholder="Votre prénom" required name='prenom' value={prenomText} onChange={form2Change} className="form-input" />
                                     </div>
                                     <div className="form-group">
                                         <label className="form-label">Numéro de téléphone:</label>
@@ -642,7 +658,7 @@ function Panier() {
                                         <select onChange={(e) => PaysUser(e)} className="form-select">
                                             <option value=''>Tous les pays</option>
                                             {pays.map((country, index) => (
-                                                <option key={index} value={country.taxe} >
+                                                <option key={index} value={JSON.stringify(country)} >
                                                     {country.name}
                                                 </option>
                                             ))}
