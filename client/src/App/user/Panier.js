@@ -30,6 +30,10 @@ function Panier() {
     const [numberCarte, setNumberCarte] = useState(0);
     const [deCarte, setDeCarte] = useState(0);
 
+    const [adress, setAdress] = useState([]);
+    const [adressText, setAdressP] = useState('');
+    const [codeText, setCodeP] = useState('');
+
 
     const [prixexpe, setPrixExpe] = useState(0);
     const [prixfrais, setPrixFrais] = useState(0);
@@ -48,7 +52,7 @@ function Panier() {
                 .then(data => {
                     setValue(data);
                     const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
-                    console.log(data)
+                    // console.log(data)
 
                     const packageItem = {
                         weight: 0,
@@ -91,7 +95,7 @@ function Panier() {
                     const prixGramme = 1.5;
                     const prixGrame = (packageItem.weight / 100) * prixGramme;
 
-                    console.log(prixGrame);
+                    // console.log(prixGrame);
 
                     setPrixFrais(int)
                     setPrixPoids(prixGrame)
@@ -106,7 +110,7 @@ function Panier() {
                 .then(data => {
                     setValue(data);
                     const total = data.reduce((sum, item) => sum + (((item.prix + item.price_type) * (1 - item.promo / 100)) * item.quantity), 0)
-                    console.log(data)
+                    // console.log(data)
 
                     const packageItem = {
                         weight: 0,
@@ -149,7 +153,7 @@ function Panier() {
                     const prixGramme = 1.5;
                     const prixGrame = (packageItem.weight / 100) * prixGramme;
 
-                    console.log(prixGrame);
+                    // console.log(prixGrame);
 
                     setPrixFrais(int)
                     setPrixPoids(prixGrame)
@@ -180,7 +184,6 @@ function Panier() {
             fetch("https://localhost:8000/achat/" + UserAccount)
                 .then(reponse => reponse.json())
                 .then(data => {
-                    console.log(data)
                     setBancaire(data)
                 })
                 .catch(erreur => console.error('Erreur: ', erreur));
@@ -226,7 +229,25 @@ function Panier() {
 
 
 
+    useEffect(() => {
+        if (!loginUser) {
+            const UserAccount = localStorage.getItem('user_no_account');
+            fetch("https://localhost:8000/information/" + UserAccount)
+                .then(reponse => reponse.json())
+                .then(data => {
+                    setAdress(data)
+                })
+                .catch(erreur => console.error('Erreur: ', erreur));
+        } else {
 
+            fetch("https://localhost:8000/information/" + loginUser.id)
+                .then(reponse => reponse.json())
+                .then(data => {
+                    setAdress(data)
+                })
+                .catch(erreur => console.error('Erreur: ', erreur));
+        }
+    }, []);
 
 
     useEffect(() => {
@@ -254,6 +275,7 @@ function Panier() {
 
     const carteChange = (e) => {
         // setNumberCarte(JSON.parse(value.num_non))
+        
         if (!e.target.value) {
             setNumberCarte(0)
             setDeCarte(0)
@@ -261,6 +283,20 @@ function Panier() {
             const value = JSON.parse(e.target.value);
             setNumberCarte(value.num_non)
             setDeCarte(value.de)
+        }
+    }
+
+    const adressChange = (e) => {
+        // setNumberCarte(JSON.parse(value.num_non))
+
+
+        if (!e.target.value) {
+            setAdressP('')
+            setCodeP('')
+        } else {
+            const value = JSON.parse(e.target.value);
+            setAdressP(value.adress)
+            setCodeP(value.postal)
         }
     }
 
@@ -282,7 +318,7 @@ function Panier() {
 
                     if (data.utilisations === 0) {
                         setCode('')
-                        console.log('code promo fini')
+                        // console.log('code promo fini')
                         return
                     } else {
                         setPriceTotal(prixtotal * (1 - data.promotion / 100))
@@ -308,13 +344,13 @@ function Panier() {
 
         })
             .then(response => response.json())
-            .then(data => console.log(data))
+            // .then(data => console.log(data))
             .catch(error => console.error('Erreur:', error));
 
     }
 
     const AddProduit = (id, stock, quantity, newprice, image_type, outpout) => {
-        console.log(stock)
+        // console.log(stock)
         if (stock - 1 >= quantity) {
 
             const Login = localStorage.getItem('users');
@@ -359,6 +395,8 @@ function Panier() {
 
     const formChange = (e) => {
         const { name, value } = e.target;
+        
+    
         if (name === 'num') {
             setNumberCarte(value)
         }
@@ -375,6 +413,15 @@ function Panier() {
 
     const form2Change = (e) => {
         const { name, value } = e.target;
+
+        if (name === 'adresse') {
+            setAdressP(value)
+    
+        }
+        if (name === 'codepostal') {
+            setCodeP(value)
+        }
+
         setForm2(prevState => ({
             ...prevState,
             [name]: value
@@ -420,10 +467,10 @@ function Panier() {
 
 
         const prixFinal = (prixfrais + prixpoid) + prixtotal
-        console.log(packageAll)
-        console.log(packages)
-        console.log(prixFinal + '€')
-        console.log("Payment successful");
+        // console.log(packageAll)
+        // console.log(packages)
+        // console.log(prixFinal + '€')
+        // console.log("Payment successful");
 
         const Login = localStorage.getItem('users');
         const loginUser = JSON.parse(Login);
@@ -431,14 +478,20 @@ function Panier() {
 
 
         let userInfos = {}
+        let userInfosAdress = {}
         if (loginUser) {
             userInfos = {
                 id_user: loginUser.id,
                 nom: form2.nom,
                 prenom: form2.prenom,
-                num: form.num,
-                de: form.de,
+                num: numberCarte,
+                de: deCarte,
                 cvv: form.cvv
+            };
+            userInfosAdress = {
+                id_user: loginUser.id,
+                adress: form2.adresse,
+                postal: form2.codepostal,
             };
         } else {
 
@@ -446,12 +499,37 @@ function Panier() {
                 id_user: UserAccount,
                 nom: form2.nom,
                 prenom: form2.prenom,
-                num: form.num,
-                de: form.de,
+                num: numberCarte,
+                de: deCarte,
                 cvv: form.cvv
             };
+            userInfosAdress = {
+                id_user: loginUser.id,
+                adress: form2.adresse,
+                postal: form2.codepostal,
+            };
+
         }
 
+       
+
+        fetch("https://localhost:8000/information/add", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userInfosAdress),
+        })
+
+            .then(response => {
+                response.json();
+                ApiPanier()
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+
+            // console.log(userInfos)
 
 
         fetch("https://localhost:8000/achat/add", {
@@ -543,13 +621,21 @@ function Panier() {
                                         <label className="form-label">Numéro de téléphone:</label>
                                         <input type="text" placeholder="Votre numéro de téléphone" required name='telephone' onChange={form2Change} className="form-input" />
                                     </div>
+                                    <select className="form-select" onChange={(e) => adressChange(e)}>
+                                        <option value=''>Tous les adresse postal</option>
+                                        {adress.map((adress, index) => (
+                                            <option key={index} value={JSON.stringify(adress)}  >
+                                                {adress.adress} - {adress.postal}
+                                            </option>
+                                        ))}
+                                    </select>
                                     <div className="form-group">
                                         <label className="form-label">Adresse:</label>
-                                        <input type="text" placeholder="Votre adresse" required name='adresse' onChange={form2Change} className="form-input" />
+                                        <input type="text" placeholder="Votre adresse" required name='adresse' value={adressText} onChange={form2Change} className="form-input" />
                                     </div>
                                     <div className="form-group">
                                         <label className="form-label">Code postal:</label>
-                                        <input type="text" placeholder="Votre code postal" required name='codepostal' onChange={form2Change} className="form-input" />
+                                        <input type="text" placeholder="Votre code postal" required name='codepostal' value={codeText} onChange={form2Change} className="form-input" />
                                     </div>
                                     <div className="form-group">
                                         <label className="form-label">Pays:</label>
