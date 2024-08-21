@@ -56,13 +56,10 @@ function AdminListPF() {
                     <tbody>
 
                         {produits.map((produit) => (
-
-                             <tr  key={produit.id}>
-                        
+                             <tr  key={produit.id}> 
                              <td>{produit.id}</td>
                              <td>{produit.name}</td>
                              <td>{produit.taxe}€</td>
-                           
                            <td> <button onClick={() => OpenPorudits(produit.id)}>Edit</button> </td>
                          </tr>
                         ))}

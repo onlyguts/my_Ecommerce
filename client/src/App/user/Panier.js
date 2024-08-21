@@ -24,6 +24,10 @@ function Panier() {
     const [form2, setForm2] = useState([]);
     const [expedition, setExpedition] = useState([]);
 
+
+
+    const [bancaire, setBancaire] = useState([]);
+
     const [prixexpe, setPrixExpe] = useState(0);
     const [prixfrais, setPrixFrais] = useState(0);
     const [prixpoid, setPrixPoids] = useState(0);
@@ -168,6 +172,60 @@ function Panier() {
     }, []);
 
     useEffect(() => {
+        if (!loginUser) {
+            const UserAccount = localStorage.getItem('user_no_account');
+            fetch("https://localhost:8000/achat/" + UserAccount)
+                .then(reponse => reponse.json())
+                .then(data => {
+                    console.log(data)
+                    setBancaire(data)
+                })
+                .catch(erreur => console.error('Erreur: ', erreur));
+        } else {
+
+            fetch("https://localhost:8000/achat/" + loginUser.id)
+                .then(reponse => reponse.json())
+                .then(data => {
+
+
+                    data.forEach(item => {
+                  
+
+                        const allCarte = {
+                            carte: []
+                        }
+
+                        data.forEach(item => {
+                            let reg = /.{1,15}/
+                            let string = item.num;
+    
+                            const carte_crypter = string.replace(reg, (m) => "*".repeat(m.length));
+    
+    
+                            allCarte.carte.push({
+                                num: carte_crypter,
+                                cvv: item.cvv,
+                                de: item.de,
+                            });
+                        });
+
+                        setBancaire(allCarte);
+
+                    });
+
+
+
+                })
+                .catch(erreur => console.error('Erreur: ', erreur));
+        }
+    }, []);
+
+
+
+    console.log(bancaire)
+
+
+    useEffect(() => {
         fetch("https://localhost:8000/expedition")
             .then(reponse => reponse.json())
             .then(data => {
@@ -195,7 +253,6 @@ function Panier() {
         setPrixExpe(int)
 
     }
-
 
 
     const addCode = (code) => {
@@ -484,6 +541,14 @@ function Panier() {
                             <div className="modal-step step-3">
                                 <h2>Mode de paiement & Récapitulatif</h2>
                                 <form>
+                                    <select className="form-select">
+                                        <option value=''>Tous les carte bancaire</option>
+                                        {bancaire.carte.map((banque, index) => (
+                                            <option key={index} value={banque.num}>
+                                                {banque.num}
+                                            </option>
+                                        ))}
+                                    </select>
                                     <div className="form-group">
                                         <label className="form-label">Numéro de carte:</label>
                                         <input type="text" placeholder="1234 5678 9012 3456" required name='num' onChange={formChange} className="form-input" />

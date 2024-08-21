@@ -150,7 +150,12 @@ class ProduitsController extends AbstractController
         $produit->setPromo($data['promo']);
         $produit->setConsommations((int)$data['consomation']);
         $produit->setSuggestion($data['suggestion']);
-        
+
+        $produit->setLength($data['length']);
+        $produit->setHeight($data['height']);
+        $produit->setWidth($data['width']);
+        $produit->setWeight($data['weight']);
+
         $entityManager->persist($produit);
         $entityManager->flush();
 

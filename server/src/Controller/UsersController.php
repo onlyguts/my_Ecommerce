@@ -158,7 +158,7 @@ class UsersController extends AbstractController
 
     private function emailRegister($emailUser, $username, $token)
     {
-        $lienVerif = 'https://localhost:3000/confirmation/' . htmlspecialchars($token);
+        $lienVerif = 'http://localhost:3000/confirmation/' . htmlspecialchars($token);
         $emailMessage = '
         <!DOCTYPE html>
         <html lang="fr">
@@ -272,7 +272,7 @@ class UsersController extends AbstractController
                     <div class="footer">
                         <p>Vous recevez cet e-mail car vous vous êtes inscrit sur notre site.
                             Si vous ne souhaitez plus recevoir ces messages, vous pouvez vous désabonner à tout moment.</p>
-                        <p><a href="https://localhost:3000/">Visiter notre site</a> | <a href="https://localhost:3000/">Contactez-nous</a></p>
+                        <p><a href="http://localhost:3000/">Visiter notre site</a> | <a href="http://localhost:3000/">Contactez-nous</a></p>
                     </div>
                 </div>
         </body>

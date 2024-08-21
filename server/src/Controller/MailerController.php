@@ -58,7 +58,7 @@ class MailerController extends AbstractController
 
         $nomProduit = $produit->getName();
         $ImageProduit = $produit->getImage();
-        $lienProduit = "https://localhost:3000/produit/" . $produitId;
+        $lienProduit = "http://localhost:3000/produit/" . $produitId;
 
         $messageMail = '
         <!DOCTYPE html>
@@ -160,7 +160,7 @@ class MailerController extends AbstractController
         $username = $user->getUsername();
         $token = $user->getToken();
 
-        $lien = 'https://localhost:3000/changepassword/' . $token;
+        $lien = 'http://localhost:3000/changepassword/' . $token;
 
         $messageEmail = '
         <!DOCTYPE html>

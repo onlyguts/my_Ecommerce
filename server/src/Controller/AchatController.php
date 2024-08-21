@@ -33,4 +33,19 @@ class AchatController extends AbstractController
         return $this->json(['success' => 'achat add', 'id' => $achat->getId()], Response::HTTP_CREATED);
     }
 
+    #[Route('/achat/{id}', name: 'app_achat_get_id', methods: ['GET', 'HEAD'])]
+    public function achatid(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $conn = $entityManager->getConnection();
+    
+        $sql = 'SELECT * FROM achat a WHERE a.id_user = :id';
+    
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $resultSet = $stmt->executeQuery();
+        $produits = $resultSet->fetchAllAssociative();
+    
+        return $this->json($produits);
+    }
+
 }
