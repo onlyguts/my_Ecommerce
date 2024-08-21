@@ -131,6 +131,39 @@ function Admin() {
         }));
     };
 
+
+    const Choisirlength = (event) => {
+        const getData = event.target.value;
+        setData(backData => ({
+            ...backData,
+            length: getData,
+        }));
+    };
+
+    const Choisirheight = (event) => {
+        const getData = event.target.value;
+        setData(backData => ({
+            ...backData,
+            height: getData,
+        }));
+    };
+
+    const Choisirwidth = (event) => {
+        const getData = event.target.value;
+        setData(backData => ({
+            ...backData,
+            width: getData,
+        }));
+    };
+
+    const Choisirweight = (event) => {
+        const getData = event.target.value;
+        setData(backData => ({
+            ...backData,
+            weight: getData,
+        }));
+    };
+
         
     const EnvoyerAPI = () => {
         fetch("https://localhost:8000/produits/add", {
@@ -207,6 +240,19 @@ function Admin() {
                 
                 <label>Recommander:</label>
                 <input type='number' name='suggestion' value={data.suggestion} onChange={ChoisirSuggestion} />
+              
+                <label>length:</label>
+                <input type='number' name='length' value={data.length} onChange={Choisirlength} />
+              
+                <label>height:</label>
+                <input type='number' name='height' value={data.height} onChange={Choisirheight} />
+                
+                <label>width:</label>
+                <input type='number' name='width' value={data.width} onChange={Choisirwidth} />
+                
+                <label>weight:</label>
+                <input type='number' name='weight' value={data.weight} onChange={Choisirweight} />
+              
                 <button onClick={() => EnvoyerAPI()}>Créer le produits</button>
                 </div>
             </form>
