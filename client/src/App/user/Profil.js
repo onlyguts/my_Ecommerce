@@ -12,8 +12,8 @@ const Profil = () => {
     const [activeSection, setActiveSection] = useState('livraison');
     const [pays, setPays] = useState([]);
 
+    const [commande, setCommande] = useState([]);
     const [bancaire, setBancaire] = useState([]);
-
     const [adress, setAdress] = useState([]);
 
 
@@ -69,6 +69,9 @@ const Profil = () => {
     useEffect(() => {
         ApiBanque()
     }, []);
+    useEffect(() => {
+        ApiCommande()
+    }, []);
 
 
     const ApiAdresse = () => {
@@ -90,6 +93,41 @@ const Profil = () => {
                 .catch(erreur => console.error('Erreur: ', erreur));
         }
     }
+
+    const ApiCommande = () => {
+        if (!loginUser) {
+            const UserAccount = localStorage.getItem('user_no_account');
+            fetch("https://localhost:8000/commande/" + UserAccount)
+                .then(reponse => reponse.json())
+                .then(data => {
+                    setCommande(data)
+                })
+                .catch(erreur => console.error('Erreur: ', erreur));
+        } else {
+            fetch("https://localhost:8000/commande/" + loginUser.id)
+                .then(reponse => reponse.json())
+                .then(data => {
+
+
+                    const allCarte = {
+                        produit: []
+                    }
+
+                    data.forEach(item => {
+                        const produit = JSON.parse(item.produits)
+                        allCarte.produit.push(produit);
+                    });
+
+                    console.log(allCarte)
+            
+                    setCommande(data)
+
+
+                })
+                .catch(erreur => console.error('Erreur: ', erreur));
+        }
+    }
+
     useEffect(() => {
         ApiAdresse()
     }, []);
@@ -246,11 +284,6 @@ const Profil = () => {
     }
 
 
-    const achats = [
-        { date: '2023-08-15', produit: 'Produit A', prix: '50€' },
-        { date: '2023-08-10', produit: 'Produit B', prix: '30€' },
-        { date: '2023-08-05', produit: 'Produit C', prix: '20€' }
-    ];
 
     return (
         <div>
@@ -402,17 +435,19 @@ const Profil = () => {
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Produit</th>
+                                   
+                                    <th>Numéro de commande</th>
                                     <th>Prix</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {achats.map((achat, index) => (
+                                {commande.map((achat, index) => (
                                     <tr key={index}>
+                                        {/* <td>{achat.date}</td> */}
                                         <td>{achat.date}</td>
-                                        <td>{achat.produit}</td>
-                                        <td>{achat.prix}</td>
+                                        <td>#{achat.id}</td>
+                                        <td>{achat.prix}€</td>
                                         <td>
                                             {/* button fiche produit bg ici  */}
                                             <button className="btn-view">Voir fiche produit</button>

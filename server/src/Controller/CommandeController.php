@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-
+use DateTime;
 use App\Entity\Commande;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +33,6 @@ class CommandeController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-
         $code = new Commande();
         $code->setIdUser($data['id_user']);
         $code->setStatus($data['status']);
@@ -47,7 +46,9 @@ class CommandeController extends AbstractController
         $code->setLength($data['length']);
         $code->setModeExpe($data['expe']);
         $code->setPapier($data['papier']);
-        
+        $code->setPrix($data['price']);
+        $code->setDate(new DateTime());
+
         $entityManager->persist($code);
         $entityManager->flush();
 

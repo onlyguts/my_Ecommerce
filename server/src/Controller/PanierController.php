@@ -88,6 +88,27 @@ class PanierController extends AbstractController
         return $this->json(['success' => 'Produit add', 'id' => $panier->getId()], Response::HTTP_CREATED);
     }
 
+    #[Route('/panier/delete/all', name: 'app_panier_remove', methods: ['DELETE'])]
+    public function removeall(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $is_user = (int)$data['id_user'];
+
+        $panier = $entityManager->getRepository(Panier::class)->findBy([
+            'id_user' => $is_user,
+        ]);
+
+        foreach ($panier as $key => $paniers) {
+            $entityManager->remove($paniers);
+        }
+       
+        $entityManager->flush();
+
+        return $this->json(['success' => 'Produit deleted', 'id' => $paniers->getId()], Response::HTTP_CREATED);
+    }
+
+    
 
 
 }

@@ -203,7 +203,36 @@ function Panier() {
             fetch("https://localhost:8000/achat/" + UserAccount)
                 .then(reponse => reponse.json())
                 .then(data => {
-                    setBancaire(data)
+
+
+                    data.forEach(item => {
+
+
+                        const allCarte = {
+                            carte: []
+                        }
+
+                        data.forEach(item => {
+                            let reg = /.{1,15}/
+                            let string = item.num;
+
+                            const carte_crypter = string.replace(reg, (m) => "*".repeat(m.length));
+
+
+                            allCarte.carte.push({
+                                num: carte_crypter,
+                                num_non: item.num,
+                                cvv: item.cvv,
+                                de: item.de,
+                            });
+                        });
+
+                        setBancaire(allCarte);
+
+                    });
+
+
+
                 })
                 .catch(erreur => console.error('Erreur: ', erreur));
         } else {
@@ -435,7 +464,9 @@ function Panier() {
 
     const form2Change = (e) => {
         const { name, value } = e.target;
-
+        if (name === 'nom') {
+            setNomP(value)
+        }
         if (name === 'prenom') {
             setPrenomP(value)
         }
@@ -504,24 +535,58 @@ function Panier() {
         console.log(packageAll)
         console.log(packages)
         console.log(prixFinal + '€')
+        let userInfos = {}
+        if (!loginUser) {
+             userInfos = {
+                id_user: UserAccount,
+                produit: value,
+                status: 0,
+                adress: adressText,
+                postal: codeText,
+                weight: packageAll.weight,
+                width: packageAll.width,
+                height: packageAll.height,
+                length: packageAll.length,
+                expe: nameexpe,
+                papier: papier,
+                price: prixFinal,
+            };
+        } else {
 
-       
+             userInfos = {
+                id_user: loginUser.id,
+                produit: value,
+                status: 0,
+                adress: adressText,
+                postal: codeText,
+                weight: packageAll.weight,
+                width: packageAll.width,
+                height: packageAll.height,
+                length: packageAll.length,
+                expe: nameexpe,
+                papier: papier,
+                price: prixFinal,
+            };
+        }
 
+        fetch("https://localhost:8000/panier/delete/all", {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userInfos),
+        })
 
-        const userInfos = {
-            id_user: loginUser.id,
-            produit: value,
-            status: 0,
-            adress: adressText,
-            postal: codeText,
-            weight: packageAll.weight,
-            width: packageAll.width,
-            height: packageAll.height,
-            length: packageAll.length,
-            expe: nameexpe,
-            papier: papier,
-        };
+            .then(response => {
+                response.json();
+                ApiPanier()
+
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
         
+
         fetch("https://localhost:8000/commande/add", {
             method: 'POST',
             headers: {

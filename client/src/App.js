@@ -29,6 +29,8 @@ import ProduitList from './App/produits/page_produit'
 
 import Conf from './App/user/Confirmation'
 
+import Commande from './App/user/Commande'
+
 import ProduitsAll from './App/produits/recherche_produits'
 import Promo from './App/produits/promotions_produits'
 import Login from './App/Login/Login'
@@ -75,7 +77,7 @@ function App() {
                 <Route path="/Register" element={<Register />}></Route>
 
                 <Route path="/profil" element={<Profil />}></Route>
-
+                <Route path="/commande" element={<Commande />}></Route>
             </Routes>
         </BrowserRouter>
     )
