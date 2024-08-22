@@ -24,6 +24,7 @@ import ProduitsList from './App/produits/liste_porduits'
 
 import Build from './App/produits/Algo'
 import Panier from './App/user/Panier'
+import Profil from './App/user/Profil'
 import ProduitList from './App/produits/page_produit'
 
 import Conf from './App/user/Confirmation'
@@ -72,6 +73,8 @@ function App() {
                 <Route path="/changepassword/:token" element={<NewPassword />}></Route>
                 <Route path="/Login" element={<Login />}></Route>
                 <Route path="/Register" element={<Register />}></Route>
+
+                <Route path="/profil" element={<Profil />}></Route>
 
             </Routes>
         </BrowserRouter>

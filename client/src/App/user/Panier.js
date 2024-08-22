@@ -24,7 +24,7 @@ function Panier() {
     const [form2, setForm2] = useState([]);
     const [expedition, setExpedition] = useState([]);
 
-    
+
     const [paysname, setNamePays] = useState('');
 
     const [bancaire, setBancaire] = useState([]);
@@ -44,6 +44,11 @@ function Panier() {
     const [step, setStep] = useState(1);
     const [selectedCountry, setSelectedCountry] = useState('');
     const navigate = useNavigate();
+
+    const [date, setDate] = useState(new Date())
+    const debut = new Date(date.getFullYear(), 7, 21);
+    const fin = new Date(date.getFullYear(), 7, 24);
+    const entre = date > debut && date < fin;
 
 
     const ApiPanier = () => {
@@ -399,15 +404,12 @@ function Panier() {
 
     const formChange = (e) => {
         const { name, value } = e.target;
-        
-    
         if (name === 'num') {
             setNumberCarte(value)
         }
         if (name === 'de') {
             setDeCarte(value)
         }
-
         setForm(prevState => ({
             ...prevState,
             [name]: value
@@ -423,7 +425,7 @@ function Panier() {
         }
         if (name === 'adresse') {
             setAdressP(value)
-    
+
         }
         if (name === 'codepostal') {
             setCodeP(value)
@@ -479,90 +481,90 @@ function Panier() {
         // console.log(prixFinal + '€')
         // console.log("Payment successful");
 
-        const Login = localStorage.getItem('users');
-        const loginUser = JSON.parse(Login);
-        const UserAccount = localStorage.getItem('user_no_account');
+        // const Login = localStorage.getItem('users');
+        // const loginUser = JSON.parse(Login);
+        // const UserAccount = localStorage.getItem('user_no_account');
 
 
-        let userInfos = {}
-        let userInfosAdress = {}
-        if (loginUser) {
-            userInfos = {
-                id_user: loginUser.id,
-                nom: form2.nom,
-                prenom: form2.prenom,
-                num: numberCarte,
-                de: deCarte,
-                cvv: form.cvv
-            };
-            userInfosAdress = {
-                id_user: loginUser.id,
-                adress: form2.adresse,
-                postal: form2.codepostal,
-                nom: form2.nom,
-                prenom: form2.prenom,
-                pays: paysname,
-            };
-            console.log(userInfosAdress)
-        } else {
+        // let userInfos = {}
+        // let userInfosAdress = {}
+        // if (loginUser) {
+        //     userInfos = {
+        //         id_user: loginUser.id,
+        //         nom: form2.nom,
+        //         prenom: form2.prenom,
+        //         num: numberCarte,
+        //         de: deCarte,
+        //         cvv: form.cvv
+        //     };
+        //     userInfosAdress = {
+        //         id_user: loginUser.id,
+        //         adress: form2.adresse,
+        //         postal: form2.codepostal,
+        //         nom: form2.nom,
+        //         prenom: form2.prenom,
+        //         pays: paysname,
+        //     };
+        //     console.log(userInfosAdress)
+        // } else {
 
-            userInfos = {
-                id_user: UserAccount,
-                nom: form2.nom,
-                prenom: form2.prenom,
-                num: numberCarte,
-                de: deCarte,
-                cvv: form.cvv
-            };
-            userInfosAdress = {
-                id_user: loginUser.id,
-                adress: form2.adresse,
-                postal: form2.codepostal,
-                nom: form2.nom,
-                prenom: form2.prenom,
-                pays: paysname,
-            };
+        //     userInfos = {
+        //         id_user: UserAccount,
+        //         nom: form2.nom,
+        //         prenom: form2.prenom,
+        //         num: numberCarte,
+        //         de: deCarte,
+        //         cvv: form.cvv
+        //     };
+        //     userInfosAdress = {
+        //         id_user: loginUser.id,
+        //         adress: form2.adresse,
+        //         postal: form2.codepostal,
+        //         nom: form2.nom,
+        //         prenom: form2.prenom,
+        //         pays: paysname,
+        //     };
 
-            console.log(userInfosAdress)
+        //     console.log(userInfosAdress)
 
-        }
-
-       
-
-        fetch("https://localhost:8000/information/add", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userInfosAdress),
-        })
-
-            .then(response => {
-                response.json();
-                ApiPanier()
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-            });
-
-            // console.log(userInfos)
+        // }
 
 
-        fetch("https://localhost:8000/achat/add", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userInfos),
-        })
 
-            .then(response => {
-                response.json();
-                ApiPanier()
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-            });
+        // fetch("https://localhost:8000/information/add", {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(userInfosAdress),
+        // })
+
+        //     .then(response => {
+        //         response.json();
+        //         // ApiPanier()
+        //     })
+        //     .catch(error => {
+        //         console.error('Erreur:', error);
+        //     });
+
+        // // console.log(userInfos)
+
+
+        // fetch("https://localhost:8000/achat/add", {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(userInfos),
+        // })
+
+        //     .then(response => {
+        //         response.json();
+        //         // ApiPanier()
+        //     })
+        //     .catch(error => {
+        //         console.error('Erreur:', error);
+        //     });
 
     };
     return (
@@ -710,6 +712,13 @@ function Panier() {
                                     </div>
                                     <p>Prix du mode d'expédition: {prixexpe}€</p>
                                     <p>Prix total: {(prixtotal + prixfrais) + (prixpoid + prixexpe)}€</p>
+                                    {(entre) && (
+
+                                        <div>
+                                            <input type="checkbox" id="cadeau" name="cadeau" />
+                                            <label for="cadeau">Papier cadeau</label>
+                                        </div>
+                                    )}
 
                                     <button type="button" onClick={() => setStep(4)} className="modal-button">Confirmer</button>
                                 </form>
