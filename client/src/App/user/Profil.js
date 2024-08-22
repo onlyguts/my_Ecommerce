@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Nav from './../Nav';
 import './Profil.css';
 
 const Profil = () => {
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
-
+    const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [formValues, setFormValues] = useState({});
     const [formValuesB, setFormValuesBanque] = useState({});
@@ -19,6 +20,7 @@ const Profil = () => {
 
     const ApiBanque = () => {
         if (!loginUser) {
+            
             const UserAccount = localStorage.getItem('user_no_account');
             fetch("https://localhost:8000/achat/" + UserAccount)
                 .then(reponse => reponse.json())
@@ -109,16 +111,7 @@ const Profil = () => {
                 .then(data => {
 
 
-                    const allCarte = {
-                        produit: []
-                    }
-
-                    data.forEach(item => {
-                        const produit = JSON.parse(item.produits)
-                        allCarte.produit.push(produit);
-                    });
-
-                    console.log(allCarte)
+                  
             
                     setCommande(data)
 
@@ -450,7 +443,7 @@ const Profil = () => {
                                         <td>{achat.prix}€</td>
                                         <td>
                                             {/* button fiche produit bg ici  */}
-                                            <button className="btn-view">Voir fiche produit</button>
+                                            <button className="btn-view" onClick={() => navigate('commande/' + loginUser.id + '/' + achat.id)}>Voir détails commande</button>
                                         </td>
                                     </tr>
                                 ))}

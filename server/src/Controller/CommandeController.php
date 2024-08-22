@@ -28,6 +28,21 @@ class CommandeController extends AbstractController
         return $this->json($produits);
     }
 
+    #[Route('/commande/solo/{id}', name: 'app_commande_get_solo_id', methods: ['GET', 'HEAD'])]
+    public function achatidsolo(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $conn = $entityManager->getConnection();
+    
+        $sql = 'SELECT * FROM commande c WHERE c.id = :id';
+    
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $resultSet = $stmt->executeQuery();
+        $produits = $resultSet->fetchAllAssociative();
+    
+        return $this->json($produits);
+    }
+
     #[Route('/commande/add', name: 'app_commande_add', methods: ['POST'])]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {

@@ -77,7 +77,7 @@ function App() {
                 <Route path="/Register" element={<Register />}></Route>
 
                 <Route path="/profil" element={<Profil />}></Route>
-                <Route path="/commande" element={<Commande />}></Route>
+                <Route path="/profil/commande/:id/:commande" element={<Commande />}></Route>
             </Routes>
         </BrowserRouter>
     )
