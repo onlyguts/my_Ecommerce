@@ -48,4 +48,21 @@ class AchatController extends AbstractController
         return $this->json($produits);
     }
 
+    
+    #[Route('/achat/delete/{id}', name: 'app_achat_delete', methods: ['DELETE'])]
+    public function delete(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $produitRepository = $entityManager->getRepository(Achat::class);
+        $produit = $produitRepository->find($id);
+        
+        if (!$produit) {
+            return $this->json(['error' => 'produit pas trouvé'], Response::HTTP_NOT_FOUND);
+        }
+    
+        $entityManager->remove($produit);
+        $entityManager->flush();
+    
+        return $this->json(['success' => 'achat supprimé']);
+    }
+
 }

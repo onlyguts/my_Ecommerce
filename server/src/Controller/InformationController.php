@@ -49,4 +49,19 @@ class InformationController extends AbstractController
     
         return $this->json($produits);
     }
+    #[Route('/information/delete/{id}', name: 'app_information_delete', methods: ['DELETE'])]
+    public function delete(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $produitRepository = $entityManager->getRepository(Information::class);
+        $produit = $produitRepository->find($id);
+        
+        if (!$produit) {
+            return $this->json(['error' => 'produit pas trouvé'], Response::HTTP_NOT_FOUND);
+        }
+    
+        $entityManager->remove($produit);
+        $entityManager->flush();
+    
+        return $this->json(['success' => 'Information supprimé']);
+    }
 }

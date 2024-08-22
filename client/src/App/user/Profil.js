@@ -46,6 +46,7 @@ const Profil = () => {
 
 
                             allCarte.carte.push({
+                                id: item.id,
                                 num: carte_crypter,
                                 num_non: item.num,
                                 cvv: item.cvv,
@@ -66,7 +67,7 @@ const Profil = () => {
     }
 
     useEffect(() => {
-      ApiBanque()
+        ApiBanque()
     }, []);
 
 
@@ -217,14 +218,32 @@ const Profil = () => {
 
             .then(response => {
                 response.json();
-                  ApiBanque()
+                ApiBanque()
             })
             .catch(error => {
                 console.error('Erreur:', error);
             });
     }
 
+    const deleteCarte = (id) => {
+        fetch("https://localhost:8000/achat/delete/" + id, {
+            method: 'DELETE',
+        })
+            .then(response => ApiBanque())
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+    }
 
+    const deleteAdresse = (id) => {
+        fetch("https://localhost:8000/information/delete/" + id, {
+            method: 'DELETE',
+        })
+            .then(response => ApiAdresse())
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+    }
 
 
     const achats = [
@@ -306,7 +325,7 @@ const Profil = () => {
                                             <td>{details.pays}</td>
                                             <td>
                                                 {/* <button className="btn-edit">Edit</button> */}
-                                                <button className="btn-delete">Delete</button>
+                                                <button className="btn-delete" onClick={() => deleteAdresse(details.id)}>Delete</button>
                                                 {/* <button className="btn-page">Page</button> */}
                                             </td>
                                         </tr>
@@ -365,7 +384,7 @@ const Profil = () => {
                                             <td>{details.cvv}</td>
                                             <td>
                                                 {/* <button className="btn-edit">Edit</button> */}
-                                                <button className="btn-delete">Delete</button>
+                                                <button className="btn-delete" onClick={() => deleteCarte(details.id)}>Delete</button>
                                                 {/* <button className="btn-page">Page</button> */}
                                             </td>
                                         </tr>
