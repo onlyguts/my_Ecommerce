@@ -280,6 +280,7 @@ function Panier() {
     useEffect(() => {
         if (!loginUser) {
             const UserAccount = localStorage.getItem('user_no_account');
+            
             fetch("https://localhost:8000/information/" + UserAccount)
                 .then(reponse => reponse.json())
                 .then(data => {
@@ -287,7 +288,7 @@ function Panier() {
                 })
                 .catch(erreur => console.error('Erreur: ', erreur));
         } else {
-
+            setStep(2)
             fetch("https://localhost:8000/information/" + loginUser.id)
                 .then(reponse => reponse.json())
                 .then(data => {
