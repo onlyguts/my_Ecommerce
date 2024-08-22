@@ -22,6 +22,8 @@ function Panier() {
     const [packageAll, setPackageAll] = useState([]);
     const [form, setForm] = useState([]);
     const [form2, setForm2] = useState([]);
+
+
     const [expedition, setExpedition] = useState([]);
 
 
@@ -31,6 +33,10 @@ function Panier() {
     const [numberCarte, setNumberCarte] = useState(0);
     const [deCarte, setDeCarte] = useState(0);
 
+
+    const [papier, setPapier] = useState(0);
+    
+
     const [adress, setAdress] = useState([]);
     const [adressText, setAdressP] = useState('');
     const [codeText, setCodeP] = useState('');
@@ -38,6 +44,8 @@ function Panier() {
     const [nomText, setNomP] = useState('');
 
     const [prixexpe, setPrixExpe] = useState(0);
+    const [nameexpe, setNameExpe] = useState('');
+    
     const [prixfrais, setPrixFrais] = useState(0);
     const [prixpoid, setPrixPoids] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,6 +58,7 @@ function Panier() {
     const fin = new Date(date.getFullYear(), 7, 24);
     const entre = date > debut && date < fin;
 
+    const [packageItem, setpackageItem]  = useState([]);
 
     const ApiPanier = () => {
         if (!loginUser) {
@@ -76,7 +85,10 @@ function Panier() {
                         packageItem.height += item.height * item.quantity;
                         packageItem.length += item.length * item.quantity;
                         packageItem.quantity += item.quantity;
+                        
                     });
+
+                    setpackageItem(packageItem)
 
                     const packageColis = {
                         produit: []
@@ -278,6 +290,7 @@ function Panier() {
         setPrixFrais(int)
         setPrixPoids(prixGrame)
         setNamePays(value.name)
+
     }
 
 
@@ -312,9 +325,12 @@ function Panier() {
 
 
     const ExpUser = (e) => {
-        const int = parseFloat(e.target.value);
-        // console.log(prixGrame);
+        const data = JSON.parse(e.target.value)
+        const int = parseFloat(data.taxe);
+        setNameExpe(data.name)
         setPrixExpe(int)
+        console.log(data.taxe)
+      
 
     }
 
@@ -472,14 +488,55 @@ function Panier() {
                 console.error('Erreur:', error);
             });
     }
+
+    const PapierCado = (e) => {
+        console.log(e.target.checked)
+        setPapier(e.target.checked)
+    }
+
     const handlePayment = () => {
 
+        const Login = localStorage.getItem('users');
+        const loginUser = JSON.parse(Login);
+        const UserAccount = localStorage.getItem('user_no_account');
 
-        const prixFinal = (prixfrais + prixpoid) + prixtotal
-        // console.log(packageAll)
-        // console.log(packages)
-        // console.log(prixFinal + '€')
-        // console.log("Payment successful");
+        const prixFinal = (prixfrais + prixpoid) + (prixtotal + prixexpe)
+        console.log(packageAll)
+        console.log(packages)
+        console.log(prixFinal + '€')
+
+       
+
+
+        const userInfos = {
+            id_user: loginUser.id,
+            produit: value,
+            status: 0,
+            adress: adressText,
+            postal: codeText,
+            weight: packageAll.weight,
+            width: packageAll.width,
+            height: packageAll.height,
+            length: packageAll.length,
+            expe: nameexpe,
+            papier: papier,
+        };
+        
+        fetch("https://localhost:8000/commande/add", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userInfos),
+        })
+
+            .then(response => {
+                response.json();
+                // ApiPanier()
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
 
         // const Login = localStorage.getItem('users');
         // const loginUser = JSON.parse(Login);
@@ -499,8 +556,8 @@ function Panier() {
         //     };
         //     userInfosAdress = {
         //         id_user: loginUser.id,
-        //         adress: form2.adresse,
-        //         postal: form2.codepostal,
+                // adress: form2.adresse,
+                // postal: form2.codepostal,
         //         nom: form2.nom,
         //         prenom: form2.prenom,
         //         pays: paysname,
@@ -565,6 +622,9 @@ function Panier() {
         //     .catch(error => {
         //         console.error('Erreur:', error);
         //     });
+
+
+     
 
     };
     return (
@@ -704,7 +764,7 @@ function Panier() {
                                         <select onChange={(e) => ExpUser(e)} className="form-select">
                                             <option value=''>Mode d'expédition</option>
                                             {expedition.map((mode, index) => (
-                                                <option key={index} value={mode.taxe}>
+                                                <option key={index} value={JSON.stringify(mode)}>
                                                     {mode.name}
                                                 </option>
                                             ))}
@@ -715,7 +775,7 @@ function Panier() {
                                     {(entre) && (
 
                                         <div>
-                                            <input type="checkbox" id="cadeau" name="cadeau" />
+                                            <input type="checkbox" onChange={(e) => PapierCado(e)} id="cadeau" name="cadeau" />
                                             <label for="cadeau">Papier cadeau</label>
                                         </div>
                                     )}
