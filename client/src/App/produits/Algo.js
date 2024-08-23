@@ -70,7 +70,7 @@ console.log(panierWait)
     <div>
       <Nav />
       <div>
-         {panierWait.map((boitier, index) => (
+         {Object.values(panierWait).map((boitier, index) => (
               <li key={index}>
                 {boitier.name} 
               </li>
@@ -97,7 +97,7 @@ console.log(panierWait)
         )}
          {step === 3 && (
           <ul>
-            <h2>Liste des Carte Mere Disponibles :</h2>
+            <h2>Liste des CPU Disponibles :</h2>
             {cpu.map((boitier, index) => (
               <li key={index}>
                 {boitier.name} (Format: {boitier.type}) <button value={JSON.stringify(boitier)} name={boitier.id} onClick={(e) => Choose2(e)}>+</button>
