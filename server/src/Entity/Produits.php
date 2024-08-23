@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProduitsRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProduitsRepository::class)]
@@ -66,6 +67,9 @@ class Produits
 
     #[ORM\Column]
     private ?int $weight = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $create_time = null;
 
   
 
@@ -286,6 +290,18 @@ class Produits
     public function setWeight(int $weight): static
     {
         $this->weight = $weight;
+
+        return $this;
+    }
+
+    public function getCreateTime(): ?\DateTimeInterface
+    {
+        return $this->create_time;
+    }
+
+    public function setCreateTime(\DateTimeInterface $create_time): static
+    {
+        $this->create_time = $create_time;
 
         return $this;
     }

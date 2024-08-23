@@ -43,6 +43,22 @@ class CommandeController extends AbstractController
         return $this->json($produits);
     }
 
+    #[Route('/commande/chercher/{id}', name: 'app_commande_chercher', methods: ['GET', 'HEAD'])]
+    public function users_chercher(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $conn = $entityManager->getConnection();
+    
+        $sql = 'SELECT * FROM commande WHERE id_commande = :id';
+
+    
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $resultSet = $stmt->executeQuery();
+        $produits = $resultSet->fetchOne();
+    
+        return $this->json($produits);
+    }
+
     #[Route('/commande/add', name: 'app_commande_add', methods: ['POST'])]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -50,6 +66,7 @@ class CommandeController extends AbstractController
 
         $code = new Commande();
         $code->setIdUser($data['id_user']);
+        $code->setIdCommande($data['id_commande']);
         $code->setStatus($data['status']);
         $code->setAdresse($data['adress']);
         $code->setCode((int)$data['postal']);

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use DateTime;
+
 use App\Entity\Produits;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,6 +54,19 @@ class ProduitsController extends AbstractController
     {
         $connection = $entityManager->getConnection();
         $Mysql = 'SELECT p.*, c.name as categorie_name FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id WHERE p.suggestion != 0 ';
+
+        $query = $connection->prepare($Mysql);
+        $resultat = $query->executeQuery();
+        $data = $resultat->fetchAllAssociative();
+        return $this->json($data);
+    }
+
+    
+    #[Route('/produits/nouveauter', name: 'app_nouveauter', methods: ['GET', 'HEAD'])]
+    public function nouveauter(EntityManagerInterface $entityManager): Response
+    {
+        $connection = $entityManager->getConnection();
+        $Mysql = 'SELECT p.*, c.name as categorie_name FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id ORDER BY p.create_time ASC LIMIT 10';
 
         $query = $connection->prepare($Mysql);
         $resultat = $query->executeQuery();
@@ -155,6 +170,7 @@ class ProduitsController extends AbstractController
         $produit->setHeight($data['height']);
         $produit->setWidth($data['width']);
         $produit->setWeight($data['weight']);
+        $produit->setCreateTime(new DateTime());
 
         $entityManager->persist($produit);
         $entityManager->flush();

@@ -532,6 +532,13 @@ function Panier() {
         const loginUser = JSON.parse(Login);
         const UserAccount = localStorage.getItem('user_no_account');
 
+        
+        function entierAleatoire(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        
+        const id_generate = entierAleatoire(100000, 999999)
+
         const prixFinal = (prixfrais + prixpoid) + (prixtotal + prixexpe)
         console.log(packageAll)
         console.log(packages)
@@ -540,6 +547,7 @@ function Panier() {
         if (!loginUser) {
              userInfos = {
                 id_user: UserAccount,
+                id_commande:  id_generate,
                 produit: value,
                 status: 0,
                 adress: adressText,
@@ -556,6 +564,7 @@ function Panier() {
 
              userInfos = {
                 id_user: loginUser.id,
+                id_commande:  id_generate,
                 produit: value,
                 status: 0,
                 adress: adressText,
@@ -587,22 +596,34 @@ function Panier() {
                 console.error('Erreur:', error);
             });
         
+           
 
-        fetch("https://localhost:8000/commande/add", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userInfos),
-        })
+            fetch("https://localhost:8000/commande/chercher/" + id_generate)
+                .then(reponse => reponse.json())
+                .then(data => {
+                    if (data === false) {
+                        fetch("https://localhost:8000/commande/add", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(userInfos),
+                        })
+                
+                            .then(response => {
+                                response.json();
+                                // ApiPanier()
+                            })
+                            .catch(error => {
+                                console.error('Erreur:', error);
+                            });
+                    } else {
+                        handlePayment()
+                    }
+                })
+                .catch(erreur => console.error('Erreur: ', erreur)); 
 
-            .then(response => {
-                response.json();
-                // ApiPanier()
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-            });
+     
 
         // const Login = localStorage.getItem('users');
         // const loginUser = JSON.parse(Login);

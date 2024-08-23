@@ -439,7 +439,7 @@ const Profil = () => {
                                     <tr key={index}>
                                         {/* <td>{achat.date}</td> */}
                                         <td>{achat.date}</td>
-                                        <td>#{achat.id}</td>
+                                        <td>#{achat.id_commande}</td>
                                         <td>{achat.prix}€</td>
                                         <td>
                                             {/* button fiche produit bg ici  */}

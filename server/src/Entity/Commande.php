@@ -53,6 +53,9 @@ class Commande
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\Column]
+    private ?int $id_commande = null;
+
 
 
     public function getId(): ?int
@@ -212,6 +215,18 @@ class Commande
     public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getIdCommande(): ?int
+    {
+        return $this->id_commande;
+    }
+
+    public function setIdCommande(int $id_commande): static
+    {
+        $this->id_commande = $id_commande;
 
         return $this;
     }
