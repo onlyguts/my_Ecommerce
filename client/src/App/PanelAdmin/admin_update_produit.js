@@ -41,7 +41,7 @@ function AdminProduit() {
             ...prevState,
             [name]: value
         }));
-      
+
     };
 
     const UpdateProduit = (e) => {
@@ -133,13 +133,11 @@ function AdminProduit() {
             <Nav />
             <div className='main'>
 
-                <form>
+                <form className='form'>
                     <div>
 
                         <h2>{produit.name}</h2>
                         <img className='imageEdit' src={produit.image} />
-                     
-                       
                         <button onClick={() => EditerProduits(produit.id)}>Fiche produit</button>
                         <button onClick={() => EditerAvis(produit.id)}>Editer avis</button>
                         <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
