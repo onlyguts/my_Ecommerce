@@ -93,15 +93,24 @@ nav a:hover {
     display: block;
 }
 
+/*——————————— navbarr top ———————————*/
+
+.menu-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
 
 .head {
     display: flex;
-    height: 91px;
     flex-shrink: 0;
     background: var(--primary-color);
     align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
+    padding-left:15% ;
+    padding-right: 15%;
+    justify-content: center;
+
 }
 
 .logoImg {
@@ -110,59 +119,102 @@ nav a:hover {
     flex-shrink: 0;
 }
 
-.navBar {
-    width: 692px;
-    height: 52px;
+/*———————— barre de navigation ————————————— */
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-shrink: 0;
+    background: var(--primary-color);
+    align-items: center;
+    padding-left:15% ;
+    padding-right: 15%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+
+.navBar-container {
+    display: flex;
+    align-items: center;
+    background-color: #cf7742; 
     border-radius: 10px;
-    background: var(--secondary-color);
-    border: none;
     padding: 0 10px;
+    max-width: 600px;
+    width: 100%;
+    height: 40px;
+}
+
+.navBar {
+    border: none;
+    background: none;
+    color: #b10f0f; 
+    width: 100%;
+    height: 100%;
+    font-size: 1rem;
+    padding-left: 10px;
+    outline: none;
+}
+
+.searchButton {
+    background-color: #333; 
     color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.searchButton:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); 
+}
+
+.searchIcon {
     font-size: 1rem;
 }
 
+
 .menu {
     display: flex;
+    align-items: center;
     gap: 10px;
 }
 
 .menu-btn {
-    background-color: var(--secondary-color);
+    background-color: #1e5d52; 
+    color: white;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
-    color: white;
     font-size: 1rem;
-}
-
-nav {
-    opacity: var(--sds-size-stroke-border);
-    background: #1C6F5E;
-    padding: 10px;
-}
-
-nav ul {
-    justify-content: center;
-    list-style: none;
     display: flex;
-    gap: 2px;
-    padding: 0;
-    margin: 0;
+    align-items: center;
+    position: relative;
 }
 
-nav a {
-    text-decoration: none;
+.quantity-circle {
+    background-color: red;
     color: white;
-    padding: 10px 20px;
-    background-color: var(--secondary-color);
-    transition: background-color 0.3s;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    position: absolute;
+    top: -5px;
+    right: -10px;
 }
 
-nav a:hover {
-    background-color: var(--accent-color);
-}
+
+/*————————— Main BYP ————————*/
 
 .main-banner {
     background-size: cover;

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Homes.css';
 import images from './images.js';
-
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from 'react-responsive-carousel';
 import { useNavigate } from "react-router-dom";
 
 function Nav() {
@@ -45,17 +43,17 @@ function Nav_one() {
         .catch(erreur => console.error('Erreur: ', erreur));
     } else {
       fetch("https://localhost:8000/panier/" + UserAccount)
-        .then(reponse => reponse.json())
-        .then(data => {
+      .then(reponse => reponse.json())
+      .then(data => {
 
-          const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
-          setQuantity(quantity);
+        const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+        setQuantity(quantity);
 
-        })
-        .catch(erreur => console.error('Erreur: ', erreur));
+      })
+      .catch(erreur => console.error('Erreur: ', erreur));
     }
   }, []);
-
+ 
   useEffect(() => {
     fetch("https://localhost:8000/produits")
       .then(response => response.json())
@@ -116,24 +114,33 @@ function Nav_one() {
   }
 
   return (
-    <header>
+    <header className='header'>
       <div className='head'>
         <div className="logo">
           <img className="logoImg" src={images.logo} alt="BYP Logo" />
         </div>
-        <div>
+        <div className="navBar-container">
           <input
             className="navBar"
             type="text"
             placeholder="Recherche"
             onChange={(event) => valueInput(event)}
           />
-          <button onClick={() => sendInput()}>Envoyer</button>
+          <button 
+            className="searchButton" 
+            onClick={sendInput}
+          >
+            <span className="searchIcon">🔍</span>
+          </button>
         </div>
         <div className="menu">
           {!loginUser
-            ? <button className="menu-btn" onClick={() => openPopup()}>Connexion</button>
-            : <button className="menu-btn" onClick={() => Deconnexion()}>Déconnexion</button>
+            ? <button className="menu-btn" onClick={() => openPopup()}>
+               <img src={images.profil} alt="Connexion/profils" className="menu-icon" />
+            </button>
+            : <button className="menu-btn" onClick={() => Deconnexion()}>
+                <img src={images.deconnexion} alt="Connexion/profils" className="menu-icon" />
+                </button>
           }
           {loginUser && (
             loginUser.groupe === 1 ? (
@@ -144,12 +151,11 @@ function Nav_one() {
           )}
 
           <button className="menu-btn" onClick={toggleCart}>
-            Cart
+          <img src={images.panier} alt="Connexion/profils" className="menu-icon" />
             {quantity > 0 && (
               <span className="quantity-circle">{quantity}</span>
             )}
           </button>
-
         </div>
       </div>
       {showCart && <Cart />}
@@ -203,6 +209,10 @@ function Nav_two() {
     navigate("/promotions");
   }
 
+  const goToProfil = () => {
+    navigate('/profil');
+  };
+
   return (
     <nav>
       <ul>
@@ -232,6 +242,12 @@ function Nav_two() {
             <a >Promotions</a>
           </div>
         </li>
+        <li className="dropdown">
+            <div onClick={goToProfil}> {/* Ici link nouveauté */}
+            <a >Profil</a>
+          </div>
+        </li>
+        
       </ul>
     </nav>
   );
@@ -249,13 +265,13 @@ function Cart() {
 
     if (!loginUser) {
       fetch("https://localhost:8000/panier/" + UserAccount)
-        .then(response => response.json())
-        .then(data => {
-          setCartItems(data);
-          const total = data.reduce((sum, item) => sum + ((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity), 0);
-          setValue(total);
-        })
-        .catch(error => console.error('Erreur: ', error));
+      .then(response => response.json())
+      .then(data => {
+        setCartItems(data);
+        const total = data.reduce((sum, item) => sum + ((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity), 0);
+        setValue(total);
+      })
+      .catch(error => console.error('Erreur: ', error));
     } else {
       fetch("https://localhost:8000/panier/" + loginUser.id)
         .then(response => response.json())
@@ -279,7 +295,7 @@ function Cart() {
     navigate('/panier')
   }
 
-  const AddProduit = (id, stock, quantity, newprice, image_type, outpout) => {
+  const AddProduit = (id, stock, quantity, newprice) => {
     console.log(stock >= quantity)
     if (stock - 1 >= quantity) {
       const Login = localStorage.getItem('users');
@@ -287,20 +303,16 @@ function Cart() {
       const UserAccount = localStorage.getItem('user_no_account');
       let userInfos = {}
       if (loginUser) {
-        userInfos = {
+         userInfos = {
           id_produit: id,
           price_type: newprice,
           id_user: loginUser.id,
-          image_type: image_type,
-          info: outpout,
         };
       } else {
-        userInfos = {
+         userInfos = {
           id_produit: id,
           price_type: newprice,
           id_user: UserAccount,
-          image_type: image_type,
-          info: outpout,
         };
       }
       fetch("https://localhost:8000/panier/add", {
@@ -323,7 +335,7 @@ function Cart() {
     }
   }
 
-  console.log(cartItems)
+
   const DeleteProduit = (id, newprice) => {
     const Login = localStorage.getItem('users');
     const loginUser = JSON.parse(Login);
@@ -331,13 +343,13 @@ function Cart() {
     const UserAccount = localStorage.getItem('user_no_account');
     let userInfos = {}
     if (loginUser) {
-      userInfos = {
+       userInfos = {
         id_produit: id,
         price_type: newprice,
         id_user: loginUser.id,
       };
     } else {
-      userInfos = {
+       userInfos = {
         id_produit: id,
         price_type: newprice,
         id_user: UserAccount,
@@ -369,14 +381,11 @@ function Cart() {
       <ul className="cart-items">
         {cartItems.map(item => (
           <li key={item.id} className="cart-item">
-            <img src={item.image_type} alt={item.name} className="cart-item-image" />
+            <img src={item.image} alt={item.name} className="cart-item-image" />
             <div className="cart-item-details">
               <div className='cart-description'>
                 <span className="cart-item-info">
-                  {item.info != 'null'
-                    ? <span> {item.name} {item.info}  </span>
-                    : <span> {item.name} </span>
-                  }
+                  {item.name}
                 </span>
                 <span className="cart-item-info">
                   {((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity)}€ | x1 {(item.prix + item.price_type) * (1 - item.promo / 100)}€
@@ -386,7 +395,7 @@ function Cart() {
               <div className='cart-PlusMoin'>
                 <button onClick={() => DeleteProduit(item.id, item.price_type)} className="cart-item-button">-</button>
                 <button className="cart-item-quantity">{item.quantity}</button>
-                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type, item.image_type, item.info)} className="cart-item-button">+</button>
+                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
               </div>
             </div>
           </li>
