@@ -33,6 +33,8 @@ function Login() {
                         email: data[0].email,
                         groupe: data[0].groupe,
                         token: data[0].token,
+                        image: data[0].image,
+                        username: data[0].username,
                         verification: data[0].verification
                     };
                     localStorage.setItem('users', JSON.stringify(userData));

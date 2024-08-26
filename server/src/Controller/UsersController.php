@@ -56,7 +56,13 @@ class UsersController extends AbstractController
         $user = $entityManager->getRepository(Users::class);
         return $this->json($user->findBy(['token' => $token]));
     }
+    #[Route('/users/{id}', name: 'app_only_user', methods: ['GET', 'HEAD'])]
+    public function indexFind(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $produits = $entityManager->getRepository(Users::class)->findBy(['id' => $id]);
 
+        return $this->json($produits);
+    }
     #[Route('/users/post', name: 'app_users_post')]
     public function indexpost(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -294,5 +300,44 @@ class UsersController extends AbstractController
         ->text($emailText);
 
     $this->mailer->send($email);
+    }
+
+    #[Route('/username/update/{id}', name: 'app_username_update', methods: ['PUT'])]
+    public function username(EntityManagerInterface $entityManager, Request $request, int $id): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $produit = $entityManager->getRepository(Users::class)->find($id);
+
+        if (!$produit) {
+            return $this->json(['message' => 'Erreur : user non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        $produit->setUsername($data['username']);
+
+        $entityManager->persist($produit);
+        $entityManager->flush();
+
+        return $this->json(['success' => 'user mis à jour'], Response::HTTP_OK);
+    }
+
+    
+    #[Route('/email/update/{id}', name: 'app_email_update', methods: ['PUT'])]
+    public function email(EntityManagerInterface $entityManager, Request $request, int $id): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $produit = $entityManager->getRepository(Users::class)->find($id);
+
+        if (!$produit) {
+            return $this->json(['message' => 'Erreur : user non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        $produit->setEmail($data['email']);
+
+        $entityManager->persist($produit);
+        $entityManager->flush();
+
+        return $this->json(['success' => 'user mis à jour'], Response::HTTP_OK);
     }
 }

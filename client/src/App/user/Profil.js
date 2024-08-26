@@ -13,6 +13,12 @@ const Profil = () => {
     const [activeSection, setActiveSection] = useState('livraison');
     const [pays, setPays] = useState([]);
 
+    const [usernameDisplay, setUsernameDisplay] = useState('');
+
+
+    const [username, setUsername] = useState([]);
+    const [email, setEmail] = useState([]);
+
     const [commande, setCommande] = useState([]);
     const [bancaire, setBancaire] = useState([]);
     const [adress, setAdress] = useState([]);
@@ -20,7 +26,7 @@ const Profil = () => {
 
     const ApiBanque = () => {
         if (!loginUser) {
-            
+
             const UserAccount = localStorage.getItem('user_no_account');
             fetch("https://localhost:8000/achat/" + UserAccount)
                 .then(reponse => reponse.json())
@@ -111,14 +117,27 @@ const Profil = () => {
                 .then(data => {
 
 
-                  
-            
+
+
                     setCommande(data)
 
 
                 })
                 .catch(erreur => console.error('Erreur: ', erreur));
         }
+    }
+
+    useEffect(() => {
+        ApiUser()
+    }, []);
+
+    const ApiUser = () => {
+        fetch("https://localhost:8000/users/" + loginUser.id)
+            .then(reponse => reponse.json())
+            .then(data => {
+                setUsernameDisplay(data[0].username)
+            })
+            .catch(erreur => console.error('Erreur: ', erreur));
     }
 
     useEffect(() => {
@@ -141,6 +160,63 @@ const Profil = () => {
             ...formValues,
             [e.target.name]: e.target.value
         });
+    };
+
+    const updateChange = (e) => {
+        if (e.target.name === 'username') {
+            fetch("https://localhost:8000/username/update/" + loginUser.id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de la mise à jour du produit');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    ApiUser()
+                })
+
+                .catch(error => console.error('Erreur :', error));
+        } else if (e.target.name === 'email') {
+            fetch("https://localhost:8000/email/update/" + loginUser.id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de la mise à jour du produit');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    ApiUser()
+                })
+
+                .catch(error => console.error('Erreur :', error));
+        }
+    };
+
+    const userChange = (e) => {
+        if (e.target.name === 'username') {
+            setUsername(e.target.value)
+        }
+        else if (e.target.name === 'email') {
+            setEmail(e.target.value)
+        }
+      
+
     };
 
     const formChangebanque = (e) => {
@@ -276,11 +352,14 @@ const Profil = () => {
             });
     }
 
-
-
     return (
         <div>
             <Nav />
+            <img src={loginUser.image} />
+            <div>
+                <p> {usernameDisplay} </p>
+            </div>
+
             <div className="profil-container">
                 <div className="profil-menu">
                     <button onClick={() => setActiveSection('livraison')} className={`profil-menu-button ${activeSection === 'livraison' ? 'active' : ''}`}>
@@ -291,6 +370,9 @@ const Profil = () => {
                     </button>
                     <button onClick={() => setActiveSection('historique')} className={`profil-menu-button ${activeSection === 'historique' ? 'active' : ''}`}>
                         Historique d'achat
+                    </button>
+                    <button onClick={() => setActiveSection('paramtre')} className={`profil-menu-button ${activeSection === 'paramtre' ? 'active' : ''}`}>
+                        Paramtre
                     </button>
                 </div>
 
@@ -428,7 +510,7 @@ const Profil = () => {
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                   
+
                                     <th>Numéro de commande</th>
                                     <th>Prix</th>
                                     <th>Options</th>
@@ -449,6 +531,43 @@ const Profil = () => {
                                 ))}
                             </tbody>
                         </table>
+                    </div>
+                )}
+                {activeSection === 'paramtre' && (
+                    <div className="section livraison-section animate-fade-in">
+                        <form className="profil-form">
+                            <div className="form-group">
+                                <label>Username:</label>
+                                <input type="text" placeholder="Votre Username" required name='username' onChange={(e) => userChange(e)} />
+                                <button type="button" name='username' onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
+                            </div>
+                            <div className="form-group">
+                                <label>Email:</label>
+                                <input type="text" placeholder="Votre Email" required name='email' onChange={(e) => userChange(e)} />
+                                <button type="button" name='email' onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
+                            </div>
+                            <div className="form-group">
+                                <label>Password:</label>
+                                <input type="text" placeholder="Votre Password" required name='Password' />
+                                <button type="button" onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
+                            </div>
+                            <div className="form-group">
+                                <label>Adresse:</label>
+                                <input type="text" placeholder="Votre adresse" required name='adresse' />
+                                <button type="button" onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
+                            </div>
+                            <div className="form-group">
+                                <label>Code postal:</label>
+                                <input type="text" placeholder="Votre code postal" required name='codepostal' />
+                                <button type="button" onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
+                            </div>
+                            <div className="form-group">
+                                <label>Photo Profil:</label>
+                                <input type="text" placeholder="Votre URL Photo Profil" required name='photo' />
+                                <button type="button" onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
+                            </div>
+
+                        </form>
                     </div>
                 )}
             </div>

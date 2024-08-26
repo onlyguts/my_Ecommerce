@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Nav from './../Nav';
+import './Commande.css';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function Commande() {
@@ -44,15 +45,45 @@ function Commande() {
     return (
         <div>
             <Nav />
-            {produits.map((details, index) => (
-                <div key={index}>
-                    <div>{details.id}</div>
-                    <img src={details.image_type} />
-                    <div>{details.prix}€</div>
+            <div className="page-container">
+                {commandes && commandes.length > 0 ? (
+                    <div className="commande-recap">
+                        <div className="commande-card">
+                            <div className="commande-info">Adresse : {commandes[0].adresse}</div>
+                            <div className="commande-info">Code : {commandes[0].code}</div>
+                            <div className="commande-info">Mode d'expédition : {commandes[0].mode_expe}</div>
+                            <div className="commande-info">Date : {commandes[0].date}</div>
+                            <div className="commande-info">Prix Totals : {commandes[0].prix_total}€</div>
+                            <div className="commande-info">Status : {commandes[0].status}</div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="commande-recap">
+                        <div className="commande-card">
+                            <div className="commande-info">Aucune commande disponible.</div>
+                        </div>
+                    </div>
+                )}
+                
+                <div className="produits-container">
+                    {produits.map((details, index) => (
+                        <div className="produit-card" key={index}>
+                            <div className="produit-id">{index+1}</div>
+
+                            <img className="produit-image" src={details.image_type} alt={`Produit ${details.id}`} />
+                            <div className="produit-name">{details.name}</div>
+                            <div className="produit-marque">{details.marque} Marque</div>
+                            <div className="produit-weight">{details.weight} Poids</div>
+                            <div className="produit-quantity">{details.quantity} Quantité</div>
+                            <div className="produit-prix">{details.prix}€</div>
+                        </div>
+                    ))}
                 </div>
-            ))}
+            </div>
         </div>
-    )
+    );
+    
+      
 }
 
 export default Commande

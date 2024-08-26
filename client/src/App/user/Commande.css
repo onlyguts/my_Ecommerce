@@ -1,0 +1,134 @@
+:root {
+    --primary-color: #E2B791;
+    --secondary-color: #D8844D;
+    --accent-color: #2E2E2E;
+    --background-color: #F3E1D1;
+    --highlight-color: #F4D5BB;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --shadow-hover-color: rgba(0, 0, 0, 0.2);
+    --blue: #1d6f5f;
+    --beige: #e1b690;
+    --transition-duration: 0.3s;
+  }
+  
+  .page-container {
+    background-color: var(--background-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--accent-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .commande-recap {
+    background-color: var(--highlight-color);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    animation: fadeInDown var(--transition-duration) ease-in-out;
+  }
+  
+  .commande-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .commande-info {
+    color: var(--accent-color);
+    font-size: 1.1em;
+    padding: 8px;
+    background-color: var(--primary-color);
+    border-radius: 6px;
+    box-shadow: 0 2px 6px var(--shadow-color);
+    transition: transform var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+  }
+  
+  .commande-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-hover-color);
+  }
+  
+  .produits-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .produit-card {
+
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    padding: 20px;
+    width: 220px;
+    text-align: center;
+    transition: transform var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .produit-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px var(--shadow-hover-color);
+  }
+  
+  .produit-id {
+    font-weight: bold;
+    color: var(--blue);
+    margin-bottom: 10px;
+    font-size: 1.1em;
+  }
+  
+  .produit-image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    transition: transform 0.5s ease;
+  }
+  
+  .produit-card:hover .produit-image {
+    transform: scale(1.1);
+  }
+  
+  .produit-name,
+  .produit-marque,
+  .produit-weight,
+  .produit-quantity,
+  .produit-prix {
+    margin-bottom: 10px;
+    font-size: 1em;
+    transition: color var(--transition-duration) ease;
+  }
+  
+  .produit-prix {
+    color: var(--secondary-color);
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+  
+  .produit-card:hover .produit-name,
+  .produit-card:hover .produit-marque,
+  .produit-card:hover .produit-weight,
+  .produit-card:hover .produit-quantity,
+  .produit-card:hover .produit-prix {
+    color: var(--accent-color);
+  }
+  
+  /* Animation de fadeIn */
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

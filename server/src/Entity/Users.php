@@ -37,6 +37,9 @@ class Users
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTime $createTime = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -124,5 +127,17 @@ class Users
     public function getCreateTime(): ?DateTime
     {
         return $this->createTime;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
     }
 }
