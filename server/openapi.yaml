@@ -1,0 +1,2287 @@
+openapi: 3.0.0
+info:
+  title: 'My First API'
+  version: '0.1'
+paths:
+  /achat/add:
+    post:
+      tags:
+        - "Information d'achat"
+      summary: "Ajoute les informations bancaires d'un utilisateur"
+      description: "Ajoute les informations bancaires d'un utilisateur en base de données."
+      operationId: be4cb99de9e34edb564122024c6d2d6e
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                id_user:
+                  description: "ID de l'utilisateur"
+                  type: integer
+                  example: 123
+                nom:
+                  description: "Nom de l'utilisateur"
+                  type: string
+                  example: Dupont
+                prenom:
+                  description: "Prénom de l'utilisateur"
+                  type: string
+                  example: Jean
+                cvv:
+                  description: 'Code CVV de la carte bancaire'
+                  type: integer
+                  example: 123
+                num:
+                  description: 'Numéro de la carte bancaire'
+                  type: string
+                  example: 1234-5678-9012-3456
+                de:
+                  description: "Date d'expiration de la carte"
+                  type: string
+                  example: 12/25
+              type: object
+      responses:
+        '201':
+          description: 'Informations bancaires ajoutées avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Informations bancaires ajoutées' }
+                  id: { description: "ID de l'enregistrement créé", type: integer, example: 789 }
+                type: object
+        '400':
+          description: 'Données de requête incorrectes'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: Erreur }
+                type: object
+  '/achat/{id}':
+    get:
+      tags:
+        - "Information d'achat"
+      summary: "Récupère les informations bancaires d'un utilisateur par ID"
+      description: "Récupère les informations bancaires d'un utilisateur par ID."
+      operationId: b16e85b86b87d3381a785c1a256ed74d
+      parameters:
+        -
+          name: id
+          in: path
+          description: "ID de l'utilisateur"
+          required: true
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: 'Informations bancaires récupérées avec succès'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: "ID de l'enregistrement bancaire", type: integer, example: 1 }, id_user: { description: "ID de l'utilisateur", type: integer, example: 123 }, firstname: { description: "Prénom de l'utilisateur", type: string, example: Jean }, lastname: { description: "Nom de l'utilisateur", type: string, example: Dupont }, cvv: { description: 'Code CVV de la carte bancaire', type: integer, example: 123 }, num: { description: 'Numéro de la carte bancaire', type: string, example: 1234-5678-9012-3456 }, de: { description: "Date d'expiration de la carte", type: string, example: 12/25 } }
+                  type: object
+        '404':
+          description: 'Aucune information bancaire trouvée pour cet utilisateur'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Aucune information bancaire trouvée' }
+                type: object
+  '/achat/delete/{id}':
+    delete:
+      tags:
+        - "Information d'achat"
+      summary: "Supprime les informations bancaires d'un utilisateur par ID"
+      description: "Supprime les informations bancaires d'un utilisateur par ID."
+      operationId: 5c17574b63caf48205b693ab2e1153ed
+      parameters:
+        -
+          name: id
+          in: path
+          description: "ID de l'utilisateur dont les informations bancaires doivent être supprimées"
+          required: true
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: 'Informations bancaires supprimées avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'achat supprimé' }
+                type: object
+        '404':
+          description: 'Aucune information bancaire trouvée pour cet ID'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'produit pas trouvé' }
+                type: object
+  '/avis/{id_produits}':
+    get:
+      tags:
+        - Avis
+      summary: 'Récupère tous les avis pour un produit spécifique'
+      description: 'Récupère tous les avis pour un produit spécifique.'
+      operationId: 2d945ff0e85eaf9ef550053452bda838
+      parameters:
+        -
+          name: id_produits
+          in: path
+          description: 'ID du produit pour lequel récupérer les avis'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 'Liste des avis récupérée avec succès'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: "ID de l'avis", type: integer, example: 1 }, id_user: { description: "ID de l'utilisateur ayant laissé l'avis", type: integer, example: 123 }, id_produits: { description: "ID du produit concerné par l'avis", type: integer, example: 456 }, rate: { description: 'Note attribuée au produit', type: integer, example: 5 }, description: { description: "Description de l'avis", type: string, example: 'Excellent produit, très satisfait!' } }
+                  type: object
+  /avis/add:
+    post:
+      tags:
+        - Avis
+      summary: 'Ajoute un nouvel avis pour un produit'
+      description: 'Ajoute un nouvel avis pour un produit.'
+      operationId: 16fe44326ffd37843b9b34af07bb460c
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                id_user:
+                  description: "ID de l'utilisateur"
+                  type: integer
+                  example: 123
+                id_produits:
+                  description: 'ID du produit'
+                  type: integer
+                  example: 456
+                rate:
+                  description: 'Note attribuée au produit'
+                  type: integer
+                  example: 5
+                description:
+                  description: "Description de l'avis"
+                  type: string
+                  example: 'Excellent produit, très satisfait!'
+              type: object
+      responses:
+        '201':
+          description: 'Avis ajouté avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'Avis ajouté' }
+                  id: { description: 'ID du nouvel avis', type: integer, example: 1 }
+                type: object
+        '400':
+          description: 'Requête invalide (données manquantes ou incorrectes)'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { description: "Message d'erreur", type: string, example: 'Erreur dans les données fournies' }
+                type: object
+  /categorie:
+    get:
+      tags:
+        - Catégories
+      summary: 'Récupère la liste de toutes les catégories'
+      description: 'Récupère la liste de toutes les catégories.'
+      operationId: 8162ccbf37975cfb14885183f497854c
+      responses:
+        '200':
+          description: 'Liste des catégories récupérée avec succès'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID de la catégorie', type: integer, example: 1 }, name: { description: 'Nom de la catégorie', type: string, example: Électronique }, image: { description: "URL de l'image de la catégorie", type: string, example: 'http://example.com/image.jpg' } }
+                  type: object
+  '/categorie/{id}':
+    get:
+      tags:
+        - Catégories
+      summary: 'Récupère une catégorie par ID'
+      description: 'Récupère une catégorie par ID.'
+      operationId: f5a8f5a905687bccd69813fee9e46abb
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID de la catégorie à récupérer'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 'Détails de la catégorie récupérés avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  id: { description: 'ID de la catégorie', type: integer, example: 1 }
+                  name: { description: 'Nom de la catégorie', type: string, example: Électronique }
+                  image: { description: "URL de l'image de la catégorie", type: string, example: 'http://example.com/image.jpg' }
+                type: object
+        '404':
+          description: "Catégorie non trouvée pour l'ID spécifié"
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: "Message d'erreur", type: string, example: 'Catégorie non trouvée' }
+                type: object
+  /categorie/add:
+    post:
+      tags:
+        - Catégories
+      summary: 'Ajoute une nouvelle catégorie'
+      description: 'Ajoute une nouvelle catégorie.'
+      operationId: f0def2cadc1829bc47487d54c5ab5459
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: 'Nom de la catégorie'
+                  type: string
+                  example: Électronique
+                image:
+                  description: "URL de l'image de la catégorie"
+                  type: string
+                  example: 'http://example.com/image.jpg'
+              type: object
+      responses:
+        '201':
+          description: 'Catégorie ajoutée avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'Catégorie ajoutée' }
+                  id: { description: 'ID de la nouvelle catégorie', type: integer, example: 1 }
+                type: object
+        '400':
+          description: 'Requête invalide (données manquantes ou incorrectes)'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { description: "Message d'erreur", type: string, example: 'Erreur dans les données fournies' }
+                type: object
+  '/categorie/update/{id}':
+    put:
+      tags:
+        - Catégories
+      summary: 'Met à jour une catégorie existante'
+      description: 'Met à jour une catégorie existante.'
+      operationId: 1e06c48b4e0a18f5d1f7091fa110b989
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID de la catégorie à mettre à jour'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: 'Nom de la catégorie'
+                  type: string
+                  example: Électronique
+                image:
+                  description: "URL de l'image de la catégorie"
+                  type: string
+                  example: 'http://example.com/image.jpg'
+              type: object
+      responses:
+        '200':
+          description: 'Catégorie mise à jour avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'Catégorie mise à jour' }
+                type: object
+        '404':
+          description: "Catégorie non trouvée pour l'ID spécifié"
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: "Message d'erreur", type: string, example: 'Catégorie non trouvée' }
+                type: object
+        '400':
+          description: 'Requête invalide (données manquantes ou incorrectes)'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { description: "Message d'erreur", type: string, example: 'Erreur dans les données fournies' }
+                type: object
+  '/categorie/delete/{id}':
+    delete:
+      tags:
+        - Catégories
+      summary: 'Supprime une catégorie par ID'
+      description: 'Supprime une catégorie par ID.'
+      operationId: 6145aca0dedb1b49da4a0450850f7ce7
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID de la catégorie à supprimer'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 'Catégorie supprimée avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'Catégorie supprimée' }
+                type: object
+        '404':
+          description: "Catégorie non trouvée pour l'ID spécifié"
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { description: "Message d'erreur", type: string, example: 'Catégorie non trouvée' }
+                type: object
+  /code:
+    get:
+      tags:
+        - 'Code promo'
+      summary: 'Récupère la liste de tous les codes promo'
+      description: 'Récupère la liste de tous les codes promo.'
+      operationId: d36b8526b5307dc76fdd375b461111cc
+      responses:
+        '200':
+          description: 'Liste des codes promo récupérée avec succès'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID du code promo', type: integer, example: 1 }, code: { description: 'Code promo', type: string, example: PROMO2024 }, promotion: { description: 'Montant de la promotion en pourcentage', type: integer, example: 20 }, utilisations: { description: "Nombre d'utilisations restantes", type: integer, example: 100 } }
+                  type: object
+  '/code/{code}':
+    get:
+      tags:
+        - 'Code promo'
+      summary: "Récupère les détails d'un code promo en utilisant le code promo"
+      description: "Récupère les détails d'un code promo en utilisant le code promo."
+      operationId: d794eb51f7cc739b2b8752ff5438dc1f
+      parameters:
+        -
+          name: code
+          in: path
+          description: 'Le code promo à rechercher'
+          required: true
+          schema:
+            type: string
+            example: PROMO2024
+      responses:
+        '200':
+          description: 'Code promo récupéré avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  id: { description: 'ID du code promo', type: integer, example: 1 }
+                  code: { description: 'Code promo', type: string, example: PROMO2024 }
+                  promotion: { description: 'Valeur de la promotion en pourcentage', type: integer, example: 20 }
+                  utilisations: { description: "Nombre d'utilisations du code promo", type: integer, example: 15 }
+                type: object
+        '404':
+          description: 'Code promo non trouvé pour le code spécifié'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: "Message d'erreur", type: string, example: 'Code promo non trouvé' }
+                type: object
+  '/code/update_utilisation/{code}':
+    put:
+      tags:
+        - 'Code promo'
+      summary: "Met à jour le nombre d'utilisations d'un code promo"
+      description: "Met à jour le nombre d'utilisations d'un code promo."
+      operationId: 297bcd2e6fff4590caf3a51ed80429ce
+      parameters:
+        -
+          name: code
+          in: path
+          description: "Le code promo dont le nombre d'utilisations doit être mis à jour"
+          required: true
+          schema:
+            type: string
+            example: PROMO2024
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                utilisations:
+                  description: "Le nombre d'utilisations à déduire"
+                  type: integer
+                  example: 1
+              type: object
+      responses:
+        '200':
+          description: "Nombre d'utilisations du code promo mis à jour avec succès"
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'code mis à jour' }
+                type: object
+        '404':
+          description: 'Code promo non trouvé pour le code spécifié'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: "Message d'erreur", type: string, example: 'Erreur : code non trouvé' }
+                type: object
+  /code/add:
+    post:
+      tags:
+        - 'Code promo'
+      summary: 'Ajoute un nouveau code promo'
+      description: 'Ajoute un nouveau code promo.'
+      operationId: fb3bb82043981fb6ff11cc2260c4e4cb
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - code
+                - promotion
+              properties:
+                code:
+                  description: 'Code promo à ajouter'
+                  type: string
+                  example: PROMO2024
+                promotion:
+                  description: 'Valeur de la promotion en pourcentage'
+                  type: integer
+                  example: 20
+                utilisations:
+                  description: "Nombre d'utilisations initiales du code promo"
+                  type: integer
+                  example: 0
+              type: object
+      responses:
+        '201':
+          description: 'Code promo ajouté avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'code add' }
+                  id: { description: 'ID du code promo nouvellement créé', type: integer, example: 1 }
+                type: object
+        '400':
+          description: 'Erreur de validation des données'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { description: "Message d'erreur", type: string, example: Erreur }
+                type: object
+  '/code/update/{id}':
+    put:
+      tags:
+        - 'Code promo'
+      summary: 'Met à jour un code promo existant'
+      description: 'Met à jour un code promo existant.'
+      operationId: 655909b5ef75357e95d4ed5252b11be7
+      parameters:
+        -
+          name: id
+          in: path
+          description: "L'identifiant du code promo à mettre à jour"
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - code
+                - promotion
+                - utilisations
+              properties:
+                code:
+                  description: 'Le nouveau code promo'
+                  type: string
+                  example: PROMO2024
+                promotion:
+                  description: 'La nouvelle valeur de la promotion en pourcentage'
+                  type: integer
+                  example: 25
+                utilisations:
+                  description: "Le nouveau nombre d'utilisations"
+                  type: integer
+                  example: 10
+              type: object
+      responses:
+        '200':
+          description: 'Code promo mis à jour avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'Catégorie update' }
+                type: object
+        '404':
+          description: "Code promo non trouvé pour l'identifiant spécifié"
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: "Message d'erreur", type: string, example: Erreur }
+                type: object
+  '/code/delete/{id}':
+    delete:
+      tags:
+        - 'Code promo'
+      summary: 'Supprime un code promo existant'
+      description: 'Supprime un code promo existant.'
+      operationId: 91f6b79652fbd4060bfaf5e1cc737ebf
+      parameters:
+        -
+          name: id
+          in: path
+          description: "L'identifiant du code promo à supprimer"
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 'Code promo supprimé avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'code supprimé' }
+                type: object
+        '404':
+          description: "Code promo non trouvé pour l'identifiant spécifié"
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { description: "Message d'erreur", type: string, example: 'code pas trouvé' }
+                type: object
+  '/commande/{id}':
+    get:
+      tags:
+        - Commandes
+      summary: "Récupère les commandes d'un utilisateur par ID."
+      operationId: f34fb2acb3116b065c2864bf16cfb2c5
+      parameters:
+        -
+          name: id
+          in: path
+          description: "L'ID de l'utilisateur pour lequel récupérer les commandes."
+          required: true
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: "Commandes de l'utilisateur récupérées avec succès."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID de la commande.', type: integer }, id_commande: { description: 'ID de la commande dans le système.', type: integer }, id_user: { description: "ID de l'utilisateur.", type: integer }, status: { description: 'Statut de la commande.', type: integer }, adresse: { description: 'Adresse de livraison.', type: string }, code: { description: "Code postal de l'adresse de livraison.", type: integer }, produits: { description: 'Liste des produits dans la commande.', type: string }, weight: { description: 'Poids total de la commande en grammes.', type: integer }, width: { description: 'Largeur totale de la commande en millimètres.', type: integer }, height: { description: 'Hauteur totale de la commande en millimètres.', type: integer }, length: { description: 'Longueur totale de la commande en millimètres.', type: integer }, mode_expe: { description: "Mode d'expédition.", type: string }, papier: { description: "Quantité de papier utilisée pour l'emballage.", type: integer }, prix: { description: 'Prix total de la commande.', type: number, format: float }, date: { description: 'Date de la commande.', type: string, format: date-time } }
+                  type: object
+        '404':
+          description: "Aucune commande trouvée pour l'ID utilisateur fourni."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Aucune commande trouvée pour cet utilisateur.' }
+                type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des commandes.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération des commandes.' }
+                type: object
+  /commande/add:
+    post:
+      tags:
+        - Commandes
+      summary: 'Ajoute une nouvelle commande.'
+      operationId: 97e5b9349d2402d9284ba9f99ce24264
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - id_user
+                - status
+                - adress
+                - postal
+                - produit
+                - weight
+                - width
+                - height
+                - length
+                - expe
+                - papier
+              properties:
+                id_user:
+                  description: "ID de l'utilisateur passant la commande."
+                  type: integer
+                  example: 1
+                status:
+                  description: 'Statut de la commande.'
+                  type: integer
+                  example: 1
+                adress:
+                  description: 'Adresse de livraison.'
+                  type: string
+                  example: '123 Rue de Exemple'
+                postal:
+                  description: "Code postal de l'adresse de livraison."
+                  type: integer
+                  example: 75001
+                produit:
+                  description: 'Liste des produits dans la commande.'
+                  type: array
+                  items: { type: string }
+                  example: [produit1, produit2]
+                weight:
+                  description: 'Poids total de la commande en grammes.'
+                  type: integer
+                  example: 1500
+                width:
+                  description: 'Largeur totale de la commande en millimètres.'
+                  type: integer
+                  example: 300
+                height:
+                  description: 'Hauteur totale de la commande en millimètres.'
+                  type: integer
+                  example: 200
+                length:
+                  description: 'Longueur totale de la commande en millimètres.'
+                  type: integer
+                  example: 500
+                expe:
+                  description: "Mode d'expédition."
+                  type: string
+                  example: Standard
+                papier:
+                  description: "Quantité de papier utilisée pour l'emballage."
+                  type: integer
+                  example: 10
+              type: object
+      responses:
+        '201':
+          description: 'Commande ajoutée avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Commande ajoutée' }
+                  id: { description: 'ID de la commande nouvellement ajoutée.', type: integer }
+                type: object
+        '400':
+          description: "Erreur de validation des données d'entrée."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur dans les données fournies.' }
+                type: object
+        '500':
+          description: "Erreur serveur lors de l'ajout de la commande."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: "Erreur serveur lors de l'ajout de la commande." }
+                type: object
+  /email/add:
+    post:
+      tags:
+        - Email
+      summary: "Ajoute une adresse email pour être alerté du retour en stock d'un produit"
+      description: "Ajoute une adresse email pour être alerté du retour en stock d'un produit."
+      operationId: 706d594d55fa97a981f9085696b93726
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - id_produit
+              properties:
+                email:
+                  description: "L'adresse email pour recevoir l'alerte"
+                  type: string
+                  format: email
+                  example: user@example.com
+                id_produit:
+                  description: "L'identifiant du produit pour lequel l'alerte est demandée"
+                  type: integer
+                  example: 123
+              type: object
+      responses:
+        '201':
+          description: 'Adresse email ajoutée avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'Produit add' }
+                  id: { description: "L'identifiant de l'entrée ajoutée", type: integer, example: 1 }
+                type: object
+        '400':
+          description: 'Erreur dans les données envoyées'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { description: "Message d'erreur", type: string, example: Erreur }
+                type: object
+  '/email/produit/{id_produit}':
+    get:
+      tags:
+        - Email
+      summary: 'Récupère les adresses email associées à un produit pour les alertes de retour en stock'
+      description: 'Récupère les adresses email associées à un produit pour les alertes de retour en stock.'
+      operationId: 3e7c51930eb3ca9798b15127656582dd
+      parameters:
+        -
+          name: id_produit
+          in: path
+          description: "L'identifiant du produit pour lequel récupérer les alertes"
+          required: true
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: 'Liste des adresses email associées au produit'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: "L'identifiant de l'alerte", type: integer, example: 1 }, id_produit: { description: "L'identifiant du produit pour lequel l'alerte est enregistrée", type: integer, example: 123 }, email: { description: "L'adresse email pour recevoir l'alerte", type: string, format: email, example: user@example.com } }
+                  type: object
+        '404':
+          description: 'Produit non trouvé ou aucune alerte associée'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: "Message d'erreur", type: string, example: 'Aucune alerte trouvée pour ce produit' }
+                type: object
+  /expedition:
+    get:
+      tags:
+        - Expédition
+      summary: 'Récupère la liste de toutes les expéditions'
+      description: 'Récupère la liste de toutes les expéditions.'
+      operationId: b7bb2b46ebde8ff5638ff76e27502c39
+      responses:
+        '200':
+          description: 'Liste des expéditions'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: "L'identifiant de l'expédition", type: integer, example: 1 }, name: { description: "Le nom de l'expédition", type: string, example: 'Expédition Standard' }, taxe: { description: "Le montant de la taxe pour l'expédition", type: integer, example: 20 } }
+                  type: object
+  /information/add:
+    post:
+      tags:
+        - "Informations de l'utilisateur lors de la commande"
+      summary: "Ajoute des informations de l'utilisateur au moment de passer une commande"
+      description: "Ajoute des informations de l'utilisateur au moment de passer une commande."
+      operationId: 16e92cdd368b152c60876a677a48d04f
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - id_user
+                - adress
+                - postal
+              properties:
+                id_user:
+                  description: "Identifiant de l'utilisateur"
+                  type: integer
+                  example: 123
+                adress:
+                  description: "Adresse de l'utilisateur"
+                  type: string
+                  example: '123 Rue Exemple'
+                postal:
+                  description: "Code postal de l'adresse"
+                  type: string
+                  example: '75001'
+                nom:
+                  description: "Nom de l'utilisateur"
+                  type: string
+                  example: Dupont
+                prenom:
+                  description: "Prénom de l'utilisateur"
+                  type: string
+                  example: Jean
+                pays:
+                  description: "Pays de l'utilisateur"
+                  type: string
+                  example: France
+              type: object
+      responses:
+        '201':
+          description: 'Informations ajoutées avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'achat add' }
+                  id: { description: "Identifiant de l'information ajoutée", type: integer, example: 1 }
+                type: object
+        '400':
+          description: "Erreur lors de l'ajout des informations"
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { description: "Message d'erreur", type: string, example: Erreur }
+                type: object
+  '/information/{id}':
+    get:
+      tags:
+        - "Informations de l'utilisateur lors de la commande"
+      summary: "Récupère les informations de l'utilisateur par son identifiant"
+      description: "Récupère les informations de l'utilisateur par son identifiant."
+      operationId: 6ecd02ee12ea9c564dc447aca02fa2a5
+      parameters:
+        -
+          name: id
+          in: path
+          description: "Identifiant de l'utilisateur"
+          required: true
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: "Informations de l'utilisateur récupérées avec succès"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: "Identifiant de l'information", type: integer, example: 1 }, id_user: { description: "Identifiant de l'utilisateur", type: integer, example: 123 }, adress: { description: "Adresse de l'utilisateur", type: string, example: '123 Rue Exemple' }, postal: { description: "Code postal de l'adresse", type: string, example: '75001' }, nom: { description: "Nom de l'utilisateur", type: string, example: Dupont }, prenom: { description: "Prénom de l'utilisateur", type: string, example: Jean }, pays: { description: "Pays de l'utilisateur", type: string, example: France } }
+                  type: object
+        '404':
+          description: "Informations de l'utilisateur non trouvées"
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: "Message d'erreur", type: string, example: 'Informations non trouvées' }
+                type: object
+  '/information/delete/{id}':
+    delete:
+      tags:
+        - "Informations de l'utilisateur lors de la commande"
+      summary: "Supprime les informations de l'utilisateur par son identifiant"
+      description: "Supprime les informations de l'utilisateur par son identifiant."
+      operationId: fbb16adecede9bd8cd6643d2ea2be57d
+      parameters:
+        -
+          name: id
+          in: path
+          description: "Identifiant de l'information à supprimer"
+          required: true
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: 'Information supprimée avec succès'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { description: 'Message de succès', type: string, example: 'Information supprimé' }
+                type: object
+        '404':
+          description: 'Information non trouvée'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { description: "Message d'erreur", type: string, example: 'produit pas trouvé' }
+                type: object
+  /email/alert/disponible:
+    post:
+      tags:
+        - "Envoie d'email"
+      summary: "Envoie un email de notification lorsqu'un produit est de retour en stock et supprime l'alerte de la base de données."
+      operationId: 9527e57a572069014ebc65d3a4421450
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - produitId
+                - userEmail
+              properties:
+                produitId:
+                  description: 'ID du produit qui est de retour en stock.'
+                  type: integer
+                  example: 123
+                userEmail:
+                  description: "Email de l'utilisateur à notifier."
+                  type: string
+                  example: user@example.com
+              type: object
+      responses:
+        '200':
+          description: 'Notification envoyée avec succès et alerte supprimée.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Notification envoyée avec succès.' }
+                type: object
+        '400':
+          description: 'Erreur de requête, les paramètres sont manquants ou invalides.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur : les paramètres sont manquants.' }
+                type: object
+        '404':
+          description: 'Produit non trouvé dans la base de données.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Produit non trouvé.' }
+                type: object
+        '500':
+          description: "Erreur serveur lors de l'envoi de l'email ou de la suppression de l'alerte."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur.' }
+                type: object
+  /email/nouveau_mdp:
+    post:
+      tags:
+        - "Envoie d'email"
+      summary: "Envoie un email pour réinitialiser le mot de passe de l'utilisateur."
+      operationId: 5f40d26c962ec942ffbaa7cf94e06aee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+              properties:
+                email:
+                  description: "L'adresse email de l'utilisateur pour réinitialiser le mot de passe."
+                  type: string
+                  format: email
+                  example: user@example.com
+              type: object
+      responses:
+        '200':
+          description: 'Email envoyé avec succès pour la réinitialisation du mot de passe.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Email envoyé avec succès' }
+                type: object
+        '400':
+          description: "Erreur dans la requête, l'email est manquant ou invalide."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur : adresse email manquante ou invalide.' }
+                type: object
+        '404':
+          description: "Utilisateur non trouvé avec l'email fourni."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Utilisateur non trouvé.' }
+                type: object
+        '500':
+          description: "Erreur serveur lors de l'envoi de l'email."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: "Erreur serveur lors de l'envoi de l'email." }
+                type: object
+  /email/panier_abandonne:
+    post:
+      tags:
+        - "Envoie d'email"
+      summary: "Envoie un email pour notifier un utilisateur d'un panier abandonné."
+      operationId: 53a642479214145f11346cddff73b38b
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - userId
+              properties:
+                userId:
+                  description: "L'ID de l'utilisateur pour notifier du panier abandonné."
+                  type: integer
+                  example: 123
+              type: object
+      responses:
+        '200':
+          description: 'Email envoyé avec succès pour notifier du panier abandonné.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Email envoyé' }
+                type: object
+        '400':
+          description: 'Erreur dans la requête, ID utilisateur manquant ou invalide.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur : ID utilisateur manquant ou invalide.' }
+                type: object
+        '404':
+          description: "Utilisateur non trouvé avec l'ID fourni."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Utilisateur non trouvé.' }
+                type: object
+        '500':
+          description: "Erreur serveur lors de l'envoi de l'email."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: "Erreur serveur lors de l'envoi de l'email." }
+                type: object
+  '/panier/{id}':
+    get:
+      tags:
+        - Panier
+      summary: "Récupère les détails des produits dans le panier d'un utilisateur."
+      operationId: 041b8fb41bad1079c5ac177832918524
+      parameters:
+        -
+          name: id
+          in: path
+          description: "ID de l'utilisateur dont on souhaite obtenir les détails du panier."
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 'Détails des produits dans le panier récupérés avec succès.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { produit_id: { description: 'ID du produit dans le panier.', type: integer, example: 123 }, id: { description: 'ID du produit.', type: integer, example: 123 }, name: { description: 'Nom du produit.', type: string, example: 'Produit Exemple' }, price_type: { description: 'Type de prix du produit.', type: integer, example: 0 }, image_type: { description: "Nom de l'image du produit.", type: string, example: image.jpg }, info: { description: 'Informations supplémentaires sur le produit.', type: string, example: 'Description du produit.' }, categorie_name: { description: 'Nom de la catégorie du produit.', type: string, example: 'Catégorie Exemple' }, quantity: { description: 'Quantité du produit dans le panier.', type: integer, example: 2 } }
+                  type: object
+        '404':
+          description: "Panier pour l'utilisateur spécifié non trouvé."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: "Panier non trouvé pour l'utilisateur." }
+                type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des détails du panier.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération des détails du panier.' }
+                type: object
+  '/panier/chercher/{id}':
+    get:
+      tags:
+        - Panier
+      summary: "Recherche un utilisateur par ID dans le contexte d'un panier."
+      operationId: 21f41f22f7fcd10f68afeca4f04de89b
+      parameters:
+        -
+          name: id
+          in: path
+          description: "ID de l'utilisateur à rechercher."
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Détails de l'utilisateur récupérés avec succès."
+          content:
+            application/json:
+              schema:
+                properties:
+                  id: { description: "ID de l'utilisateur.", type: integer, example: 1 }
+                  username: { description: "Nom d'utilisateur.", type: string, example: johndoe }
+                  email: { description: "Adresse e-mail de l'utilisateur.", type: string, example: johndoe@example.com }
+                  first_name: { description: "Prénom de l'utilisateur.", type: string, example: John }
+                  last_name: { description: "Nom de famille de l'utilisateur.", type: string, example: Doe }
+                type: object
+        '404':
+          description: "Utilisateur non trouvé pour l'ID spécifié."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Utilisateur non trouvé.' }
+                type: object
+        '500':
+          description: "Erreur serveur lors de la recherche de l'utilisateur."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: "Erreur serveur lors de la recherche de l'utilisateur." }
+                type: object
+  /panier/add:
+    post:
+      tags:
+        - Panier
+      summary: "Ajoute un produit au panier de l'utilisateur."
+      operationId: 4565c770ae4274464dd133182db3795f
+      requestBody:
+        required: true
+      responses:
+        '201':
+          description: 'Produit ajouté au panier avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Produit ajouté' }
+                  id: { description: 'ID du panier nouvellement créé.', type: integer }
+                type: object
+        '400':
+          description: 'Requête invalide en raison de données manquantes.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: Erreur }
+                type: object
+  /panier/delete:
+    delete:
+      tags:
+        - Panier
+      summary: "Supprime un produit du panier de l'utilisateur."
+      operationId: 40d545f763928682ded405f4d194fbdb
+      requestBody:
+        required: true
+      responses:
+        '200':
+          description: 'Produit supprimé du panier avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Produit supprimé' }
+                type: object
+        '400':
+          description: 'Requête invalide en raison de données manquantes.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: Erreur }
+                type: object
+        '404':
+          description: 'Produit non trouvé dans le panier.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Produit non trouvé' }
+                type: object
+  /pays:
+    get:
+      tags:
+        - Pays
+      summary: 'Récupère la liste de tous les pays.'
+      operationId: 60c674066ded7c10005e07e234dffc72
+      responses:
+        '200':
+          description: 'Liste des pays récupérée avec succès.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID du pays.', type: integer, example: 1 }, name: { description: 'Nom du pays.', type: string, example: France }, taxe: { description: 'Taxe appliquée au pays.', type: integer, example: 20 } }
+                  type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération de la liste des pays.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération de la liste des pays.' }
+                type: object
+  '/pays/{id}':
+    get:
+      tags:
+        - Pays
+      summary: "Récupère les détails d'un pays spécifique par ID."
+      operationId: 908efafecea3b89aeec8afa896548c15
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID du pays à récupérer.'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 'Détails du pays récupérés avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  id: { description: 'ID du pays.', type: integer, example: 1 }
+                  name: { description: 'Nom du pays.', type: string, example: France }
+                  taxe: { description: 'Taxe appliquée au pays.', type: integer, example: 20 }
+                type: object
+        '404':
+          description: "Pays non trouvé pour l'ID spécifié."
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'pays find' }
+                type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération du pays.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération du pays.' }
+                type: object
+  '/pays/update/{id}':
+    put:
+      tags:
+        - Pays
+      summary: "Met à jour les informations d'un pays."
+      operationId: f459a26ff62c14403854caeeab1209dd
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID du pays à mettre à jour.'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+      responses:
+        '200':
+          description: 'Les informations du pays ont été mises à jour avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Catégorie update' }
+                type: object
+        '404':
+          description: "Pays non trouvé pour l'ID spécifié."
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: Erreur }
+                type: object
+        '400':
+          description: 'Requête invalide en raison de données manquantes ou incorrectes.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur dans la mise à jour du pays' }
+                type: object
+  /produit/type:
+    get:
+      tags:
+        - 'Type du produit'
+      summary: 'Récupère tous les types de produits.'
+      operationId: fb2bced655da7e7837b306d634f0c228
+      responses:
+        '200':
+          description: 'Liste des types de produits récupérée avec succès.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID du type de produit.', type: integer, example: 1 }, id_produit: { description: 'ID du produit associé.', type: integer, example: 101 }, type: { description: 'Type de produit.', type: string, example: couleur }, output: { description: 'Description du type du produit.', type: string, example: blanc }, price: { description: 'Prix du type de produit.', type: integer, example: 299 }, image_type: { description: "Nom de l'image associée au type de produit.", type: string, example: image.jpg } }
+                  type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des types de produits.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération des types de produits.' }
+                type: object
+  '/produit/type/{id_produits}':
+    get:
+      tags:
+        - 'Type du produit'
+      summary: 'Récupère les types de produit pour un produit spécifique.'
+      operationId: e6f6196816941f7a77e967157bb10134
+      parameters:
+        -
+          name: id_produits
+          in: path
+          description: 'ID du produit pour lequel on souhaite obtenir les types.'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 'Types de produit récupérés avec succès.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID du type de produit.', type: integer, example: 1 }, id_produit: { description: 'ID du produit associé.', type: integer, example: 101 }, type: { description: 'Type de produit.', type: string, example: couleur }, output: { description: 'Description du type du produit', type: string, example: blanc }, price: { description: 'Prix du type de produit.', type: integer, example: 299 }, image_type: { description: "Nom de l'image associée au type de produit.", type: string, example: image.jpg } }
+                  type: object
+        '404':
+          description: "Aucun type de produit trouvé pour l'ID du produit spécifié."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: "Aucun type de produit trouvé pour l'ID du produit spécifié." }
+                type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des types de produit.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération des types de produit.' }
+                type: object
+  /produits:
+    get:
+      tags:
+        - Produit
+      summary: 'Récupère la liste de tous les produits, avec leurs catégories.'
+      operationId: d30714c851eb59f8aa5703729bd548f6
+      responses:
+        '200':
+          description: 'Liste des produits récupérée avec succès.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID du produit.', type: integer, example: 1 }, id_categorie: { description: 'ID de la catégorie du produit.', type: integer, example: 10 }, name: { description: 'Nom du produit.', type: string, example: 'Produit Exemple' }, marque: { description: 'Marque du produit.', type: string, example: 'Marque Exemple' }, prix: { description: 'Prix du produit en centimes.', type: integer, example: 299 }, image: { description: "URL de l'image du produit.", type: string, example: image.jpg }, stock: { description: 'Quantité en stock du produit.', type: integer, example: 20 }, views: { description: 'Nombre de vues du produit.', type: integer, example: 100 }, taille: { description: 'Taille du produit.', type: string, example: M }, type: { description: 'Type de produit.', type: string, example: Électronique }, socket: { description: 'Type de socket du produit.', type: string, example: USB-C }, typec: { description: 'Type C du produit.', type: string, example: 'Type C Exemple' }, consommations: { description: 'Consommation du produit.', type: integer, example: 150 }, promo: { description: 'Indicateur de promotion (0 = non, 1 = oui).', type: integer, example: 0 }, suggestion: { description: 'Indicateur de suggestion.', type: integer, example: 1 }, weight: { description: 'Poids du produit en grammes.', type: integer, example: 500 }, width: { description: 'Largeur du produit en millimètres.', type: integer, example: 150 }, height: { description: 'Hauteur du produit en millimètres.', type: integer, example: 200 }, length: { description: 'Longueur du produit en millimètres.', type: integer, example: 300 }, create_time: { description: 'Date et heure de création du produit.', type: string, format: date-time, example: '2024-08-23T12:00:00Z' }, categorie_name: { description: 'Nom de la catégorie du produit.', type: string, example: 'Catégorie Exemple' } }
+                  type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des produits.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération des produits.' }
+                type: object
+  /produits/top10:
+    get:
+      tags:
+        - Produit
+      summary: 'Récupère les 10 produits les plus vus.'
+      operationId: 6c9edfdc445fb53dae2904d229139150
+      responses:
+        '200':
+          description: 'Liste des 10 produits les plus vus récupérée avec succès.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID du produit.', type: integer, example: 1 }, id_categorie: { description: 'ID de la catégorie du produit.', type: integer, example: 10 }, name: { description: 'Nom du produit.', type: string, example: 'Produit Exemple' }, marque: { description: 'Marque du produit.', type: string, example: 'Marque Exemple' }, prix: { description: 'Prix du produit en centimes.', type: integer, example: 299 }, image: { description: "URL de l'image du produit.", type: string, example: image.jpg }, stock: { description: 'Quantité en stock du produit.', type: integer, example: 20 }, views: { description: 'Nombre de vues du produit.', type: integer, example: 1000 }, taille: { description: 'Taille du produit.', type: string, example: M }, type: { description: 'Type de produit.', type: string, example: Électronique }, socket: { description: 'Type de socket du produit.', type: string, example: USB-C }, typec: { description: 'Type C du produit.', type: string, example: 'Type C Exemple' }, consommations: { description: 'Consommation du produit.', type: integer, example: 150 }, promo: { description: 'Indicateur de promotion (0 = non, 1 = oui).', type: integer, example: 0 }, suggestion: { description: 'Indicateur de suggestion.', type: integer, example: 1 }, weight: { description: 'Poids du produit en grammes.', type: integer, example: 500 }, width: { description: 'Largeur du produit en millimètres.', type: integer, example: 150 }, height: { description: 'Hauteur du produit en millimètres.', type: integer, example: 200 }, length: { description: 'Longueur du produit en millimètres.', type: integer, example: 300 }, create_time: { description: 'Date et heure de création du produit.', type: string, format: date-time, example: '2024-08-23T12:00:00Z' }, categorie_name: { description: 'Nom de la catégorie du produit.', type: string, example: 'Catégorie Exemple' } }
+                  type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des produits.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération des produits.' }
+                type: object
+  /produits/promotions:
+    get:
+      tags:
+        - Produit
+      summary: 'Récupère les produits en promotion.'
+      operationId: 0cab01cb6e658815ef1e1d7910bb4272
+      responses:
+        '200':
+          description: 'Liste des produits en promotion récupérée avec succès.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID du produit.', type: integer, example: 1 }, id_categorie: { description: 'ID de la catégorie du produit.', type: integer, example: 10 }, name: { description: 'Nom du produit.', type: string, example: 'Produit en Promotion' }, marque: { description: 'Marque du produit.', type: string, example: 'Marque Exemple' }, prix: { description: 'Prix du produit en centimes.', type: integer, example: 299 }, image: { description: "URL de l'image du produit.", type: string, example: image.jpg }, stock: { description: 'Quantité en stock du produit.', type: integer, example: 20 }, views: { description: 'Nombre de vues du produit.', type: integer, example: 1000 }, taille: { description: 'Taille du produit.', type: string, example: M }, type: { description: 'Type de produit.', type: string, example: Électronique }, socket: { description: 'Type de socket du produit.', type: string, example: USB-C }, typec: { description: 'Type C du produit.', type: string, example: 'Type C Exemple' }, consommations: { description: 'Consommation du produit.', type: integer, example: 150 }, promo: { description: 'Indicateur de promotion (0 = non, >0 = oui).', type: integer, example: 20 }, suggestion: { description: 'Indicateur de suggestion.', type: integer, example: 1 }, weight: { description: 'Poids du produit en grammes.', type: integer, example: 500 }, width: { description: 'Largeur du produit en millimètres.', type: integer, example: 150 }, height: { description: 'Hauteur du produit en millimètres.', type: integer, example: 200 }, length: { description: 'Longueur du produit en millimètres.', type: integer, example: 300 }, create_time: { description: 'Date et heure de création du produit.', type: string, format: date-time, example: '2024-08-23T12:00:00Z' }, categorie_name: { description: 'Nom de la catégorie du produit.', type: string, example: 'Catégorie Exemple' } }
+                  type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des produits en promotion.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération des produits en promotion.' }
+                type: object
+  /produits/suggestion:
+    get:
+      tags:
+        - Produit
+      summary: 'Récupère les produits suggérés.'
+      operationId: cfb577789fff14b529ba144e4e474372
+      responses:
+        '200':
+          description: 'Liste des produits suggérés récupérée avec succès.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID du produit.', type: integer, example: 1 }, id_categorie: { description: 'ID de la catégorie du produit.', type: integer, example: 10 }, name: { description: 'Nom du produit.', type: string, example: 'Produit Suggéré' }, marque: { description: 'Marque du produit.', type: string, example: 'Marque Exemple' }, prix: { description: 'Prix du produit en centimes.', type: integer, example: 299 }, image: { description: "URL de l'image du produit.", type: string, example: image.jpg }, stock: { description: 'Quantité en stock du produit.', type: integer, example: 20 }, views: { description: 'Nombre de vues du produit.', type: integer, example: 1000 }, taille: { description: 'Taille du produit.', type: string, example: M }, type: { description: 'Type de produit.', type: string, example: Électronique }, socket: { description: 'Type de socket du produit.', type: string, example: USB-C }, typec: { description: 'Type C du produit.', type: string, example: 'Type C Exemple' }, consommations: { description: 'Consommation du produit.', type: integer, example: 150 }, promo: { description: 'Indicateur de promotion (0 = non, >0 = oui).', type: integer, example: 20 }, suggestion: { description: 'Indicateur de suggestion (0 = non suggéré, >0 = suggéré).', type: integer, example: 1 }, weight: { description: 'Poids du produit en grammes.', type: integer, example: 500 }, width: { description: 'Largeur du produit en millimètres.', type: integer, example: 150 }, height: { description: 'Hauteur du produit en millimètres.', type: integer, example: 200 }, length: { description: 'Longueur du produit en millimètres.', type: integer, example: 300 }, create_time: { description: 'Date et heure de création du produit.', type: string, format: date-time, example: '2024-08-23T12:00:00Z' }, categorie_name: { description: 'Nom de la catégorie du produit.', type: string, example: 'Catégorie Exemple' } }
+                  type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des produits suggérés.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération des produits suggérés.' }
+                type: object
+  '/produits/{id}':
+    get:
+      tags:
+        - Produit
+      summary: "Récupère les produits d'une catégorie par ID de catégorie."
+      operationId: dd52236bdb1a087818b69f9f2cbf80d8
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID de la catégorie pour laquelle récupérer les produits.'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 'Liste des produits récupérés avec succès pour la catégorie spécifiée.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { description: 'ID du produit.', type: integer, example: 1 }, id_categorie: { description: 'ID de la catégorie du produit.', type: integer, example: 10 }, name: { description: 'Nom du produit.', type: string, example: 'Produit Exemple' }, marque: { description: 'Marque du produit.', type: string, example: 'Marque Exemple' }, prix: { description: 'Prix du produit en centimes.', type: integer, example: 299 }, image: { description: "URL de l'image du produit.", type: string, example: image.jpg }, stock: { description: 'Quantité en stock du produit.', type: integer, example: 20 }, views: { description: 'Nombre de vues du produit.', type: integer, example: 1000 }, taille: { description: 'Taille du produit.', type: string, example: M }, type: { description: 'Type de produit.', type: string, example: Électronique }, socket: { description: 'Type de socket du produit.', type: string, example: USB-C }, typec: { description: 'Type C du produit.', type: string, example: 'Type C Exemple' }, consommations: { description: 'Consommation du produit.', type: integer, example: 150 }, promo: { description: 'Indicateur de promotion (0 = non, >0 = oui).', type: integer, example: 20 }, suggestion: { description: 'Indicateur de suggestion (0 = non suggéré, >0 = suggéré).', type: integer, example: 1 }, weight: { description: 'Poids du produit en grammes.', type: integer, example: 500 }, width: { description: 'Largeur du produit en millimètres.', type: integer, example: 150 }, height: { description: 'Hauteur du produit en millimètres.', type: integer, example: 200 }, length: { description: 'Longueur du produit en millimètres.', type: integer, example: 300 }, create_time: { description: 'Date et heure de création du produit.', type: string, format: date-time, example: '2024-08-23T12:00:00Z' }, categorie_name: { description: 'Nom de la catégorie du produit.', type: string, example: 'Catégorie Exemple' } }
+                  type: object
+        '404':
+          description: 'Aucun produit trouvé pour la catégorie spécifiée.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Aucun produit trouvé pour cette catégorie.' }
+                type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des produits.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération des produits.' }
+                type: object
+  '/produit/{id}':
+    get:
+      tags:
+        - Produit
+      summary: "Récupère les détails d'un produit par son ID."
+      operationId: 4898b152895461089b9850a49d3f6014
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID du produit à récupérer.'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 'Détails du produit récupérés avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  id: { description: 'ID du produit.', type: integer, example: 1 }
+                  id_categorie: { description: 'ID de la catégorie du produit.', type: integer, example: 10 }
+                  name: { description: 'Nom du produit.', type: string, example: 'Produit Exemple' }
+                  marque: { description: 'Marque du produit.', type: string, example: 'Marque Exemple' }
+                  prix: { description: 'Prix du produit en centimes.', type: integer, example: 299 }
+                  image: { description: "URL de l'image du produit.", type: string, example: image.jpg }
+                  stock: { description: 'Quantité en stock du produit.', type: integer, example: 20 }
+                  views: { description: 'Nombre de vues du produit.', type: integer, example: 1000 }
+                  taille: { description: 'Taille du produit.', type: string, example: M }
+                  type: { description: 'Type de produit.', type: string, example: Électronique }
+                  socket: { description: 'Type de socket du produit.', type: string, example: USB-C }
+                  typec: { description: 'Type C du produit.', type: string, example: 'Type C Exemple' }
+                  consommations: { description: 'Consommation du produit.', type: integer, example: 150 }
+                  promo: { description: 'Indicateur de promotion (0 = non, >0 = oui).', type: integer, example: 20 }
+                  suggestion: { description: 'Indicateur de suggestion (0 = non suggéré, >0 = suggéré).', type: integer, example: 1 }
+                  weight: { description: 'Poids du produit en grammes.', type: integer, example: 500 }
+                  width: { description: 'Largeur du produit en millimètres.', type: integer, example: 150 }
+                  height: { description: 'Hauteur du produit en millimètres.', type: integer, example: 200 }
+                  length: { description: 'Longueur du produit en millimètres.', type: integer, example: 300 }
+                  create_time: { description: 'Date et heure de création du produit.', type: string, format: date-time, example: '2024-08-23T12:00:00Z' }
+                  categorie_name: { description: 'Nom de la catégorie du produit.', type: string, example: 'Catégorie Exemple' }
+                type: object
+        '404':
+          description: "Produit non trouvé pour l'ID spécifié."
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Produit non trouvé' }
+                type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération du produit.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la récupération du produit.' }
+                type: object
+  '/produit/update/{id}':
+    put:
+      tags:
+        - Produit
+      summary: "Met à jour les détails d'un produit par son ID."
+      operationId: 439c69841c6928c55adb71ab9a8cf039
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID du produit à mettre à jour.'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: 'Nom du produit.'
+                  type: string
+                  example: 'Produit Exemple'
+                idCategorie:
+                  description: 'ID de la catégorie du produit.'
+                  type: integer
+                  example: 10
+                marque:
+                  description: 'Marque du produit.'
+                  type: string
+                  example: 'Marque Exemple'
+                prix:
+                  description: 'Prix du produit en centimes.'
+                  type: integer
+                  example: 299
+                image:
+                  description: "URL de l'image du produit."
+                  type: string
+                  example: image.jpg
+                stock:
+                  description: 'Quantité en stock du produit.'
+                  type: integer
+                  example: 20
+                taille:
+                  description: 'Taille du produit.'
+                  type: string
+                  example: M
+                type:
+                  description: 'Type de produit.'
+                  type: string
+                  example: Électronique
+                socket:
+                  description: 'Type de socket du produit.'
+                  type: string
+                  example: USB-C
+                typec:
+                  description: 'Type C du produit.'
+                  type: string
+                  example: 'Type C Exemple'
+                promo:
+                  description: 'Indicateur de promotion (0 = non, >0 = oui).'
+                  type: integer
+                  example: 20
+                consommations:
+                  description: 'Consommation du produit.'
+                  type: integer
+                  example: 150
+                suggestion:
+                  description: 'Indicateur de suggestion (0 = non suggéré, >0 = suggéré).'
+                  type: integer
+                  example: 1
+              type: object
+      responses:
+        '200':
+          description: 'Produit mis à jour avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Produit mis à jour' }
+                type: object
+        '404':
+          description: "Produit non trouvé pour l'ID spécifié."
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Erreur : Produit non trouvé' }
+                type: object
+        '400':
+          description: 'Erreur de validation des données fournies.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Données invalides' }
+                type: object
+        '500':
+          description: 'Erreur serveur lors de la mise à jour du produit.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la mise à jour du produit.' }
+                type: object
+  '/produit/updateView/{id}':
+    put:
+      tags:
+        - Produit
+      summary: "Met à jour le nombre de vues d'un produit par son ID."
+      operationId: 23e9ca48a8e67b6edfdcaf17bfcfe4e9
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID du produit dont le nombre de vues doit être mis à jour.'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                views:
+                  description: 'Nombre de vues à ajouter au produit.'
+                  type: integer
+                  example: 5
+              type: object
+      responses:
+        '200':
+          description: 'Nombre de vues du produit mis à jour avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Produit mis à jour' }
+                type: object
+        '404':
+          description: "Produit non trouvé pour l'ID spécifié."
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Erreur : Produit non trouvé' }
+                type: object
+        '400':
+          description: 'Erreur de validation des données fournies.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Données invalides' }
+                type: object
+        '500':
+          description: 'Erreur serveur lors de la mise à jour du produit.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur lors de la mise à jour du produit.' }
+                type: object
+  /produits/add:
+    post:
+      tags:
+        - Produit
+      summary: 'Ajoute un nouveau produit.'
+      operationId: 43b88eb758e46f1533e0997ef255316e
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - id_categorie
+              properties:
+                name:
+                  description: 'Nom du produit'
+                  type: string
+                  example: 'Produit XYZ'
+                id_categorie:
+                  description: 'ID de la catégorie du produit'
+                  type: integer
+                  example: 1
+                marque:
+                  description: 'Marque du produit'
+                  type: string
+                  example: 'Marque ABC'
+                prix:
+                  description: 'Prix du produit'
+                  type: integer
+                  example: 100
+                image:
+                  description: "URL de l'image du produit"
+                  type: string
+                  example: 'http://example.com/image.jpg'
+                stock:
+                  description: 'Quantité en stock'
+                  type: integer
+                  example: 50
+                taille:
+                  description: 'Taille du produit'
+                  type: string
+                  example: M
+                type:
+                  description: 'Type de produit'
+                  type: string
+                  example: Électronique
+                socket:
+                  description: 'Type de socket'
+                  type: string
+                  example: USB-C
+                typec:
+                  description: 'Type C'
+                  type: string
+                  example: 'Type C'
+                promo:
+                  description: 'Pourcentage de promotion'
+                  type: integer
+                  example: 10
+                consommation:
+                  description: "Consommation d'énergie"
+                  type: integer
+                  example: 50
+                suggestion:
+                  description: 'Indique si le produit est suggéré (1 pour oui, 0 pour non)'
+                  type: integer
+                  example: 1
+                length:
+                  description: 'Longueur du produit'
+                  type: integer
+                  example: 10
+                height:
+                  description: 'Hauteur du produit'
+                  type: integer
+                  example: 20
+                width:
+                  description: 'Largeur du produit'
+                  type: integer
+                  example: 30
+                weight:
+                  description: 'Poids du produit'
+                  type: integer
+                  example: 500
+              type: object
+      responses:
+        '201':
+          description: 'Produit ajouté avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Produit add' }
+                  id: { type: integer, example: 1 }
+                type: object
+        '400':
+          description: 'Erreur de validation des données fournies.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: Erreur }
+                type: object
+        '500':
+          description: "Erreur serveur lors de l'ajout du produit."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: "Erreur serveur lors de l'ajout du produit." }
+                type: object
+  '/produits/delete/{id}':
+    delete:
+      tags:
+        - Produit
+      summary: 'Supprime un produit par son ID.'
+      operationId: 963f3ce577b39328f3090385077b33ac
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID du produit à supprimer.'
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 'Produit supprimé avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'produit supprimé' }
+                type: object
+        '404':
+          description: 'Produit non trouvé.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'produit pas trouvé' }
+                type: object
+        '500':
+          description: 'Erreur serveur lors de la suppression du produit.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur' }
+                type: object
+  /users:
+    get:
+      tags:
+        - Utilisateur
+      summary: 'Récupère tous les utilisateurs.'
+      operationId: c6917bf8df3eece80a9b27dfcd6f8263
+      responses:
+        '200':
+          description: 'Liste de tous les utilisateurs.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { type: integer, example: 1 }, username: { type: string, example: johndoe }, email: { type: string, example: johndoe@example.com }, password: { type: string, example: hashed_password }, groupe: { type: integer, example: 1 }, verification: { type: integer, example: 0 }, token: { type: string, example: some_token }, create_time: { type: string, format: date-time, example: '2024-08-23T10:00:00Z' } }
+                  type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des utilisateurs.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur' }
+                type: object
+  /users/date:
+    get:
+      tags:
+        - Utilisateur
+      summary: 'Récupère les utilisateurs avec la date de création formatée.'
+      operationId: f9a29eff5ef5284e756593a147e737ea
+      responses:
+        '200':
+          description: 'Liste des utilisateurs avec la date de création formatée.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { type: integer, example: 1 }, create_time: { type: string, example: 23/08/2024 } }
+                  type: object
+        '500':
+          description: 'Erreur serveur lors de la récupération des utilisateurs.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur' }
+                type: object
+  '/users/get/{email}':
+    get:
+      tags:
+        - Utilisateur
+      summary: 'Récupère un utilisateur par son adresse e-mail.'
+      operationId: 57ac4fe04b2d2e89b3f977dd40cf0d6f
+      parameters:
+        -
+          name: email
+          in: path
+          description: "Adresse e-mail de l'utilisateur à récupérer."
+          required: true
+          schema:
+            type: string
+            format: email
+            example: user@example.com
+      responses:
+        '200':
+          description: 'Utilisateur trouvé.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { type: integer, example: 1 }, username: { type: string, example: john_doe }, email: { type: string, example: user@example.com }, password: { type: string, example: hashed_password }, groupe: { type: integer, example: 1 }, verification: { type: integer, example: 0 }, token: { type: string, example: random_token }, create_time: { type: string, format: date-time, example: '2024-08-23T00:00:00Z' } }
+                  type: object
+        '404':
+          description: 'Utilisateur non trouvé.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Utilisateur non trouvé' }
+                type: object
+        '500':
+          description: "Erreur serveur lors de la récupération de l'utilisateur."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur' }
+                type: object
+  '/users/token/{token}':
+    get:
+      tags:
+        - Utilisateur
+      summary: 'Récupère un utilisateur par son token.'
+      operationId: 339a868d75d5b24719f16983603b8367
+      parameters:
+        -
+          name: token
+          in: path
+          description: "Token de l'utilisateur à récupérer."
+          required: true
+          schema:
+            type: string
+            example: abc123def456
+      responses:
+        '200':
+          description: 'Utilisateur trouvé.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { id: { type: integer, example: 1 }, username: { type: string, example: john_doe }, email: { type: string, example: user@example.com }, password: { type: string, example: hashed_password }, groupe: { type: integer, example: 1 }, verification: { type: integer, example: 0 }, token: { type: string, example: abc123def456 }, create_time: { type: string, format: date-time, example: '2024-08-23T00:00:00Z' } }
+                  type: object
+        '404':
+          description: 'Utilisateur non trouvé.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Utilisateur non trouvé' }
+                type: object
+        '500':
+          description: "Erreur serveur lors de la récupération de l'utilisateur."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur' }
+                type: object
+  /users/post:
+    post:
+      tags:
+        - Utilisateur
+      summary: 'Crée un nouvel utilisateur.'
+      operationId: d1a24400505d5d8ad5b660e5d2c234d6
+      requestBody:
+        description: "Données de l'utilisateur à créer."
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - formData
+              properties:
+                formData:
+                  required: [email, username, password]
+                  properties: { email: { type: string, format: email, example: user@example.com }, username: { type: string, example: john_doe }, password: { type: string, example: secret_password } }
+                  type: object
+              type: object
+      responses:
+        '200':
+          description: 'Utilisateur créé avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: boolean, example: true }
+                type: object
+        '400':
+          description: 'Requête invalide. Manque des champs requis ou données invalides.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur dans les données fournies.' }
+                type: object
+        '500':
+          description: "Erreur serveur lors de la création de l'utilisateur."
+          content:
+            application/json:
+              schema:
+                properties:
+                  error: { type: string, example: 'Erreur serveur' }
+                type: object
+  '/users/updateverif/{token}':
+    put:
+      tags:
+        - Utilisateur
+      summary: "Met à jour la vérification de l'utilisateur par token."
+      operationId: 235b18d338e2bf7780bf80fe8317f876
+      parameters:
+        -
+          name: token
+          in: path
+          description: "Token de l'utilisateur pour la vérification."
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 'Données à mettre à jour.'
+        required: false
+        content:
+          application/json:
+            schema:
+              properties:
+                verification:
+                  description: 'Statut de vérification'
+                  type: integer
+                  example: 1
+              type: object
+      responses:
+        '200':
+          description: 'Utilisateur mis à jour avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Utilisateur mis à jour avec la vérification' }
+                type: object
+        '404':
+          description: 'Token invalide ou utilisateur déjà vérifié.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Erreur : lien invalide' }
+                type: object
+        '500':
+          description: 'Erreur serveur.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Erreur serveur.' }
+                type: object
+  '/users/update/password/{token}':
+    put:
+      tags:
+        - Utilisateur
+      summary: "Met à jour le mot de passe de l'utilisateur par token."
+      operationId: a511a15eef9a4ef221e0f21c64eedbfd
+      parameters:
+        -
+          name: token
+          in: path
+          description: "Token de l'utilisateur pour mettre à jour le mot de passe."
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 'Données pour la mise à jour du mot de passe.'
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                password:
+                  description: "Nouveau mot de passe de l'utilisateur"
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 'Mot de passe mis à jour avec succès.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  success: { type: string, example: 'Utilisateur mis à jour avec la vérification' }
+                type: object
+        '404':
+          description: 'Token invalide ou utilisateur non trouvé.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Erreur : lien invalide' }
+                type: object
+        '400':
+          description: 'Mauvaise requête, données manquantes ou invalides.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Données invalides' }
+                type: object
+tags:
+  -
+    name: "Information d'achat"
+    description: "Information d'achat"
+  -
+    name: Avis
+    description: Avis
+  -
+    name: Catégories
+    description: Catégories
+  -
+    name: 'Code promo'
+    description: 'Code promo'
+  -
+    name: Commandes
+    description: Commandes
+  -
+    name: Email
+    description: Email
+  -
+    name: Expédition
+    description: Expédition
+  -
+    name: "Informations de l'utilisateur lors de la commande"
+    description: "Informations de l'utilisateur lors de la commande"
+  -
+    name: "Envoie d'email"
+    description: "Envoie d'email"
+  -
+    name: Panier
+    description: Panier
+  -
+    name: Pays
+    description: Pays
+  -
+    name: 'Type du produit'
+    description: 'Type du produit'
+  -
+    name: Produit
+    description: Produit
+  -
+    name: Utilisateur
+    description: Utilisateur

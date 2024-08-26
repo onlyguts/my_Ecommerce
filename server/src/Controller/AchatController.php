@@ -44,6 +44,10 @@ class AchatController extends AbstractController
         $stmt->bindValue(':id', $id);
         $resultSet = $stmt->executeQuery();
         $produits = $resultSet->fetchAllAssociative();
+
+        if (!$produits) {
+            return $this->json(['error' => 'achat pas trouvé'], Response::HTTP_NOT_FOUND);
+        }
     
         return $this->json($produits);
     }
