@@ -150,14 +150,14 @@ function Nav_tree() {
     }
     return (
         <div>
-            <header>
+            <header className='header'>
                 <div className='head'>
                     <div className="logo">
                         <img className="logoImg" src={images.logo} alt="BYP Logo" />
                     </div>
-                    <div>
+                    <div className='navBar-container'>
                         <input className="navBar" type="text" value={recherche} placeholder="Recherche" onChange={(event) => RechercheChange(event)} />
-                        <button onClick={() => sendInput()}>Envoyer</button>
+                        <button className='searchButton' onClick={() => sendInput()}>    <span className="searchIcon">🔍</span></button>
                     </div>
                     <div className="menu">
                         {!loginUser
