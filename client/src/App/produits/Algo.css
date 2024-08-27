@@ -64,7 +64,7 @@
   
   .item {
     justify-content: space-between;
-    width: 10em;
+    /* width: 10em; */
   }
   
   .panier-image, .item-image {
