@@ -340,4 +340,40 @@ class UsersController extends AbstractController
 
         return $this->json(['success' => 'user mis à jour'], Response::HTTP_OK);
     }
+    #[Route('/password/update/{id}', name: 'app_password_update', methods: ['PUT'])]
+    public function password(EntityManagerInterface $entityManager, Request $request, int $id): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $produit = $entityManager->getRepository(Users::class)->find($id);
+
+        if (!$produit) {
+            return $this->json(['message' => 'Erreur : user non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        $produit->setPassword($data['password']);
+
+        $entityManager->persist($produit);
+        $entityManager->flush();
+
+        return $this->json(['success' => 'user mis à jour'], Response::HTTP_OK);
+    }
+    #[Route('/photo/update/{id}', name: 'app_photo_update', methods: ['PUT'])]
+    public function photo(EntityManagerInterface $entityManager, Request $request, int $id): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $produit = $entityManager->getRepository(Users::class)->find($id);
+
+        if (!$produit) {
+            return $this->json(['message' => 'Erreur : user non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        $produit->setImage($data['photo']);
+
+        $entityManager->persist($produit);
+        $entityManager->flush();
+
+        return $this->json(['success' => 'user mis à jour'], Response::HTTP_OK);
+    }
 }

@@ -14,10 +14,15 @@ const Profil = () => {
     const [pays, setPays] = useState([]);
 
     const [usernameDisplay, setUsernameDisplay] = useState('');
+    
+    const [imageDisplay, setImageDisplay] = useState('');
+
 
 
     const [username, setUsername] = useState([]);
     const [email, setEmail] = useState([]);
+    const [password, setPassword] = useState([]);
+    const [photo, setPhoto] = useState([]);
 
     const [commande, setCommande] = useState([]);
     const [bancaire, setBancaire] = useState([]);
@@ -136,6 +141,7 @@ const Profil = () => {
             .then(reponse => reponse.json())
             .then(data => {
                 setUsernameDisplay(data[0].username)
+                setImageDisplay(data[0].image)
             })
             .catch(erreur => console.error('Erreur: ', erreur));
     }
@@ -205,6 +211,48 @@ const Profil = () => {
                 })
 
                 .catch(error => console.error('Erreur :', error));
+        } else if (e.target.name === 'password') {
+            fetch("https://localhost:8000/password/update/" + loginUser.id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    password: password,
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de la mise à jour du produit');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    ApiUser()
+                })
+
+                .catch(error => console.error('Erreur :', error));
+        } else if (e.target.name === 'photo') {
+            fetch("https://localhost:8000/photo/update/" + loginUser.id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    photo: photo,
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de la mise à jour du produit');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    ApiUser()
+                })
+
+                .catch(error => console.error('Erreur :', error));
         }
     };
 
@@ -214,6 +262,12 @@ const Profil = () => {
         }
         else if (e.target.name === 'email') {
             setEmail(e.target.value)
+        }
+        else if (e.target.name === 'password') {
+            setPassword(e.target.value)
+        }
+        else if (e.target.name === 'photo') {
+            setPhoto(e.target.value)
         }
       
 
@@ -308,10 +362,6 @@ const Profil = () => {
                 de: formValuesB.de,
                 cvv: formValuesB.cvv
             };
-
-
-            console.log(userInfos)
-
         }
 
 
@@ -355,7 +405,7 @@ const Profil = () => {
     return (
         <div>
             <Nav />
-            <img src={loginUser.image} />
+            <img src={imageDisplay} />
             <div>
                 <p> {usernameDisplay} </p>
             </div>
@@ -548,24 +598,16 @@ const Profil = () => {
                             </div>
                             <div className="form-group">
                                 <label>Password:</label>
-                                <input type="text" placeholder="Votre Password" required name='Password' />
-                                <button type="button" onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
+                                <input type="text" placeholder="Votre Password" required name='password' onChange={(e) => userChange(e)}  />
+                                <button type="button" name='password' onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
                             </div>
-                            <div className="form-group">
-                                <label>Adresse:</label>
-                                <input type="text" placeholder="Votre adresse" required name='adresse' />
-                                <button type="button" onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
-                            </div>
-                            <div className="form-group">
-                                <label>Code postal:</label>
-                                <input type="text" placeholder="Votre code postal" required name='codepostal' />
-                                <button type="button" onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
-                            </div>
+                    
                             <div className="form-group">
                                 <label>Photo Profil:</label>
-                                <input type="text" placeholder="Votre URL Photo Profil" required name='photo' />
-                                <button type="button" onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
+                                <input type="text" placeholder="Votre URL Photo Profil" required name='photo' onChange={(e) => userChange(e)} />
+                                <button type="button" name='photo' onClick={(e) => updateChange(e)} className="btn-primary">Modifier</button>
                             </div>
+
 
                         </form>
                     </div>
