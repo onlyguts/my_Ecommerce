@@ -23,6 +23,7 @@ function Nav_one() {
   const [showCart, setShowCart] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const [categorie, setCategorie] = useState([]);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
 
 
@@ -95,12 +96,27 @@ function Nav_one() {
 
   }
 
+  const toggleDropdown = () => {
+    setIsDropdownVisible(!isDropdownVisible);
+  };
+
+  const handleOptionClick = (action) => {
+    setIsDropdownVisible(false);
+    if (action === 'admin') {
+      Admin();
+    } else if (action === 'logout') {
+      Deconnexion();
+    } else if (action === 'profil') {
+      navigate('/profil');
+    }
+  };
+
 
   const toggleCart = () => {
     setShowCart(!showCart);
   };
-  // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/some
-  // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+  // httpss://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+  // httpss://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
   const produits_trier = produits.filter(produit => {
     const produit_trouvee = produit.name.toLowerCase().includes(recherche.toLowerCase());
     const categorie_trouvee = categorie.some(categorie => categorie.name.toLowerCase() === recherche.toLowerCase() && produit.id_categorie === categorie.id);
@@ -126,32 +142,45 @@ function Nav_one() {
             placeholder="Recherche"
             onChange={(event) => valueInput(event)}
           />
-          <button 
-            className="searchButton" 
-            onClick={sendInput}
-          >
-            <span className="searchIcon">🔍</span>
+          <button className="searchButton" onClick={sendInput}>
+            <span>
+              <img className='searchImg' src={images.search}></img>
+            </span>
           </button>
         </div>
         <div className="menu">
-          {!loginUser
-            ? <button className="menu-btn" onClick={() => openPopup()}>
-               <img src={images.profil} alt="Connexion/profils" className="menu-icon" />
-            </button>
-            : <button className="menu-btn" onClick={() => Deconnexion()}>
-                <img src={images.deconnexion} alt="Connexion/profils" className="menu-icon" />
-                </button>
-          }
-          {loginUser && (
-            loginUser.groupe === 1 ? (
-              <button className="menu-btn" onClick={Admin}>Panel Admin</button>
-            ) : (
-              <p></p>
-            )
-          )}
+        {!loginUser ? (
 
+  <button className="menu-btn" onClick={() => openPopup()}>
+    <img src={images.profil} alt="Connexion/profils" className="menu-icon" />
+  </button>
+) : (
+          <div className="menu-dropdown-container">
+            <button className="menu-btn" onClick={toggleDropdown}>
+              <img src={images.para} alt="Menu utilisateur" className="menu-icon" />
+            </button>
+            {isDropdownVisible && (
+              <div className="dropdown-menu animated-dropdown">
+                <div className="dropdown-option" onClick={() => handleOptionClick('profil')}>
+                  <img src={images.profil} alt="profil" className="dropdown-icon" />
+                  Profil
+                </div>
+                {loginUser && loginUser.groupe === 1 && (
+                  <div className="dropdown-option" onClick={() => handleOptionClick('admin')}>
+                    <img src={images.admin} alt="admin" className="dropdown-icon" />
+                    Admin
+                  </div>
+                )}
+                <div className="dropdown-option" onClick={() => handleOptionClick('logout')}>
+                  <img src={images.deconnexion} alt="Déconnexion" className="dropdown-icon" />
+                  Déconnexion
+                </div>
+              </div>
+            )}
+          </div>
+          )}
           <button className="menu-btn" onClick={toggleCart}>
-          <img src={images.panier} alt="Connexion/profils" className="menu-icon" />
+            <img src={images.panier} alt="Panier" className="menu-icon" />
             {quantity > 0 && (
               <span className="quantity-circle">{quantity}</span>
             )}
@@ -178,7 +207,6 @@ function Nav_one() {
       )}
     </header>
   );
-
 }
 
 
@@ -216,12 +244,7 @@ function Nav_two() {
   return (
     <nav>
       <ul>
-        <li className="dropdown">
-          <div onClick={() => Home()}>
-            <a >Home</a>
-          </div>
-        </li>
-        <li className="dropdown">
+      <li className="dropdown">
           <a href="#">Catégorie</a>
           <div className="dropdown-content">
             {categorie.map(categorie => (
@@ -229,7 +252,11 @@ function Nav_two() {
                 <a onClick={() => ProduitsShow(categorie.id, categorie.name)}>{categorie.name}</a>
               </li>
             ))}
-
+          </div>
+        </li>
+        <li className="dropdown">
+          <div onClick={() => Home()}>
+            <a >Home</a>
           </div>
         </li>
         <li className="dropdown">
@@ -241,13 +268,7 @@ function Nav_two() {
           <div onClick={() => Promo()}>
             <a >Promotions</a>
           </div>
-        </li>
-        <li className="dropdown">
-            <div onClick={goToProfil}> {/* Ici link nouveauté */}
-            <a >Profil</a>
-          </div>
-        </li>
-        
+        </li> 
       </ul>
     </nav>
   );
@@ -291,10 +312,11 @@ function Cart() {
 
 
   const PagePanier = () => {
+
     navigate('/panier')
   }
 
-  const AddProduit = (id, stock, quantity, newprice, image_type, outpout) => {
+  const AddProduit = (id, stock, quantity, newprice) => {
     console.log(stock >= quantity)
     if (stock - 1 >= quantity) {
       const Login = localStorage.getItem('users');
@@ -302,22 +324,18 @@ function Cart() {
       const UserAccount = localStorage.getItem('user_no_account');
       let userInfos = {}
       if (loginUser) {
-          userInfos = {
-            id_produit: id,
-            price_type: newprice,
-            id_user: loginUser.id,
-            image_type: image_type,
-            info: outpout,
-          };
-        } else {
-          userInfos = {
-            id_produit: id,
-            price_type: newprice,
-            id_user: UserAccount,
-            image_type: image_type,
-            info: outpout,
-          };
-        }
+         userInfos = {
+          id_produit: id,
+          price_type: newprice,
+          id_user: loginUser.id,
+        };
+      } else {
+         userInfos = {
+          id_produit: id,
+          price_type: newprice,
+          id_user: UserAccount,
+        };
+      }
       fetch("https://localhost:8000/panier/add", {
         method: 'POST',
         headers: {
@@ -337,6 +355,7 @@ function Cart() {
         });
     }
   }
+
 
   const DeleteProduit = (id, newprice) => {
     const Login = localStorage.getItem('users');
@@ -383,7 +402,7 @@ function Cart() {
       <ul className="cart-items">
         {cartItems.map(item => (
           <li key={item.id} className="cart-item">
-            <img src={item.image_type} alt={item.name} className="cart-item-image" />
+            <img src={item.image} alt={item.name} className="cart-item-image" />
             <div className="cart-item-details">
               <div className='cart-description'>
                 <span className="cart-item-info">
@@ -397,7 +416,7 @@ function Cart() {
               <div className='cart-PlusMoin'>
                 <button onClick={() => DeleteProduit(item.id, item.price_type)} className="cart-item-button">-</button>
                 <button className="cart-item-quantity">{item.quantity}</button>
-                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type, item.image_type, item.info)} className="cart-item-button">+</button>
+                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
               </div>
             </div>
           </li>

@@ -39,7 +39,7 @@ function Promotionsproduits() {
                     </div>
                 ))}
             <h1>Nouveau Produit </h1>
-                {promo.map(produit => (
+                {nouveau.map(produit => (
                     <div className='promo-in-grid'>
                         <p className="legend" >{produit.name}</p>
                         <p className="legend" >{produit.prix * (1 - produit.promo / 100)}€</p>

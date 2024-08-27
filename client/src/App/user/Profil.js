@@ -575,7 +575,7 @@ const Profil = () => {
                                         <td>{achat.prix}€</td>
                                         <td>
                                             {/* button fiche produit bg ici  */}
-                                            <button className="btn-view" onClick={() => navigate('commande/' + loginUser.id + '/' + achat.id)}>Voir détails commande</button>
+                                            <button className="btn-view" onClick={() => navigate('commande/' + loginUser.id + '/' + achat.id_commande)}>Voir détails commande</button>
                                         </td>
                                     </tr>
                                 ))}

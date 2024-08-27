@@ -66,7 +66,7 @@ class ProduitsController extends AbstractController
     public function nouveauter(EntityManagerInterface $entityManager): Response
     {
         $connection = $entityManager->getConnection();
-        $Mysql = 'SELECT p.*, c.name as categorie_name FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id ORDER BY p.create_time ASC LIMIT 10';
+        $Mysql = 'SELECT p.*, c.name as categorie_name FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id ORDER BY p.create_time DESC LIMIT 10';
 
         $query = $connection->prepare($Mysql);
         $resultat = $query->executeQuery();

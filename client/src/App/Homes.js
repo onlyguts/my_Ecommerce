@@ -115,6 +115,7 @@ function PopularProducts() {
 }
 
 function Main() {
+  const navigate = useNavigate();
   const [categorie, setProduits] = useState([]);
   useEffect(() => {
     fetch("https://localhost:8000/categorie")
@@ -128,8 +129,8 @@ function Main() {
         <div className="main-banner">
           <div className='byp-banner'>
             <img className='marging' src={images.BYP} alt='banniere'/>
-            <button id='button-BYP'>Build Your PC</button>
-          </div>
+            <button id='button-BYP' onClick={() => navigate('/build')}>Build Your PC</button>
+          </div>  
         </div>
         <div className="grid-container marging">
           <div id='item-0'>

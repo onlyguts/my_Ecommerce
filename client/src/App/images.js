@@ -12,6 +12,10 @@ import BYP from './assets/BYP.png';
 import profil from './assets/profil.png';
 import panier from './assets/panier.png';
 import deconnexion from './assets/deconnexion.png';
+import admin from './assets/Admin.png';
+import para from './assets/Parametre.png';
+import search from './assets/fleche.png';
+import dropdown from './assets/dropdown.png';
 
 const images = {
     logo,
@@ -27,7 +31,11 @@ const images = {
     BYP,
     profil,
     panier,
-    deconnexion
+    deconnexion,
+    admin,
+    para,
+    search,
+    dropdown
 };
 
 export default images;

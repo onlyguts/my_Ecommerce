@@ -42,7 +42,7 @@ class CommandeController extends AbstractController
     {
         $conn = $entityManager->getConnection();
 
-        $sql = 'SELECT * FROM commande c WHERE c.id = :id';
+        $sql = 'SELECT * FROM commande c WHERE c.id_commande = :id';
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':id', $id);
@@ -121,7 +121,7 @@ class CommandeController extends AbstractController
                     <p>Vous recevrez rapidement un email lorsque celle-ci sera envoyée.</p>
                     <p>Revenez finaliser votre achat avant que vos articles ne soient plus disponibles!</p>
                 <div class="button">
-                    <a href="http://localhost:3000/">Votre commande</a>
+                    <a href="http://localhost:3000/profil/commande/' . htmlspecialchars($data['id_user']) .'/' . htmlspecialchars($data['id_commande']) .'">Votre commande</a>
                 </div>
                 </div>
                 <div class="footer">

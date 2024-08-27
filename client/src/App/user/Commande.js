@@ -13,6 +13,7 @@ function Commande() {
     const [commandes, setCommande] = useState([]);
     const [produits, setProduit] = useState([]);
 
+
     const [status, setStatus] = useState(0);
     const [commandeId, setIdCommande] = useState(0);
     // if (!loginUser) {
@@ -36,7 +37,7 @@ function Commande() {
                     setProduit(produit);
                     setIdCommande(item.id)
                     setStatus(item.status)
-                    console.log(item.status)
+                    
                 });
 
             })
@@ -105,7 +106,8 @@ function Commande() {
                             <div className="commande-info">Code : {commandes[0].code}</div>
                             <div className="commande-info">Mode d'expédition : {commandes[0].mode_expe}</div>
                             <div className="commande-info">Date : {commandes[0].date}</div>
-                            <div className="commande-info">Prix Totals : {commandes[0].prix_total}€</div>
+                            <div className="commande-info">Prix Totals : {commandes[0].prix}€</div>
+                           
                             {status === 0 && (
                                 <div className="commande-info">Status : en préparation</div>
                             )}
