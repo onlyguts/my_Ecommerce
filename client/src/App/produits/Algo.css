@@ -1,0 +1,137 @@
+:root {
+    --background-color: #f4f4f4;
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --highlight-color: #ecf0f1;
+    --accent-color: #34495e;
+  }
+  
+  .algo-container {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .algo-steps {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+  }
+  
+  .panier-section {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .produits-section {
+    flex: 2;
+  }
+  
+  .panier-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .panier-list, .item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .panier-item, .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .panier-item {
+    justify-content: space-between;
+  
+  }
+  
+  .item {
+    justify-content: space-between;
+    width: 10em;
+  }
+  
+  .panier-image, .item-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 4px;
+  }
+  
+  .panier-empty {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+  }
+  
+  .step-title {
+  
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .item-button {
+    padding: 5px 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .item-button:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  .start-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+  }
+  
+  .start-button:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  .step-content {
+    background-color: var(--highlight-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .finish-message {
+    text-align: center;
+    font-size: 18px;
+    color: var(--accent-color);
+    padding: 20px;
+    background-color: var(--highlight-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
