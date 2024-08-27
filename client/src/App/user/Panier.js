@@ -50,6 +50,7 @@ function Panier() {
     const [prixpoid, setPrixPoids] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [step, setStep] = useState(1);
+
     const [selectedCountry, setSelectedCountry] = useState('');
     const navigate = useNavigate();
 
@@ -104,9 +105,7 @@ function Panier() {
                             quantity: item.quantity
                         });
                     });
-
-
-
+                    
                     setPackage(packageColis)
                     setPackageAll(packageItem)
                     const int = parseFloat(prixfrais);

@@ -13,6 +13,8 @@ function Commande() {
     const [commandes, setCommande] = useState([]);
     const [produits, setProduit] = useState([]);
 
+    const [status, setStatus] = useState(0);
+    const [commandeId, setIdCommande] = useState(0);
     // if (!loginUser) {
     //     if (UserAccount !== id) {
     //         navigate('/')
@@ -23,7 +25,8 @@ function Commande() {
     //     }
     // }
 
-    useEffect(() => {
+
+    const CommandeAPI = () => {
         fetch("https://localhost:8000/commande/solo/" + commande)
             .then(reponse => reponse.json())
             .then(data => {
@@ -31,17 +34,66 @@ function Commande() {
                 data.forEach(item => {
                     const produit = JSON.parse(item.produits)
                     setProduit(produit);
+                    setIdCommande(item.id)
+                    setStatus(item.status)
+                    console.log(item.status)
                 });
-            
+
             })
             .catch(erreur => console.error('Erreur: ', erreur));
 
 
+    }
+    useEffect(() => {
+        CommandeAPI()
 
     }, []);
 
-    console.log(produits)
-    console.log(commandes)
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setStatus(prevStatus => {
+                if (prevStatus === 0) {
+                    fetch(`https://localhost:8000/commande/update/${commandeId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            status: 1,
+                        }),
+                    })
+                        .then(data => CommandeAPI())
+                        .catch(error => console.error('Erreur :', error));
+                    console.log(1);
+                    return 1;
+                } else if (prevStatus === 1) {
+                    fetch(`https://localhost:8000/commande/update/${commandeId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            status: 2,
+                        }),
+                    })
+                        .then(data => CommandeAPI())
+                        .catch(error => console.error('Erreur :', error));
+                    console.log(2);
+                    return 2;
+                } else if (prevStatus === 2) {
+                    console.log(2);
+                    return 2;
+                }
+                return prevStatus;
+            });
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [commandeId]);
+
+
+
+
     return (
         <div>
             <Nav />
@@ -49,12 +101,22 @@ function Commande() {
                 {commandes && commandes.length > 0 ? (
                     <div className="commande-recap">
                         <div className="commande-card">
+
+                            <div className="commande-info">ID Commande : {commandes[0].id_commande}</div>
                             <div className="commande-info">Adresse : {commandes[0].adresse}</div>
                             <div className="commande-info">Code : {commandes[0].code}</div>
                             <div className="commande-info">Mode d'expédition : {commandes[0].mode_expe}</div>
                             <div className="commande-info">Date : {commandes[0].date}</div>
                             <div className="commande-info">Prix Totals : {commandes[0].prix_total}€</div>
-                            <div className="commande-info">Status : {commandes[0].status}</div>
+                            {status === 0 && (
+                                <div className="commande-info">Status : en préparation</div>
+                            )}
+                            {status === 1 && (
+                                <div className="commande-info">Status : en cours de livraison</div>
+                            )}
+                            {status === 2 && (
+                                <div className="commande-info">Status : Livrée</div>
+                            )}
                         </div>
                     </div>
                 ) : (
@@ -64,11 +126,11 @@ function Commande() {
                         </div>
                     </div>
                 )}
-                
+
                 <div className="produits-container">
                     {produits.map((details, index) => (
                         <div className="produit-card" key={index}>
-                            <div className="produit-id">{index+1}</div>
+                            <div className="produit-id">{index + 1}</div>
 
                             <img className="produit-image" src={details.image_type} alt={`Produit ${details.id}`} />
                             <div className="produit-name">{details.name}</div>
@@ -82,8 +144,8 @@ function Commande() {
             </div>
         </div>
     );
-    
-      
+
+
 }
 
 export default Commande
