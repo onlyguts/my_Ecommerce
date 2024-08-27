@@ -92,8 +92,6 @@ function Commande() {
     }, [commandeId]);
 
 
-
-
     return (
         <div>
             <Nav />
