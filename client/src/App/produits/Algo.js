@@ -201,7 +201,7 @@ function Algo() {
     for (const id in panierWait) {
       if (panierWait.hasOwnProperty(id)) {
         console.log(panierWait[id].image);
-        const userInfos = {}
+        let userInfos = {}
         if (!loginUser) {
           userInfos = {
             id_produit: UserAccount,
