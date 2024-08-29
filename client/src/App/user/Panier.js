@@ -35,7 +35,7 @@ function Panier() {
 
 
     const [papier, setPapier] = useState(0);
-    
+
 
     const [adress, setAdress] = useState([]);
     const [adressText, setAdressP] = useState('');
@@ -45,7 +45,7 @@ function Panier() {
 
     const [prixexpe, setPrixExpe] = useState(0);
     const [nameexpe, setNameExpe] = useState('');
-    
+
     const [prixfrais, setPrixFrais] = useState(0);
     const [prixpoid, setPrixPoids] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,11 +55,11 @@ function Panier() {
     const navigate = useNavigate();
 
     const [date, setDate] = useState(new Date())
-    const debut = new Date(date.getFullYear(), 7, 21);
-    const fin = new Date(date.getFullYear(), 7, 24);
+    const debut = new Date(date.getFullYear(), 7, 29);
+    const fin = new Date(date.getFullYear(), 7, 30);
     const entre = date > debut && date < fin;
 
-    const [packageItem, setpackageItem]  = useState([]);
+    const [packageItem, setpackageItem] = useState([]);
 
     const ApiPanier = () => {
         if (!loginUser) {
@@ -86,7 +86,7 @@ function Panier() {
                         packageItem.height += item.height * item.quantity;
                         packageItem.length += item.length * item.quantity;
                         packageItem.quantity += item.quantity;
-                        
+
                     });
 
                     setpackageItem(packageItem)
@@ -105,7 +105,7 @@ function Panier() {
                             quantity: item.quantity
                         });
                     });
-                    
+
                     setPackage(packageColis)
                     setPackageAll(packageItem)
                     const int = parseFloat(prixfrais);
@@ -279,7 +279,7 @@ function Panier() {
     useEffect(() => {
         if (!loginUser) {
             const UserAccount = localStorage.getItem('user_no_account');
-            
+
             fetch("https://localhost:8000/information/" + UserAccount)
                 .then(reponse => reponse.json())
                 .then(data => {
@@ -359,7 +359,7 @@ function Panier() {
         setNameExpe(data.name)
         setPrixExpe(int)
         console.log(data.taxe)
-      
+
 
     }
 
@@ -531,11 +531,11 @@ function Panier() {
         const loginUser = JSON.parse(Login);
         const UserAccount = localStorage.getItem('user_no_account');
 
-        
+
         function entierAleatoire(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-        
+
         const id_generate = entierAleatoire(100000, 999999)
 
         const prixFinal = (prixfrais + prixpoid) + (prixtotal + prixexpe)
@@ -544,9 +544,9 @@ function Panier() {
         console.log(prixFinal + '€')
         let userInfos = {}
         if (!loginUser) {
-             userInfos = {
+            userInfos = {
                 id_user: UserAccount,
-                id_commande:  id_generate,
+                id_commande: id_generate,
                 produit: value,
                 status: 0,
                 adress: adressText,
@@ -561,9 +561,9 @@ function Panier() {
             };
         } else {
 
-             userInfos = {
+            userInfos = {
                 id_user: loginUser.id,
-                id_commande:  id_generate,
+                id_commande: id_generate,
                 produit: value,
                 status: 0,
                 adress: adressText,
@@ -594,35 +594,35 @@ function Panier() {
             .catch(error => {
                 console.error('Erreur:', error);
             });
-        
-           
 
-            fetch("https://localhost:8000/commande/chercher/" + id_generate)
-                .then(reponse => reponse.json())
-                .then(data => {
-                    if (data === false) {
-                        fetch("https://localhost:8000/commande/add", {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(userInfos),
+
+
+        fetch("https://localhost:8000/commande/chercher/" + id_generate)
+            .then(reponse => reponse.json())
+            .then(data => {
+                if (data === false) {
+                    fetch("https://localhost:8000/commande/add", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(userInfos),
+                    })
+
+                        .then(response => {
+                            response.json();
+                            // ApiPanier()
                         })
-                
-                            .then(response => {
-                                response.json();
-                                // ApiPanier()
-                            })
-                            .catch(error => {
-                                console.error('Erreur:', error);
-                            });
-                    } else {
-                        handlePayment()
-                    }
-                })
-                .catch(erreur => console.error('Erreur: ', erreur)); 
+                        .catch(error => {
+                            console.error('Erreur:', error);
+                        });
+                } else {
+                    handlePayment()
+                }
+            })
+            .catch(erreur => console.error('Erreur: ', erreur));
 
-     
+
 
         // const Login = localStorage.getItem('users');
         // const loginUser = JSON.parse(Login);
@@ -642,8 +642,8 @@ function Panier() {
         //     };
         //     userInfosAdress = {
         //         id_user: loginUser.id,
-                // adress: form2.adresse,
-                // postal: form2.codepostal,
+        // adress: form2.adresse,
+        // postal: form2.codepostal,
         //         nom: form2.nom,
         //         prenom: form2.prenom,
         //         pays: paysname,
@@ -710,7 +710,7 @@ function Panier() {
         //     });
 
 
-     
+
 
     };
     return (
@@ -865,8 +865,12 @@ function Panier() {
                                             <label for="cadeau">Papier cadeau</label>
                                         </div>
                                     )}
+                                    {(prixtotal > 3000) ? (
+                                        <button type="button" onClick={() => navigate('/login')} className="modal-button">Login</button>
 
-                                    <button type="button" onClick={() => setStep(4)} className="modal-button">Confirmer</button>
+                                    ) : (
+                                        <button type="button" onClick={() => setStep(4)} className="modal-button">Confirmer</button>
+                                    )}
                                 </form>
                             </div>
                         )}

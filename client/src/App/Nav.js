@@ -316,7 +316,7 @@ function Cart() {
     navigate('/panier')
   }
 
-  const AddProduit = (id, stock, quantity, newprice) => {
+  const AddProduit = (id, stock, quantity, newprice, image_type, outpout) => {
     console.log(stock >= quantity)
     if (stock - 1 >= quantity) {
       const Login = localStorage.getItem('users');
@@ -328,12 +328,16 @@ function Cart() {
           id_produit: id,
           price_type: newprice,
           id_user: loginUser.id,
+          image_type: image_type,
+          info: outpout,
         };
       } else {
          userInfos = {
           id_produit: id,
           price_type: newprice,
           id_user: UserAccount,
+          image_type: image_type,
+          info: outpout,
         };
       }
       fetch("https://localhost:8000/panier/add", {
@@ -416,7 +420,7 @@ function Cart() {
               <div className='cart-PlusMoin'>
                 <button onClick={() => DeleteProduit(item.id, item.price_type)} className="cart-item-button">-</button>
                 <button className="cart-item-quantity">{item.quantity}</button>
-                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type)} className="cart-item-button">+</button>
+                <button onClick={() => AddProduit(item.id, item.stock, item.quantity, item.price_type, item.image_type, item.info)} className="cart-item-button">+</button>
               </div>
             </div>
           </li>
