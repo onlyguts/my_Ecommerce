@@ -13,6 +13,8 @@ const Tabs = () => {
     const [avis, setAvis] = useState([]);
     const [avissend, setAvisSend] = useState([]);
     const [moyenne, setMoyenne] = useState(0);
+    const Login = localStorage.getItem('users');
+    const loginUser = JSON.parse(Login);
 
 
 
@@ -28,13 +30,13 @@ const Tabs = () => {
                 const totalavis = data.reduce((sum, avis) => sum + avis.rate, 0);
                 const moyenne = data.length > 0 ? totalavis / data.length : 0;
                 setMoyenne(data.rate);
-    
+
             })
             .catch(error => console.error('Erreur:', error));
     }
 
 
-    
+
     useEffect(() => {
         Api()
     }, []);
@@ -126,23 +128,31 @@ const Tabs = () => {
                     <img src={PhotoSpecs} alt="Image Fiche Technique" />
                 </div>
                 <div ref={tab2Ref} className={`tab-panel ${activeTab === 'tab2' ? 'active' : ''}`}>
-                    <input type='number' max='5' value={rate} onChange={(e) => AvisSet(e)}></input>
-                    <textarea className="avis-input" value={text} placeholder="Votre avis ici" onChange={(e) => AvisSet_2(e)}></textarea>
-                    <button className="avis-button" onClick={() => EnvoyerAvis()}>Envoyer</button>
+                    {(loginUser) &&
+                        <p>
+                            <input type='number' max='5' value={rate} onChange={(e) => AvisSet(e)}></input>
+                            <textarea className="avis-input" value={text} placeholder="Votre avis ici" onChange={(e) => AvisSet_2(e)}></textarea>
+                            <button className="avis-button" onClick={() => EnvoyerAvis()}>Envoyer</button>
+                        </p>
+                    }
+
+
+
                     <section className="avis-list">
                         {avis.map((produit) => (
 
+
                             <article className="avis" key={produit.id}>
-                                 <div className="star-stat2">
-                                        {produit.rate === 0 && <p>Aucune évaluation</p>}
-                                        {produit.rate >= 1 && produit.rate < 2 && renderStars(1)}
-                                        {produit.rate >= 2 && produit.rate < 3 && renderStars(2)}
-                                        {produit.rate >= 3 && produit.rate < 4 && renderStars(3)}
-                                        {produit.rate >= 4 && produit.rate < 5 && renderStars(4)}
-                                        {produit.rate >= 5 && renderStars(5)}
-                                    </div>
-                               <br/> <h2>{produit.username} </h2>
-                                <p> Commentaire :  <br/>  {produit.description} </p>
+                                <div className="star-stat2">
+                                    {produit.rate === 0 && <p>Aucune évaluation</p>}
+                                    {produit.rate >= 1 && produit.rate < 2 && renderStars(1)}
+                                    {produit.rate >= 2 && produit.rate < 3 && renderStars(2)}
+                                    {produit.rate >= 3 && produit.rate < 4 && renderStars(3)}
+                                    {produit.rate >= 4 && produit.rate < 5 && renderStars(4)}
+                                    {produit.rate >= 5 && renderStars(5)}
+                                </div>
+                                <br /> <h2>{produit.username} </h2>
+                                <p> Commentaire :  <br />  {produit.description} </p>
                             </article>
 
                         ))}
