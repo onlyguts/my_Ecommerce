@@ -78,6 +78,8 @@ class CommandeController extends AbstractController
         $code->setIdCommande($data['id_commande']);
         $code->setStatus($data['status']);
         $code->setAdresse($data['adress']);
+        $code->setName($data['name']);
+        $code->setAdresse($data['adress']);
         $code->setCode((int)$data['postal']);
         $code->setProduits(json_encode($data['produit']));
 
@@ -171,5 +173,19 @@ class CommandeController extends AbstractController
         $entityManager->flush();
 
         return $this->json(['success' => 'user mis à jour'], Response::HTTP_OK);
+    }
+
+
+    #[Route('/exel', name: 'app_exel', methods: ['GET', 'HEAD'])]
+    public function exel(EntityManagerInterface $entityManager): Response
+    {
+        $conn = $entityManager->getConnection();
+        $sql = ' SELECT c.* from commande c';
+
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        $produits = $resultSet->fetchAllAssociative();
+        return $this->json($produits);
     }
 }

@@ -56,6 +56,9 @@ class Commande
     #[ORM\Column]
     private ?int $id_commande = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
 
 
     public function getId(): ?int
@@ -227,6 +230,18 @@ class Commande
     public function setIdCommande(int $id_commande): static
     {
         $this->id_commande = $id_commande;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }

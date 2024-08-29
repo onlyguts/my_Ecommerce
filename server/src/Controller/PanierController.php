@@ -43,7 +43,7 @@ class PanierController extends AbstractController
         return $this->json($produits);
     }
 
-    #[Route('/panier/add', name: 'app_panier_add', methods: ['POST'])]
+    #[Route('/panier/add', name: 'app_paniers_add', methods: ['POST'])]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
