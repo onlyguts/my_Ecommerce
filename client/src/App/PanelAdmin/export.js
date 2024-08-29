@@ -1,26 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { use } from 'react';
 
 const ExcelGenerator = () => {
-
-  const [commandes, setCommandes] = useState([])
-
-  
-  const data = [
-    {
-      id: 1,
-      id_commande: 101,
-      name: "John",
-      lastName: "Doe",
-      commande: [
-        { produit: "RTX 4090" },
-        { produit: "Ryzen 9" },
-      ],
-    },
-
-  ];
+  const [commandes, setCommandes] = useState([]);
 
   useEffect(() => {
     fetch("https://localhost:8000/exel")
@@ -29,31 +12,31 @@ const ExcelGenerator = () => {
       .catch(error => console.error('Erreur: ', error));
   }, []);
 
-
-  commandes.forEach(element => {
-    const produits = JSON.parse(element.produits)
-    console.log(produits) // array des produits de chaque commande 
-  });
-
   const generateExcel = () => {
     const excelData = [];
-    data.forEach((item) => {
-      item.commande.forEach((produit, index) => {
+
+ 
+    commandes.forEach((item) => {
+      const produits = JSON.parse(item.produits); 
+
+      produits.forEach((produit, index) => {
         if (index === 0) {
           excelData.push({
-            id: item.id,
-            id_commande: item.id_commande,
+            id_commande: '#' + item.id_commande,
+            id: item.id_user,
             name: item.name,
-            lastName: item.lastName,
-            produit: produit.produit,
+            adresse:  item.code + ' ' + item.adresse,
+
+            produit: produit.name,
           });
         } else {
+
           excelData.push({
             id: '',
             id_commande: '',
             name: '',
-            lastName: '',
-            produit: produit.produit,
+            adresse: '',
+            produit: produit.name, 
           });
         }
       });
@@ -67,12 +50,12 @@ const ExcelGenerator = () => {
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const dataBlob = new Blob([excelBuffer], { type: 'application/octet-stream' });
 
-
     saveAs(dataBlob, 'commande_format.xlsx');
   };
+
   return (
     <div>
-      <button onClick={generateExcel}>Générer Excel</button>
+      <button onClick={generateExcel}>Générer Excel ( Toute les commandes )</button>
     </div>
   );
 };

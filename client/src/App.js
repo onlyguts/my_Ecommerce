@@ -38,7 +38,7 @@ import Register from './App/Login/Register'
 import Password from './App/Login/Password'
 import NewPassword from './App/Login/NewPassword'
 
-import Export from './export'
+
 
 
 function App() {
@@ -52,7 +52,7 @@ function App() {
                 <Route path="/promotions" element={<Promo />}></Route>
                 <Route path="/panier" element={<Panier />}></Route>
                 <Route path="/build" element={<Build />}></Route>
-                <Route path="/export" element={<Export />}></Route>
+              
 
                 <Route path="/admin" element={<Admindash />}></Route>
                 <Route path="/admin/add" element={<Admin />}></Route>

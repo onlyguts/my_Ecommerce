@@ -202,10 +202,11 @@ function Algo() {
       if (panierWait.hasOwnProperty(id)) {
         console.log(panierWait[id].image);
         let userInfos = {}
+
         if (!loginUser) {
           userInfos = {
-            id_produit: UserAccount,
-            id_user: loginUser.id,
+            id_produit: id,
+            id_user: UserAccount,
             price_type: 0,
             image_type: panierWait[id].image,
             info: 'null',

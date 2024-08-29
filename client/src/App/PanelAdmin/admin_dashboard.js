@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import CSS from './Admin.css'
 import Nav from './admin_navbar'
+import Export from './export'
 
 function AdminDashboard() {
 
@@ -50,6 +51,7 @@ function AdminDashboard() {
     return (
         <div>
             <Nav />
+            <Export />
             <div>
                 <p>Nombre de catégories : {categories.length}</p>
                 <p>Nombre de produits : {produits.length}</p>

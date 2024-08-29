@@ -558,6 +558,8 @@ function Panier() {
                 expe: nameexpe,
                 papier: papier,
                 price: prixFinal,
+                name: prenomText + ' ' + nomText,
+  
             };
         } else {
 
@@ -575,6 +577,7 @@ function Panier() {
                 expe: nameexpe,
                 papier: papier,
                 price: prixFinal,
+                name: prenomText + ' ' + nomText,
             };
         }
 
@@ -865,7 +868,7 @@ function Panier() {
                                             <label for="cadeau">Papier cadeau</label>
                                         </div>
                                     )}
-                                    {(prixtotal > 3000) ? (
+                                    {(prixtotal > 3000 && !loginUser) ? (
                                         <button type="button" onClick={() => navigate('/login')} className="modal-button">Login</button>
 
                                     ) : (
