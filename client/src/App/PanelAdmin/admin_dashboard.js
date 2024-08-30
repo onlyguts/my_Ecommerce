@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CSS from './Admin.css'
 import Nav from './admin_navbar'
 import Export from './export'
-
+import Exporte from './exporte'
 function AdminDashboard() {
 
     const [categories, setCategorie] = useState([]);
@@ -52,6 +52,7 @@ function AdminDashboard() {
         <div>
             <Nav />
             <Export />
+            <Exporte />
             <div>
                 <p>Nombre de catégories : {categories.length}</p>
                 <p>Nombre de produits : {produits.length}</p>

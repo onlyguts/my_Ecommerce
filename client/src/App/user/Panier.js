@@ -519,12 +519,14 @@ function Panier() {
                 console.error('Erreur:', error);
             });
     }
+    
 
     const PapierCado = (e) => {
         console.log(e.target.checked)
         setPapier(e.target.checked)
     }
 
+ 
     const handlePayment = () => {
 
         const Login = localStorage.getItem('users');
@@ -542,6 +544,23 @@ function Panier() {
         console.log(packageAll)
         console.log(packages)
         console.log(prixFinal + '€')
+
+
+        value.forEach((value) => {
+            for (let i = 0; i < value.quantity; i++) {
+                fetch("https://localhost:8000/produit/sell/" + value.produit_id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .catch(error => console.error('Erreur :', error));
+            }
+        });
+        
+
+        
+
         let userInfos = {}
         if (!loginUser) {
             userInfos = {

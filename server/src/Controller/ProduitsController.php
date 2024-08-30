@@ -24,7 +24,19 @@ class ProduitsController extends AbstractController
         $produits = $resultSet->fetchAllAssociative();
         return $this->json($produits);
     }
-    
+
+    #[Route('produits/get/vendu', name: 'app_produits_sell', methods: ['GET', 'HEAD'])]
+    public function indexsell(EntityManagerInterface $entityManager): Response
+    {
+        $conn = $entityManager->getConnection();
+        $sql = ' SELECT p.*, c.name as categorie_name FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id WHERE p.vendu != 0 ORDER BY p.vendu desc';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        $produits = $resultSet->fetchAllAssociative();
+        return $this->json($produits);
+    }
+
     #[Route('/produits/top10', name: 'app_top_produits', methods: ['GET', 'HEAD'])]
     public function topProduits(EntityManagerInterface $entityManager): Response
     {
@@ -61,7 +73,7 @@ class ProduitsController extends AbstractController
         return $this->json($data);
     }
 
-    
+
     #[Route('/produits/nouveauter', name: 'app_nouveauter', methods: ['GET', 'HEAD'])]
     public function nouveauter(EntityManagerInterface $entityManager): Response
     {
@@ -142,6 +154,29 @@ class ProduitsController extends AbstractController
 
         return $this->json(['success' => 'Produit mis à jour'], Response::HTTP_OK);
     }
+    #[Route('/produit/sell/{id}', name: 'app_produit_update_sell', methods: ['PUT'])]
+    public function updateSell(EntityManagerInterface $entityManager, Request $request, int $id): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $produit = $entityManager->getRepository(Produits::class)->find($id);
+
+        if (!$produit) {
+            return $this->json(['message' => 'Erreur : Produit non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        $produit->setStock($produit->getStock() - 1); 
+        $produit->setVendu($produit->getVendu() + 1); 
+
+        $entityManager->persist($produit);
+        $entityManager->flush();
+
+        return $this->json(['success' => 'Produit mis à jour'], Response::HTTP_OK);
+    }
+
+    
+    
+
     #[Route('/produits/add', name: 'app_produits_add', methods: ['POST'])]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -184,17 +219,14 @@ class ProduitsController extends AbstractController
     {
         $produitRepository = $entityManager->getRepository(Produits::class);
         $produit = $produitRepository->find($id);
-        
+
         if (!$produit) {
             return $this->json(['error' => 'produit pas trouvé'], Response::HTTP_NOT_FOUND);
         }
-    
+
         $entityManager->remove($produit);
         $entityManager->flush();
-    
+
         return $this->json(['success' => 'produit supprimé']);
     }
-
- 
-
 }

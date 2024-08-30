@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Nav from './../Nav';
 import './Commande.css';
 import { useNavigate, useParams } from 'react-router-dom';
+import jsPDF from 'jspdf';
 
 function Commande() {
     const { id, commande } = useParams();
@@ -92,10 +93,31 @@ function Commande() {
         return () => clearInterval(interval);
     }, [commandeId]);
 
+    const facture = () => {
+        const doc = new jsPDF();
+        let hauteur = 70;
 
+        doc.setFontSize(20);
+        doc.text("Facture #" + commandes[0].id, 20, 20);
+        doc.setFontSize(13);
+        doc.text("ID Commande: " + commandes[0].id_commande, 20, 40);
+        doc.text("Prenom Nom: " + commandes[0].name, 20, 50);
+        doc.text("Date: " + commandes[0].date, 20, 60);
+        doc.setFontSize(7);
+        produits.forEach(element => {
+            doc.text("x" + element.quantity + " - Produit: " + element.name + ' ('+ element.prix + "€)", 20, hauteur);
+            hauteur += 5; 
+        });
+        doc.setFontSize(14);
+        doc.text("Montant total: " + commandes[0].prix + "€", 20, hauteur + 20);
+
+        doc.save("facture.pdf");
+    };
+    
     return (
         <div>
             <Nav />
+         
             <div className="page-container">
                 {commandes && commandes.length > 0 ? (
                     <div className="commande-recap">
@@ -107,6 +129,7 @@ function Commande() {
                             <div className="commande-info">Mode d'expédition : {commandes[0].mode_expe}</div>
                             <div className="commande-info">Date : {commandes[0].date}</div>
                             <div className="commande-info">Prix Totals : {commandes[0].prix}€</div>
+
                            
                             {status === 0 && (
                                 <div className="commande-info">Status : en préparation</div>
@@ -117,6 +140,7 @@ function Commande() {
                             {status === 2 && (
                                 <div className="commande-info">Status : Livrée</div>
                             )}
+                               <button onClick={facture}>Imprimer la facture</button>
                         </div>
                     </div>
                 ) : (

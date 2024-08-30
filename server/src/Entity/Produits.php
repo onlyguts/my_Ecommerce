@@ -71,6 +71,9 @@ class Produits
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $create_time = null;
 
+    #[ORM\Column]
+    private ?int $vendu = null;
+
   
 
     public function getId(): ?int
@@ -302,6 +305,18 @@ class Produits
     public function setCreateTime(\DateTimeInterface $create_time): static
     {
         $this->create_time = $create_time;
+
+        return $this;
+    }
+
+    public function getVendu(): ?int
+    {
+        return $this->vendu;
+    }
+
+    public function setVendu(int $vendu): static
+    {
+        $this->vendu = $vendu;
 
         return $this;
     }

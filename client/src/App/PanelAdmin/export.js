@@ -4,13 +4,30 @@ import { saveAs } from 'file-saver';
 
 const ExcelGenerator = () => {
   const [commandes, setCommandes] = useState([]);
-
+  const [pourcent, setArrayPourcent] = useState([]);
   useEffect(() => {
     fetch("https://localhost:8000/exel")
       .then(response => response.json())
       .then(data => setCommandes(data))
       .catch(error => console.error('Erreur: ', error));
   }, []);
+
+
+  useEffect(() => {
+    fetch("https://localhost:8000/produits/get/vendu")
+      .then(response => response.json())
+      .then(data => {
+        const totalVentes = data.reduce((total, produit) => total + produit.vendu, 0);
+        const produitsAvecPourcentage = data.map(produit => {
+          const pourcentageVentes = (produit.vendu / totalVentes) * 100;
+          return {...produit, pourcentageVentes: pourcentageVentes.toFixed(2)};
+        });
+        // console.log(produitsAvecPourcentage);
+        setArrayPourcent(produitsAvecPourcentage)
+      })
+      .catch(error => console.error('Erreur: ', error));
+  }, []);
+  
 
   const generateExcel = () => {
     const excelData = [];
@@ -52,6 +69,8 @@ const ExcelGenerator = () => {
 
     saveAs(dataBlob, 'commande_format.xlsx');
   };
+
+  
 
   return (
     <div>
