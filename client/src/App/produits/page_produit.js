@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import "./productBoitier.css";
+import "./page_produit.css";
 import Nav from "../Nav";
-import PhotoBoitier from '../assets/boitie.png';
-import VueIcon from '../assets/vue_icon.svg';
-import AvisIcon from '../assets/avis_icon.svg';
 import StarProduit from '../assets/star-produit.svg';
-import WrenchCreate from '../assets/wrench-create.svg';
-import MSILogo from '../assets/MSI-removebg-preview.png';
-import NvidiaLogo from '../assets/nvidia-removebg-preview.png';
-import BuyingCart from '../assets/cart.svg';
-import ChevronRight from '../assets/chevron-right.svg';
+import PhotoSpecs from '../assets/Specs.png';
+import StarFull from '../assets/starFull.png';
+import StarEmpty from '../assets/starEmpty.png';
 
-import QuantityPicker from '../components/quantityPicker'
-import Tabs from "../components/Tabs";
-
-export const ProductBoitier = () => {
+export const ProductPage = () => {
     const { id } = useParams();
     const [produit, setProduit] = useState(null);
     const navigate = useNavigate();
@@ -33,8 +25,9 @@ export const ProductBoitier = () => {
     const [image, setNewImage] = useState('');
     const [outpout, setOutpout] = useState('');
 
-
-
+    const [step, setStep] = useState(1);
+    const [text, setText] = useState('');
+    const [rate, setRate] = useState(0);
 
     useEffect(() => {
         fetch(`https://localhost:8000/produit/${id}`)
@@ -102,31 +95,42 @@ export const ProductBoitier = () => {
     }
 
 
-    const Type_Produit = (e) => {
-        const data = JSON.parse(e.target.value);
-        const int = parseFloat(data.price);
-        setNewPrice(int);
-        setNewImage(data.image);
-        setOutpout(data.type);
+    const Type_Produit = (item) => {
+        // const data = JSON.parse(e.target.value);
+        // const int = parseFloat(data.price);
+        // setNewPrice(int);
+        // setNewImage(data.image);
+        // setOutpout(data.type);
+        setNewPrice(parseFloat(item.price));
+        setNewImage(item.image_type);
+        setOutpout(item.outpout);
     }
 
 
-    const AvisSet = (e) => {
+    const AvisSet = (value) => {
         const users = localStorage.getItem('users');
-        const id_user = JSON.parse(users)
+        // const id_user = JSON.parse(users)
+        // setRate(e.target.value)
+        // setAvisSend(backData => ({
+        //     ...backData,
+        //     id_user: id_user.id,
+        //     id_produit: id,
+        //     rate: e.target.value,
+        const id_user = JSON.parse(users);
+        setRate(value);
 
-        setAvisSend(backData => ({
-            ...backData,
+        setAvisSend(prevData => ({
+            ...prevData,
             id_user: id_user.id,
             id_produit: id,
-            rate: e.target.value,
+            rate: value,
         }));
-
     }
 
     const AvisSet_2 = (e) => {
         const users = localStorage.getItem('users');
         const id_user = JSON.parse(users)
+        setText(e.target.value)
         setAvisSend(backData => ({
             ...backData,
             id_user: id_user.id,
@@ -219,7 +223,7 @@ export const ProductBoitier = () => {
                     .then(reponse => reponse.json())
                     .then(data => {
                         if (data === false) {
-                        
+
                             const userInfos = {
                                 id_produit: id,
                                 id_user: UserAccount,
@@ -287,120 +291,173 @@ export const ProductBoitier = () => {
             {produit ? (
                 <div>
                     <div className='board'>
-                        <div>
+                        <div className='breadcrumb'>
                             <button onClick={() => Debut()}>Home</button>/<button onClick={() => Mid(produit.idCategorie)}>{Categorie}</button>/<button onClick={() => End(produit.id)}>{produit.name}</button>
                         </div>
                         {loginUser && (
                             loginUser.groupe === 1 ? (
-                                <button className="menu-btn" onClick={() => EditerProduits(produit.id)}>Editer le produit</button>
+                                <button className="menu-btn" onClick={() => EditerProduits(produit.id)}>Modifier le produit</button>
                             ) : (
                                 <p></p>
                             )
                         )}
                     </div>
-                    <div className="product-boitier">
-
-
-                        <section className="product-section">
-                            <section className="product">
-                                <div className="picture">
-                                    <img className="boitier" alt="photo Boitier" src={image} />
+                    <div className='nom_produit'>
+                        <p className="nom">{produit.name}</p>
+                    </div>
+                    <div className='produit_page'>
+                        <div class="page_produit">
+                            <div className='jointure'>
+                                <div className='photo_produit'>
+                                    <img className="image_produit" alt="Photo du produit" src={image} />
                                 </div>
-                                <p className="p">{produit.name}</p>
-                            </section>
-                            <section className="product-info">
-                                <div className="notation">
-                                    <div className="vue-stat">
-                                        <img src={VueIcon} alt="Icon Nombre Vue" />
-                                        <p className="vue-texte">{produit.views} vues</p>
+                                <section className='produit_description'>
+                                    <div className='block_infos'>
+                                        <div className='star_produit'>
+                                            {moyenne >= 1 && moyenne < 2 && renderStars(1)}
+                                            {moyenne >= 2 && moyenne < 3 && renderStars(2)}
+                                            {moyenne >= 3 && moyenne < 4 && renderStars(3)}
+                                            {moyenne >= 4 && moyenne < 5 && renderStars(4)}
+                                            {moyenne >= 5 && renderStars(5)}
+                                        </div>
+                                        <div>
+                                            <p className="avis_produit">{nbavis} avis client</p>
+                                        </div>
                                     </div>
-                                    <div className="avis-stat">
-                                        <img src={AvisIcon} alt="Icon Nombre Avis" />
-                                        <p className="avis-texte">{nbavis} avis client</p>
+                                    <div className='description_produit'>
+                                        <p className='description'>
+                                            Le NZXT H5 Flow RGB est un boîtier PC Gaming moderne équipé d'un panneau latéral en verre trempé et de ventilateurs RGB 140 mm en façade. Il dispose de toutes les caractéristiques que l'on est en droit d'attendre d'un boîtier PC Gaming.
+                                        </p>
                                     </div>
-                                    <div className="star-stat">
-                                        <select onChange={(e) => Type_Produit(e)}>
-                                            <option value={JSON.stringify({ price: 0, image: produit.image, type: produit.outpout })} >
-                                                Basique
-                                            </option>
-                                            {typeporduit.map(item => (
-                                                <option key={item.id} value={JSON.stringify({ price: item.price, image: item.image_type, type: item.outpout})}>
-                                                    {item.type} - {item.outpout}
-                                                </option>
-                                            ))}
-
-                                        </select>
-
-                                        {moyenne === 0 && <p>Aucune évaluation</p>}
-                                        {moyenne >= 1 && moyenne < 2 && renderStars(1)}
-                                        {moyenne >= 2 && moyenne < 3 && renderStars(2)}
-                                        {moyenne >= 3 && moyenne < 4 && renderStars(3)}
-                                        {moyenne >= 4 && moyenne < 5 && renderStars(4)}
-                                        {moyenne >= 5 && renderStars(5)}
+                                    <div className='select_produit'>
+                                        <img
+                                            src={produit.image}
+                                            alt="Image principale"
+                                            onClick={() => Type_Produit({
+                                                price: 0,
+                                                image_type: produit.image,
+                                                outpout: produit.outpout
+                                            })}
+                                        />
+                                        {typeporduit.map(item => (
+                                            <img
+                                                key={item.id}
+                                                src={item.image_type}
+                                                alt={item.type}
+                                                onClick={() => Type_Produit(item)}
+                                            />
+                                        ))}
                                     </div>
-                                </div>
-                                <p className="descripion-produits">
-                                    Le boîtier Zalman i3 Neo Black va pouvoir accueillir une configuration ATX,
-                                    Micro-ATX ou Mini-ITX avec une carte graphique de 355 mm de long.
-                                    Ce boîtier moyen tour avec fenêtre en verre trempé sera un achat idéal pour assembler une
-                                    configuration performante,
-                                    axée vers le jeu et le multimédia.
-                                </p>
-                                {/* <div className="button-create">
-                                    <img className="icone-create" alt="Icone create" src={WrenchCreate} />
-                                    <p className="texte-create">CREER UN PC AVEC CE PRODUIT</p>
-                                </div> */}
-                                <div className="marques-produits">
-                                    <img className="msi-Logo" alt="Msi removebg preview" src={MSILogo} />
-                                    <img className="nvidia-logo" alt="Nvidia removebg" src={NvidiaLogo} />
-                                </div>
-                            </section>
-                            <section className="price-section">
-
-
-                                {produit.promo != 0
-                                    ? <h2 className="product-price">En promo : <span className='produit-promo'>{produit.prix + newprice}€</span> {((produit.prix) * (1 - produit.promo / 100)) + newprice} €</h2>
-
-                                    : <h2 className="product-price">{produit.prix + newprice} €</h2>
-                                }
-                                {/* <section className="multiple-payement">
-                                    <h3>Multiple Payements</h3>
-                                    <p className="time-price">{Math.round((produit.prix / 3) + 1.05) + newprice} € <span>3 fois</span></p>
-                                    <p className="frais-price">dont 1.05 € de frais</p>
-                                </section> */}
-                                {/* <section className="product-quantity">
-                                    <h3>QUANTITE</h3>
-                                    <QuantityPicker min={1} max={10} />
-                                </section> */}
-                                <section className="add-basket-button" onClick={() => AddPanier(produit.id, produit.stock, image, outpout)}>
-                                    <h2>AJOUTER AU PANIER</h2>
-                                    <img src={BuyingCart} alt="Icone Ajout Panier" />
                                 </section>
-                                {/* <section className="buy-now-button">
-                                    <h2>ACHETER MAINTENANT</h2>
-                                    <img src={ChevronRight} alt="Icone Achat Immediat" />
-                                </section> */}
+                            </div>
+                            <section class="produit_achat">
+                                <div className='etiquette'>
+                                    {produit.promo != 0 && (
+                                        <div><span className='etiquette_promo'>Promo</span> <span className='etiquette_pourcent'>-{produit.promo}%</span></div>
+                                    )}
+                                </div>
+                                <div className='produit_promo'>
+                                    {produit.promo != 0
+                                        ? <h2 className="promo_produit"><span className='prix_promo'>{produit.prix + newprice}€</span> <span className='prix_enpromo'>{((produit.prix) * (1 - produit.promo / 100)) + newprice}€</span></h2>
 
-
+                                        : <h2 className="prix_produit">{produit.prix + newprice}€</h2>
+                                    }
+                                </div>
+                                <div className="ajouter_panier" onClick={() => AddPanier(produit.id, produit.stock, image, outpout)}>
+                                    <h2>Ajouter au panier</h2>
+                                </div>
                                 {produit.stock === 0 ? (
-                                    <section className="product-stock">
-                                        <h4 className="out-of-stock">Stock Non Disponible</h4>
-                                        <div className="stock-notify">
-                                            <label htmlFor="email_stock">Etre prévenu de la disponibilité</label>
-                                            <input type="text" name="email_stock" onChange={(e) => writeEmail(e)} className="input_email" placeholder="EMAIL" />
-                                            <button className="button_email" onClick={() => sendAlert()}>ENVOYER</button>
+                                    <section className="stock_produit">
+                                        <h4 className="rupture_stock">En rupture de stock!</h4>
+                                        <div className="mail_stock">
+                                            <p className='p1'>Créer une alerte</p>
+                                            <div className='info_email'>
+                                                <input type="text" name="email_stock" onChange={(e) => writeEmail(e)} className="input_email" placeholder="Votre e-mail" />
+                                                <button className="envoyer_email" onClick={() => sendAlert()}>Envoyer</button>
+                                            </div>
                                         </div>
                                     </section>
                                 ) : (
-                                    <section className="product-stock">
-                                        <h4 className="in-stock">En Stock : {produit.stock}</h4>
-                                    </section>
+                                    <div className="stock_produit">
+                                        <h4 className="en_stock">En stock : {produit.stock}</h4>
+                                    </div>
                                 )}
-
-
                             </section>
-                        </section>
-                        <Tabs />
+                        </div>
+                    </div>
+                    <div className='produit_step'>
+                        <div className="section_step">
+                            <button onClick={() => setStep(1)} className={step === 1 ? 'active' : ''}>Fiche technique</button>
+                            <button onClick={() => setStep(2)} className={step === 2 ? 'active' : ''}>Avis client</button>
+                            {loginUser && (
+                                <button onClick={() => setStep(3)} className={step === 3 ? 'active' : ''}>Ajouter un avis</button>
+                            )}
+                        </div>
+                        {step === 1 && (
+                            <div className='section_fichetech'>
+                                <img src={PhotoSpecs} alt="Image Fiche Technique" />
+                            </div>
+                        )}
+                        {step === 2 && (
+
+                            <div className='section_avis'>
+                                <section className="liste_avis">
+                                    {avis.map((produit) => (
+                                        <article className="avis" key={produit.id}>
+                                            <div className='infos_client'>
+                                                <img src={produit.user_image} />
+                                                <p>{produit.username}</p>
+                                            </div>
+                                            <div className="avis_evaluation">
+                                                {produit.rate === 0 && <p>Aucune évaluation</p>}
+                                                {produit.rate >= 1 && produit.rate < 2 && renderStars(1)}
+                                                {produit.rate >= 2 && produit.rate < 3 && renderStars(2)}
+                                                {produit.rate >= 3 && produit.rate < 4 && renderStars(3)}
+                                                {produit.rate >= 4 && produit.rate < 5 && renderStars(4)}
+                                                {produit.rate >= 5 && renderStars(5)}
+                                            </div>
+                                            <div className='avis_description'>
+                                                <p> {produit.description} </p>
+                                            </div>
+                                        </article>
+
+                                    ))}
+
+                                </section>
+                            </div>
+                        )}
+
+                        {(step === 3 && loginUser) && (
+
+                            <div className='section_addavis'>
+                                <div className='post_avis'>
+                                    <p className='avis_p'>Note générale</p>
+                                    {/* <input type='number' max='5' value={rate} onChange={(e) => AvisSet(e)} placeholder="Nombre d'étoiles"></input> */}
+                                    {/* <div class="five-rate-active">
+                                        <button type="button" class="rate-value-empty" aria-label="Noter 1 sur 5"><span aria-hidden="true">1</span></button>
+                                        <button type="button" class="rate-value-empty" aria-label="Noter 2 sur 5"><span aria-hidden="true">2</span></button>
+                                        <button type="button" class="rate-value-empty" aria-label="Noter 3 sur 5"><span aria-hidden="true">3</span></button>
+                                        <button type="button" class="rate-value-empty" aria-label="Noter 4 sur 5"><span aria-hidden="true">4</span></button>
+                                        <button type="button" class="rate-value-empty" aria-label="Noter 5 sur 5"><span aria-hidden="true">5</span></button>
+                                    </div> */}
+                                    <div className="evaluation_avis">
+                                        {[1, 2, 3, 4, 5].map(value => (
+                                            <img
+                                                key={value}
+                                                src={value <= rate ? StarFull : StarEmpty} // Utilisation des images appropriées
+                                                alt={`${value} étoile${value > 1 ? 's' : ''}`}
+                                                className="evaluation_etoile"
+                                                onClick={() => AvisSet(value)} // Assurez-vous que 'value' est défini ici
+                                                aria-label={`Noter ${value} sur 5`}
+                                            />
+                                        ))}
+                                    </div>
+                                    <p className='avis_p'>Ajouter un commentaire écrit</p>
+                                    <textarea className="avis_texte" value={text} placeholder="Pour quelles utilisations avez-vous employé ce produit? Qu'est-ce que vous avez aimé ou n'avez pas aimé?" onChange={(e) => AvisSet_2(e)}></textarea>
+                                    <button className="avis_envoyer" onClick={() => EnvoyerAvis()}>Envoyer</button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             ) : (
@@ -413,4 +470,4 @@ export const ProductBoitier = () => {
     );
 }
 
-export default ProductBoitier;
+export default ProductPage;

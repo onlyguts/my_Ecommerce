@@ -1,0 +1,1353 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Breadcrumb + modif produit */
+.board {
+    display: flex;
+    justify-content: space-between;
+}
+
+.board .breadcrumb {
+    color: #E2B791;
+}
+
+.board .breadcrumb button {
+    background-color: #F3E1D1;
+    padding: 10px;
+    color: #D8844D;
+    font-size: 1.2em;
+}
+
+/* Nom produit */
+.nom_produit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 20px;
+    font-size: 2.5em;
+}
+
+/* Bande avec produit */
+.produit_page {
+    display: flex;
+    justify-content: center;
+}
+
+/* Page du produit */
+.page_produit {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #CC8857;
+    width: 60%;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+/* Jointure image + description du produit */
+.jointure {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    /* border: 1px solid red; */
+    border-radius: 10px;
+    height: 100%;
+    margin: 10px;
+    width: 70%;
+}
+
+.photo_produit img {
+    height: 400px;
+    width: 400px;
+    padding: 30px 10px;
+    border-radius: 12px;
+}
+
+/* Description du produit */
+.produit_description {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    /* border: 1px solid blue; */
+    height: 100%;
+    width: 40%;
+}
+
+.produit_description .block_infos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+
+.produit_description .block_infos .star_produit {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 20px;
+    font-size: 1em;
+}
+
+.produit_description .block_infos .star_produit .no_eval {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+}
+
+.produit_description .block_infos .avis_produit {
+    font-size: 1.1em;
+}
+
+.description_produit .description {
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    padding-bottom: 15px;
+}
+
+/* Sélection des types/couleurs du produit */
+.produit_description .select_produit img {
+    height: 50px;
+    width: 50px;
+    margin: 5px;
+}
+
+.produit_description .select_produit img:hover {
+    cursor: pointer;
+}
+
+/* Achat du produit */
+.produit_achat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    height: 100%;
+    padding: 0 50px;
+    border-radius: 10px;
+    /* border: 1px solid green; */
+}
+
+.produit_achat .etiquette .etiquette_promo,
+.produit_achat .etiquette .etiquette_pourcent {
+    background-color: #D8844D;
+    color: #F3E1D1;
+    padding: 7px;
+    border-radius: 10px;
+}
+
+.produit_achat .produit_promo {
+    display: flex;
+    flex-direction: column;
+}
+
+.produit_achat .prix_produit,
+.produit_achat .promo_produit {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: 500;
+    font-size: 2em;
+}
+
+.produit_achat .promo_produit .prix_promo,
+.produit_achat .promo_produit .prix_enpromo {
+    padding: 5px;
+}
+
+.produit_achat .promo_produit .prix_enpromo,
+.produit_achat .prix_produit {
+    font-weight: 700;
+    color: #1d6f5f;
+}
+
+.produit_achat .prix_promo {
+    text-decoration: line-through;
+}
+
+.produit_achat .ajouter_panier {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 30px;
+    border-radius: 20px;
+    background-color: #F4D5BB;
+    justify-content: center;
+    align-items: center;
+}
+
+.produit_achat .ajouter_panier h2 {
+    font-weight: 500;
+    font-size: 1.2em;
+}
+
+/* Message stock ou non */
+.stock_produit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.stock_produit .rupture_stock {
+    display: flex;
+    color: #CC8857;
+}
+
+.stock_produit .mail_stock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: bisque;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.stock_produit .mail_stock p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stock_produit .mail_stock .p1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.stock_produit .mail_stock .info_email {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.stock_produit .mail_stock input,
+.stock_produit .mail_stock button {
+    padding: 7px;
+    margin-right: 3px;
+    border-radius: 10px;
+    border: none;
+}
+
+/* Partie des 3 steps */
+.produit_step {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.produit_step .section_step {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    width: 70%;
+}
+
+.produit_step .section_step button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: 1px solid #CC8857;
+    background-color: #F3E1D1;
+    color: #CC8857;
+    font-size: 1.5rem;
+}
+
+.produit_step .section_step button.active {
+    border: 2px solid #CC8857;
+    transition: ease-in-out 0.2s;
+}
+
+.produit_step .section_fichetech {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Partie fiche technique */
+.produit_step .section_fichetech img {
+    width: 60%;
+    padding: 10px;
+    margin: 10px;
+}
+
+/* Partie avis */
+.produit_step .section_avis {
+    /* border: 1px solid purple; */
+    border-radius: 20px;
+    width: 60%;
+    padding: 20px;
+}
+
+.produit_step .section_avis .avis {
+    /* border: 1px solid magenta; */
+    padding: 20px;
+    /* border-bottom: 1px solid black; */
+}
+
+.produit_step .section_avis .infos_client {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.produit_step .section_avis .infos_client img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    margin: 0 5px 10px 0;
+}
+
+.produit_step .section_avis .avis_evaluation {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 20px;
+    width: 20px;
+    margin-bottom: 5px;
+}
+
+/* Partie ajouter un avis */
+.produit_step .section_addavis {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* border: 1px solid firebrick; */
+    width: 60%;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.produit_step .section_addavis .post_avis {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.produit_step .section_addavis .post_avis .avis_p {
+    font-weight: 800;
+    padding: 5px 0;
+}
+
+.produit_step .section_addavis .post_avis .evaluation_etoile {
+    height: 20px;
+    width: 20px;
+}
+
+.produit_step .section_addavis .post_avis input {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.produit_step .section_addavis .post_avis .avis_texte {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    width: 75%;
+    min-height: 150px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 1024px) {
+
+    /* Breadcrumb + modif produit */
+    .board .breadcrumb button {
+        background-color: #F3E1D1;
+        padding: 10px;
+        color: #D8844D;
+        font-size: 1em;
+    }
+
+    .board .menu-btn {
+        font-size: 0.8em;
+    }
+
+    /* Nom produit */
+    .nom_produit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-weight: bold;
+        padding-top: 20px;
+        font-size: 1.7em;
+    }
+
+    /* Page du produit */
+    .page_produit {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        /* border: 1px solid #CC8857; */
+        width: 80%;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    /* Jointure image + description du produit */
+    .jointure {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        /* border: 1px solid red; */
+        border-radius: 10px;
+        height: 100%;
+        margin: 10px;
+        width: 70%;
+    }
+
+    .photo_produit img {
+        height: 300px;
+        width: 300px;
+        padding: 30px 10px;
+        border-radius: 12px;
+    }
+
+    /* Description du produit */
+    .produit_description {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        /* border: 1px solid blue; */
+        height: 100%;
+    }
+
+    .produit_description .block_infos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+
+    .produit_description .block_infos .star_produit {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 15px;
+        width: 15px;
+        font-size: 0.9em;
+    }
+
+    .produit_description .block_infos .star_produit .no_eval {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8em;
+    }
+
+    .produit_description .block_infos .avis_produit {
+        font-size: 0.8em;
+    }
+
+    .description_produit .description {
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+        padding-bottom: 15px;
+        font-size: 0.8em;
+    }
+
+    /* Sélection des types/couleurs du produit */
+.produit_description .select_produit img {
+    height: 50px;
+    width: 50px;
+    margin: 5px;
+}
+
+.produit_description .select_produit img:hover {
+    cursor: pointer;
+}
+
+    /* Achat du produit */
+    .produit_achat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        height: 100%;
+        padding: 0 50px;
+        border-radius: 10px;
+        /* border: 1px solid green; */
+        width: 20%;
+    }
+
+    .produit_achat .produit_promo {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .produit_achat .prix_produit {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-weight: 500;
+        font-size: 1.5em;
+    }
+
+    .produit_achat .bold_promo {
+        font-weight: 600;
+    }
+
+    .produit_achat .prix_promo {
+        text-decoration: line-through;
+    }
+
+    .produit_achat .ajouter_panier {
+        display: flex;
+        flex-direction: row;
+        padding: 15px 20px;
+        border-radius: 20px;
+        background-color: #F4D5BB;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .produit_achat .ajouter_panier h2 {
+        font-weight: 500;
+        font-size: 0.9em;
+    }
+
+    /* Message stock ou non */
+    .stock_produit {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .stock_produit .rupture_stock {
+        display: flex;
+        color: #CC8857;
+    }
+
+    .stock_produit .mail_stock {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: bisque;
+        border-radius: 10px;
+        padding: 15px;
+    }
+
+    .stock_produit .mail_stock p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8em;
+    }
+
+    .stock_produit .mail_stock .p1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 10px;
+        font-size: 0.8em;
+    }
+
+    .stock_produit .mail_stock .info_email {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .stock_produit .mail_stock input,
+    .stock_produit .mail_stock button {
+        padding: 5px;
+        margin-right: 2px;
+        border-radius: 10px;
+        border: none;
+        font-size: 0.8em;
+    }
+
+    .stock_produit .en_stock {
+        font-size: 0.8em;
+    }
+
+    /* Partie des 3 steps */
+    .produit_step .section_step {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        width: 80%;
+    }
+
+    .produit_step .section_step button {
+        margin: 10px;
+        padding: 10px 20px;
+        border: 1px solid #CC8857;
+        background-color: #F3E1D1;
+        color: #CC8857;
+        font-size: 0.9em;
+    }
+
+    /* Partie fiche technique */
+    .produit_step .section_fichetech img {
+        width: 80%;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    /* Partie avis */
+    .produit_step .section_avis {
+        /* border: 1px solid purple; */
+        border-radius: 20px;
+        width: 80%;
+        padding: 20px;
+        font-size: 0.8em;
+    }
+
+    .produit_step .section_avis .avis {
+        /* border: 1px solid magenta; */
+        padding: 15px;
+        /* border-bottom: 1px solid black; */
+    }
+
+    .produit_step .section_avis .infos_client img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50px;
+        margin: 0 5px 10px 0;
+    }
+
+    .produit_step .section_avis .avis_evaluation {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        height: 15px;
+        width: 15px;
+        margin-bottom: 5px;
+    }
+
+    /* Partie ajouter un avis */
+    .produit_step .section_addavis {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        /* border: 1px solid firebrick; */
+        width: 80%;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .produit_step .section_addavis .post_avis {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .produit_step .section_addavis .post_avis .avis_p {
+        font-weight: 800;
+        padding: 5px 0;
+        font-size: 0.8em;
+    }
+
+    .produit_step .section_addavis .post_avis .evaluation_etoile {
+        height: 18px;
+        width: 18px;
+    }
+
+    .produit_step .section_addavis .post_avis input {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: 0.8em;
+    }
+
+    .produit_step .section_addavis .post_avis .avis_texte {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        width: 75%;
+        min-height: 125px;
+        margin-bottom: 10px;
+        font-size: 0.8em;
+    }
+
+    .produit_step .section_addavis .post_avis .avis_envoyer {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Breadcrumb + modif produit */
+    .board .breadcrumb button {
+        background-color: #F3E1D1;
+        padding: 10px;
+        color: #D8844D;
+        font-size: 0.8em;
+        padding: 9px;
+    }
+
+    .board .menu-btn {
+        font-size: 0.8em;
+        padding: 9px;
+    }
+
+    .nom_produit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-weight: bold;
+        padding-top: 20px;
+        font-size: 1.5em;
+    }
+
+    /* Nom produit */
+    .page_produit {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border: 1px solid #CC8857;
+        width: 80%;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    /* Jointure image + description du produit */
+    .jointure {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        /* border: 1px solid red; */
+        border-radius: 10px;
+        height: 100%;
+        margin: 10px;
+        width: 70%;
+    }
+
+    .photo_produit img {
+        height: 200px;
+        width: 200px;
+        padding: 30px 10px;
+        border-radius: 12px;
+    }
+
+    /* Description du produit */
+    .produit_description {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        /* border: 1px solid blue; */
+        height: 100%;
+    }
+
+    .produit_description .block_infos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+
+    .produit_description .block_infos .star_produit {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 15px;
+        width: 15px;
+        font-size: 0.7em;
+    }
+
+    .produit_description .block_infos .star_produit .no_eval {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.7em;
+    }
+
+    .produit_description .block_infos .avis_produit {
+        font-size: 0.7em;
+    }
+
+    .description_produit .description {
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+        padding-bottom: 15px;
+        font-size: 0.6em;
+    }
+
+    /* Sélection des types/couleurs du produit */
+.produit_description .select_produit img {
+    height: 40px;
+    width: 40px;
+    margin: 5px;
+}
+
+.produit_description .select_produit img:hover {
+    cursor: pointer;
+}
+
+    /* Achat du produit */
+    .produit_achat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        height: 100%;
+        padding: 0 50px;
+        border-radius: 10px;
+        /* border: 1px solid green; */
+        width: 20%;
+    }
+
+    .produit_achat .produit_promo {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .produit_achat .prix_produit {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-weight: 500;
+        font-size: 0.9em;
+    }
+
+    .produit_achat .bold_promo {
+        font-weight: 600;
+    }
+
+    .produit_achat .prix_promo {
+        text-decoration: line-through;
+    }
+
+    .produit_achat .ajouter_panier {
+        display: flex;
+        flex-direction: row;
+        padding: 10px 15px;
+        border-radius: 20px;
+        background-color: #F4D5BB;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .produit_achat .ajouter_panier h2 {
+        font-weight: 500;
+        font-size: 0.64em;
+    }
+
+    /* Message stock ou non */
+    .stock_produit {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .stock_produit .rupture_stock {
+        display: flex;
+        color: #CC8857;
+        font-size: 0.7em;
+    }
+
+    .stock_produit .mail_stock {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: bisque;
+        border-radius: 10px;
+        padding: 15px;
+    }
+
+    .stock_produit .mail_stock .p1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 10px;
+        font-size: 0.7em;
+    }
+
+    .stock_produit .mail_stock .info_email {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .stock_produit .mail_stock input,
+    .stock_produit .mail_stock button {
+        padding: 4px;
+        margin-right: 2px;
+        border-radius: 10px;
+        border: none;
+        font-size: 0.6em;
+    }
+
+    .stock_produit .en_stock {
+        font-size: 0.6em;
+    }
+
+    /* Partie des 3 steps */
+    .produit_step .section_step {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        width: 80%;
+    }
+
+    .produit_step .section_step button {
+        margin: 10px;
+        padding: 10px 20px;
+        border: 1px solid #CC8857;
+        background-color: #F3E1D1;
+        color: #CC8857;
+        font-size: 0.8em;
+    }
+
+    /* Partie fiche technique */
+    .produit_step .section_fichetech img {
+        width: 80%;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    /* Partie avis */
+    .produit_step .section_avis {
+        /* border: 1px solid purple; */
+        border-radius: 20px;
+        width: 80%;
+        padding: 20px;
+        font-size: 0.7em;
+    }
+
+    .produit_step .section_avis .avis {
+        /* border: 1px solid magenta; */
+        padding: 10px;
+        /* border-bottom: 1px solid black; */
+    }
+
+    .produit_step .section_avis .infos_client img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50px;
+        margin: 0 5px 10px 0;
+    }
+
+    .produit_step .section_avis .avis_evaluation {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        height: 15px;
+        width: 15px;
+        margin-bottom: 5px;
+        font-size: 0.7em;
+    }
+
+    /* Partie ajouter un avis */
+    .produit_step .section_addavis {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        /* border: 1px solid firebrick; */
+        width: 80%;
+        padding: 10px;
+        border-radius: 20px;
+    }
+
+    .produit_step .section_addavis .post_avis {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .produit_step .section_addavis .post_avis .avis_p {
+        font-weight: 800;
+        padding: 5px 0;
+        font-size: 0.6em;
+    }
+
+    .produit_step .section_addavis .post_avis .evaluation_etoile {
+        height: 16px;
+        width: 16px;
+    }
+
+    .produit_step .section_addavis .post_avis input {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: 0.6em;
+    }
+
+    .produit_step .section_addavis .post_avis .avis_texte {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        width: 75%;
+        min-height: 100px;
+        margin-bottom: 10px;
+        font-size: 0.6em;
+    }
+
+    .produit_step .section_addavis .post_avis .avis_envoyer {
+        font-size: 0.6em;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Breadcrumb + modif produit */
+    .board .breadcrumb button {
+        background-color: #F3E1D1;
+        padding: 5px;
+        color: #D8844D;
+        font-size: 0.6em;
+        padding: 5px;
+    }
+
+    .board .menu-btn {
+        font-size: 0.6em;
+        padding: 5px;
+    }
+
+    /* Nom produit */
+    .nom_produit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-weight: bold;
+        padding-top: 20px;
+        font-size: 0.7em;
+    }
+
+    /* Page du produit */
+    .page_produit {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border: 1px solid #CC8857;
+        width: 80%;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    /* Jointure image + description du produit */
+    .jointure {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        /* border: 1px solid red; */
+        border-radius: 10px;
+        height: 100%;
+        margin: 5px;
+        width: 60%;
+    }
+
+    .photo_produit img {
+        height: 100px;
+        width: 100px;
+        padding: 7px 3px;
+        border-radius: 12px;
+    }
+
+    /* Description du produit */
+    .produit_description {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        /* border: 1px solid blue; */
+        height: 100%;
+    }
+
+    .produit_description .block_infos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding-top: 5px;
+        padding-bottom: 3px;
+    }
+
+    .produit_description .block_infos .star_produit {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 7px;
+        width: 7px;
+        font-size: 0.5em;
+    }
+
+    .produit_description .block_infos .star_produit .no_eval {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.5em;
+    }
+
+    .produit_description .block_infos .avis_produit {
+        font-size: 0.4em;
+    }
+
+    .description_produit .description {
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+        padding-bottom: 15px;
+        font-size: 0.35em;
+    }
+
+    /* Sélection des types/couleurs du produit */
+.produit_description .select_produit img {
+    height: 20px;
+    width: 20px;
+    margin: 2px;
+}
+
+.produit_description .select_produit img:hover {
+    cursor: pointer;
+}
+
+    /* Achat du produit */
+    .produit_achat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        height: 100%;
+        padding: 0 15px;
+        border-radius: 10px;
+        /* border: 1px solid green; */
+        width: 25%;
+    }
+
+    .produit_achat .produit_promo {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .produit_achat .prix_produit {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-weight: 500;
+        font-size: 0.5em;
+    }
+
+    .produit_achat .bold_promo {
+        font-weight: 600;
+    }
+
+    .produit_achat .prix_promo {
+        text-decoration: line-through;
+    }
+
+    .produit_achat .ajouter_panier {
+        display: flex;
+        flex-direction: row;
+        padding: 10px 15px;
+        border-radius: 20px;
+        background-color: #F4D5BB;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .produit_achat .ajouter_panier h2 {
+        font-weight: 500;
+        font-size: 6px;
+    }
+
+    /* Message stock ou non */
+    .stock_produit {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .stock_produit .rupture_stock {
+        display: flex;
+        color: #CC8857;
+        font-size: 0.45em;
+    }
+
+    .stock_produit .mail_stock {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: bisque;
+        border-radius: 5px;
+        padding: 4px;
+    }
+
+    .stock_produit .mail_stock .p1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 10px;
+        font-size: 0.45em;
+    }
+
+    .stock_produit .mail_stock .info_email {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .stock_produit .mail_stock input,
+    .stock_produit .mail_stock button {
+        padding: 2px;
+        margin-right: 1px;
+        border-radius: 10px;
+        border: none;
+        font-size: 0.2em;
+    }
+
+    .stock_produit .en_stock {
+        font-size: 0.45em;
+    }
+
+    /* Partie des 3 steps */
+    .produit_step .section_step {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        width: 80%;
+    }
+
+    .produit_step .section_step button {
+        margin: 10px;
+        padding: 5px 15px;
+        border: 0.5px solid #CC8857;
+        background-color: #F3E1D1;
+        color: #CC8857;
+        font-size: 0.5em;
+    }
+
+    .produit_step .section_step button.active {
+        border: 1px solid #CC8857;
+        transition: ease-in-out 0.2s;
+    }
+
+    /* Partie fiche technique */
+    .produit_step .section_fichetech img {
+        width: 80%;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    /* Partie avis */
+    .produit_step .section_avis {
+        /* border: 1px solid purple; */
+        border-radius: 20px;
+        width: 80%;
+        padding: 20px;
+        font-size: 0.4em;
+    }
+
+    .produit_step .section_avis .infos_client img {
+        height: 15px;
+        width: 15px;
+        border-radius: 50px;
+    }
+
+    .produit_step .section_avis .avis_evaluation {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        height: 7px;
+        width: 7px;
+        margin-bottom: 5px;
+    }
+
+    /* Partie ajouter un avis */
+    .produit_step .section_addavis {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        /* border: 1px solid firebrick; */
+        width: 80%;
+        padding: 10px;
+        border-radius: 20px;
+    }
+
+    .produit_step .section_addavis .post_avis .avis_p {
+        font-weight: 800;
+        padding: 5px 0;
+        font-size: 0.4em;
+    }
+
+    .produit_step .section_addavis .post_avis .evaluation_etoile {
+        height: 13px;
+        width: 13px;
+    }
+
+    .produit_step .section_addavis .post_avis input {
+        padding: 7px;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: 0.4em;
+    }
+
+    .produit_step .section_addavis .post_avis .avis_texte {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        width: 75%;
+        min-height: 70px;
+        margin-bottom: 10px;
+        font-size: 0.4em;
+    }
+
+    .produit_step .section_addavis .post_avis .avis_envoyer {
+        padding: 7px;
+        font-size: 0.4em;
+    }
+}

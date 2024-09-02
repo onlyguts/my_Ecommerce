@@ -37,6 +37,24 @@ class ProduitsController extends AbstractController
         return $this->json($produits);
     }
 
+    #[Route('/produits/categorie/{id}', name: 'app_produit_categorie_chercher', methods: ['GET', 'HEAD'])]
+    public function users_chercher(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $conn = $entityManager->getConnection();
+
+        $sql = 'SELECT * FROM produits WHERE id_categorie = :id LIMIT 9';
+
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $resultSet = $stmt->executeQuery();
+        $produits = $resultSet->fetchAll();
+
+        return $this->json($produits);
+    }
+
+
+
     #[Route('/produits/top10', name: 'app_top_produits', methods: ['GET', 'HEAD'])]
     public function topProduits(EntityManagerInterface $entityManager): Response
     {
