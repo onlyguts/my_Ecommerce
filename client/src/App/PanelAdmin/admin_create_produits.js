@@ -73,6 +73,16 @@ function Admin() {
         }));
     };
 
+
+    const ChoisirDescription = (event) => {
+        const getData = event.target.value;
+        setData(backData => ({
+            ...backData,
+            description: getData,
+        }));
+    };
+
+    
     const ChoisirTaille = (event) => {
         const getData = event.target.value;
         setData(backData => ({
@@ -224,6 +234,8 @@ function Admin() {
                 <input type='text' value={data.fiche} onChange={ChoisirFicher} /> */}
                 <label>Stock:</label>
                 <input type='number' name='stock' value={data.stock} onChange={ChoisirStock} />
+                <label>Description:</label>
+                <input type='text' name='description' value={data.description} onChange={ChoisirDescription} />
                 <label>taille:</label>
                 <input type='text' name='taille' value={data.taille} onChange={ChoisirTaille} />
                 <label>Type:</label>

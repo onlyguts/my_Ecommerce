@@ -116,7 +116,7 @@ function PopularProducts() {
   }, []);
 
   function ProduitsShow(id, name) {
-    navigate("/produits/" + id);
+    navigate("/produit/" + id);
     localStorage.setItem('categorie', name);
   }
 
@@ -166,7 +166,7 @@ function PopularProducts() {
       >
         <div className="popular-products-carousel-slide">
           {limitProduit(1, 6).map(produit => (
-            <div key={produit.id} className="product-item-top" onClick={() => ProduitsShow(produit.id, produit.name)}>
+            <div key={produit.id} className="product-item-top" onClick={() => ProduitsShow(produit.id, produit.categorie_name)}>
               <img src={produit.image} alt={`Produit Populaire ${produit.name}`} />
               <p className="product-name">{produit.name}</p>
             </div>
@@ -174,7 +174,7 @@ function PopularProducts() {
         </div>
         <div className="popular-products-carousel-slide">
           {limitProduit(7, 12).map(produit => (
-            <div key={produit.id} className="product-item-top" onClick={() => ProduitsShow(produit.id, produit.name)}>
+            <div key={produit.id} className="product-item-top" onClick={() => ProduitsShow(produit.id, produit.categorie_name)}>
               <img src={produit.image} alt={`Produit Populaire ${produit.name}`} />
               <p className="product-name">{produit.name}</p>
             </div>

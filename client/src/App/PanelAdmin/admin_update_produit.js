@@ -156,7 +156,8 @@ function AdminProduit() {
                         <label>Nom :</label>
                         <input type="text" name='name' value={produit.name} onChange={formChange} />
 
-
+                        <label>Description :</label>
+                        <input type="text" name='description' value={produit.description} onChange={formChange} />
 
                         <label>Marque:</label>
                         <input type="text" name='marque' value={produit.marque} onChange={formChange} />

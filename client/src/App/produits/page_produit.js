@@ -50,15 +50,15 @@ export const ProductPage = () => {
 
     const ApiAvis = (id) => {
         fetch(`https://localhost:8000/avis/${id}`)
-        .then(response => response.json())
-        .then(data => {
-            setAvis(data)
-            const totalavis = data.reduce((sum, avis) => sum + avis.rate, 0);
-            const moyenne = data.length > 0 ? totalavis / data.length : 0;
-            setMoyenne(moyenne);
-            setNbAvis(data.length)
-        })
-        .catch(error => console.error('Erreur:', error));
+            .then(response => response.json())
+            .then(data => {
+                setAvis(data)
+                const totalavis = data.reduce((sum, avis) => sum + avis.rate, 0);
+                const moyenne = data.length > 0 ? totalavis / data.length : 0;
+                setMoyenne(moyenne);
+                setNbAvis(data.length)
+            })
+            .catch(error => console.error('Erreur:', error));
     }
 
 
@@ -288,7 +288,7 @@ export const ProductPage = () => {
             }
         }
     }
-
+// console.log(typeporduit)
 
     return (
         <div>
@@ -336,27 +336,42 @@ export const ProductPage = () => {
                                     </div>
                                     <div className='description_produit'>
                                         <p className='description'>
-                                            Le NZXT H5 Flow RGB est un boîtier PC Gaming moderne équipé d'un panneau latéral en verre trempé et de ventilateurs RGB 140 mm en façade. Il dispose de toutes les caractéristiques que l'on est en droit d'attendre d'un boîtier PC Gaming.
+                                            {produit.description}
                                         </p>
                                     </div>
                                     <div className='select_produit'>
-                                        <img
-                                            src={produit.image}
-                                            alt="Image principale"
-                                            onClick={() => Type_Produit({
-                                                price: 0,
-                                                image_type: produit.image,
-                                                outpout: produit.outpout
-                                            })}
-                                        />
-                                        {typeporduit.map(item => (
+                                        {typeporduit.length !== 0 && (
+
+                                        <div className='type_produit'>
                                             <img
-                                                key={item.id}
-                                                src={item.image_type}
-                                                alt={item.type}
-                                                onClick={() => Type_Produit(item)}
+                                                src={produit.image}
+                                                alt="Image principale"
+                                                onClick={() => Type_Produit({
+                                                    price: 0,
+                                                    image_type: produit.image,
+                                                    outpout: produit.outpout
+                                                })}
                                             />
+                                            <p>Basique</p>
+                                        </div>
+                                        )}
+                                        {typeporduit.map(item => (
+                                            <div className='type_produit'>
+                                                <img
+                                                    key={item.id}
+                                                    src={item.image_type}
+                                                    alt={item.type}
+                                                    onClick={() => Type_Produit(item)}
+                                                />
+                                                {item.type === 'To' && (
+                                                <p>{item.outpout} {item.type}</p>
+                                                )}
+                                                {item.type === 'Couleur' && (
+                                                <p>{item.outpout}</p>
+                                                )}
+                                            </div>
                                         ))}
+
                                     </div>
                                 </section>
                             </div>
