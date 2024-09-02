@@ -79,7 +79,7 @@ nav {
     border-radius: 5px;
     z-index: 9;
     max-height: 300px;
-    overflow-y: auto;
+    overflow-y: scroll;
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);

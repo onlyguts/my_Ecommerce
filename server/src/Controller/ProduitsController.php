@@ -139,6 +139,7 @@ class ProduitsController extends AbstractController
         $produit->setMarque($data['marque']);
         $produit->setPrix($data['prix']);
         $produit->setImage($data['image']);
+        $produit->setDescription($data['description']);
         $produit->setStock($data['stock']);
         $produit->setTaille($data['taille']);
         $produit->setType($data['type']);
@@ -211,6 +212,7 @@ class ProduitsController extends AbstractController
         $produit->setPrix((int)$data['prix']);
         $produit->setImage($data['image']);
         $produit->setVendu(0);
+        $produit->setDescription($data['description']);
         $produit->setStock((int)$data['stock']);
         $produit->setTaille($data['taille']);
         $produit->setType($data['type']);
