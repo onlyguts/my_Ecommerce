@@ -44,17 +44,17 @@ function Nav_one() {
         .catch(erreur => console.error('Erreur: ', erreur));
     } else {
       fetch("https://localhost:8000/panier/" + UserAccount)
-      .then(reponse => reponse.json())
-      .then(data => {
+        .then(reponse => reponse.json())
+        .then(data => {
 
-        const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
-        setQuantity(quantity);
+          const quantity = data.reduce((sum, item) => sum + (1 * item.quantity), 0);
+          setQuantity(quantity);
 
-      })
-      .catch(erreur => console.error('Erreur: ', erreur));
+        })
+        .catch(erreur => console.error('Erreur: ', erreur));
     }
   }, []);
- 
+
   useEffect(() => {
     fetch("https://localhost:8000/produits")
       .then(response => response.json())
@@ -149,35 +149,35 @@ function Nav_one() {
           </button>
         </div>
         <div className="menu">
-        {!loginUser ? (
+          {!loginUser ? (
 
-  <button className="menu-btn" onClick={() => openPopup()}>
-    <img src={images.profil} alt="Connexion/profils" className="menu-icon" />
-  </button>
-) : (
-          <div className="menu-dropdown-container">
-            <button className="menu-btn" onClick={toggleDropdown}>
-              <img src={images.para} alt="Menu utilisateur" className="menu-icon" />
+            <button className="menu-btn" onClick={() => openPopup()}>
+              <img src={images.profil} alt="Connexion/profils" className="menu-icon" />
             </button>
-            {isDropdownVisible && (
-              <div className="dropdown-menu animated-dropdown">
-                <div className="dropdown-option" onClick={() => handleOptionClick('profil')}>
-                  <img src={images.profil} alt="profil" className="dropdown-icon" />
-                  Profil
-                </div>
-                {loginUser && loginUser.groupe === 1 && (
-                  <div className="dropdown-option" onClick={() => handleOptionClick('admin')}>
-                    <img src={images.admin} alt="admin" className="dropdown-icon" />
-                    Admin
+          ) : (
+            <div className="menu-dropdown-container">
+              <button className="menu-btn" onClick={toggleDropdown}>
+                <img src={images.para} alt="Menu utilisateur" className="menu-icon" />
+              </button>
+              {isDropdownVisible && (
+                <div className="dropdown-menu animated-dropdown">
+                  <div className="dropdown-option" onClick={() => handleOptionClick('profil')}>
+                    <img src={images.profil} alt="profil" className="dropdown-icon" />
+                    Profil
                   </div>
-                )}
-                <div className="dropdown-option" onClick={() => handleOptionClick('logout')}>
-                  <img src={images.deconnexion} alt="Déconnexion" className="dropdown-icon" />
-                  Déconnexion
+                  {loginUser && loginUser.groupe === 1 && (
+                    <div className="dropdown-option" onClick={() => handleOptionClick('admin')}>
+                      <img src={images.admin} alt="admin" className="dropdown-icon" />
+                      Admin
+                    </div>
+                  )}
+                  <div className="dropdown-option" onClick={() => handleOptionClick('logout')}>
+                    <img src={images.deconnexion} alt="Déconnexion" className="dropdown-icon" />
+                    Déconnexion
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
           )}
           <button className="menu-btn" onClick={toggleCart}>
             <img src={images.panier} alt="Panier" className="menu-icon" />
@@ -244,7 +244,7 @@ function Nav_two() {
   return (
     <nav>
       <ul>
-      <li className="dropdown">
+        <li className="dropdown">
           <a href="#">Catégorie</a>
           <div className="dropdown-content">
             {categorie.map(categorie => (
@@ -268,7 +268,7 @@ function Nav_two() {
           <div onClick={() => Promo()}>
             <a >Promotions</a>
           </div>
-        </li> 
+        </li>
       </ul>
     </nav>
   );
@@ -286,13 +286,13 @@ function Cart() {
 
     if (!loginUser) {
       fetch("https://localhost:8000/panier/" + UserAccount)
-      .then(response => response.json())
-      .then(data => {
-        setCartItems(data);
-        const total = data.reduce((sum, item) => sum + ((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity), 0);
-        setValue(total);
-      })
-      .catch(error => console.error('Erreur: ', error));
+        .then(response => response.json())
+        .then(data => {
+          setCartItems(data);
+          const total = data.reduce((sum, item) => sum + ((item.prix + item.price_type) * (1 - item.promo / 100) * item.quantity), 0);
+          setValue(total);
+        })
+        .catch(error => console.error('Erreur: ', error));
     } else {
       fetch("https://localhost:8000/panier/" + loginUser.id)
         .then(response => response.json())
@@ -324,7 +324,7 @@ function Cart() {
       const UserAccount = localStorage.getItem('user_no_account');
       let userInfos = {}
       if (loginUser) {
-         userInfos = {
+        userInfos = {
           id_produit: id,
           price_type: newprice,
           id_user: loginUser.id,
@@ -332,7 +332,7 @@ function Cart() {
           info: outpout,
         };
       } else {
-         userInfos = {
+        userInfos = {
           id_produit: id,
           price_type: newprice,
           id_user: UserAccount,
@@ -368,13 +368,13 @@ function Cart() {
     const UserAccount = localStorage.getItem('user_no_account');
     let userInfos = {}
     if (loginUser) {
-       userInfos = {
+      userInfos = {
         id_produit: id,
         price_type: newprice,
         id_user: loginUser.id,
       };
     } else {
-       userInfos = {
+      userInfos = {
         id_produit: id,
         price_type: newprice,
         id_user: UserAccount,

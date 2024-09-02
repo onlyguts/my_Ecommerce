@@ -48,18 +48,22 @@ export const ProductPage = () => {
     }, [id]);
 
 
+    const ApiAvis = (id) => {
+        fetch(`https://localhost:8000/avis/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            setAvis(data)
+            const totalavis = data.reduce((sum, avis) => sum + avis.rate, 0);
+            const moyenne = data.length > 0 ? totalavis / data.length : 0;
+            setMoyenne(moyenne);
+            setNbAvis(data.length)
+        })
+        .catch(error => console.error('Erreur:', error));
+    }
+
 
     useEffect(() => {
-        fetch(`https://localhost:8000/avis/${id}`)
-            .then(response => response.json())
-            .then(data => {
-                setAvis(data)
-                const totalavis = data.reduce((sum, avis) => sum + avis.rate, 0);
-                const moyenne = data.length > 0 ? totalavis / data.length : 0;
-                setMoyenne(moyenne);
-                setNbAvis(data.length)
-            })
-            .catch(error => console.error('Erreur:', error));
+        ApiAvis(id)
     }, [id]);
 
     // console.log(moyenne)
@@ -152,8 +156,9 @@ export const ProductPage = () => {
 
             .then(response => {
                 response.json();
-                alert('Produit Ajouter');
-                ;
+                ApiAvis(id);
+                setRate(0)
+                setText("")
             })
             .catch(error => {
                 console.error('Erreur:', error);
@@ -323,6 +328,11 @@ export const ProductPage = () => {
                                         <div>
                                             <p className="avis_produit">{nbavis} avis client</p>
                                         </div>
+                                        <div className='etiquette'>
+                                            {produit.promo != 0 && (
+                                                <div className='etiquette_promo'>Promo</div>
+                                            )}
+                                        </div>
                                     </div>
                                     <div className='description_produit'>
                                         <p className='description'>
@@ -351,17 +361,20 @@ export const ProductPage = () => {
                                 </section>
                             </div>
                             <section class="produit_achat">
-                                <div className='etiquette'>
-                                    {produit.promo != 0 && (
-                                        <div><span className='etiquette_promo'>Promo</span> <span className='etiquette_pourcent'>-{produit.promo}%</span></div>
-                                    )}
-                                </div>
                                 <div className='produit_promo'>
                                     {produit.promo != 0
-                                        ? <h2 className="promo_produit"><span className='prix_promo'>{produit.prix + newprice}€</span> <span className='prix_enpromo'>{((produit.prix) * (1 - produit.promo / 100)) + newprice}€</span></h2>
+                                        ?
+                                        <div className='etiquette_pourcent'>
+                                            <span className='prix_enpromo'>
+                                                <span className='pourcent'>-{produit.promo}%</span>
+                                                {((produit.prix) * (1 - produit.promo / 100)) + newprice}€</span>
+                                        </div>
 
                                         : <h2 className="prix_produit">{produit.prix + newprice}€</h2>
                                     }
+                                    {produit.promo != 0 && (
+                                        <div className='ancien_prix'>Ancien prix : <span className='prix_promo'>{produit.prix + newprice}€</span></div>
+                                    )}
                                 </div>
                                 <div className="ajouter_panier" onClick={() => AddPanier(produit.id, produit.stock, image, outpout)}>
                                     <h2>Ajouter au panier</h2>
@@ -399,7 +412,6 @@ export const ProductPage = () => {
                             </div>
                         )}
                         {step === 2 && (
-
                             <div className='section_avis'>
                                 <section className="liste_avis">
                                     {avis.map((produit) => (
@@ -426,20 +438,10 @@ export const ProductPage = () => {
                                 </section>
                             </div>
                         )}
-
                         {(step === 3 && loginUser) && (
-
                             <div className='section_addavis'>
                                 <div className='post_avis'>
                                     <p className='avis_p'>Note générale</p>
-                                    {/* <input type='number' max='5' value={rate} onChange={(e) => AvisSet(e)} placeholder="Nombre d'étoiles"></input> */}
-                                    {/* <div class="five-rate-active">
-                                        <button type="button" class="rate-value-empty" aria-label="Noter 1 sur 5"><span aria-hidden="true">1</span></button>
-                                        <button type="button" class="rate-value-empty" aria-label="Noter 2 sur 5"><span aria-hidden="true">2</span></button>
-                                        <button type="button" class="rate-value-empty" aria-label="Noter 3 sur 5"><span aria-hidden="true">3</span></button>
-                                        <button type="button" class="rate-value-empty" aria-label="Noter 4 sur 5"><span aria-hidden="true">4</span></button>
-                                        <button type="button" class="rate-value-empty" aria-label="Noter 5 sur 5"><span aria-hidden="true">5</span></button>
-                                    </div> */}
                                     <div className="evaluation_avis">
                                         {[1, 2, 3, 4, 5].map(value => (
                                             <img

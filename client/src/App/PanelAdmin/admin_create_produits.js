@@ -177,7 +177,7 @@ function Admin() {
         .then(response => {
             response.json();
             alert('Produit Ajouter');
-            navigate('/admin');
+            // navigate('/admin');
         })
         .catch(error => {
             console.error('Erreur:', error);

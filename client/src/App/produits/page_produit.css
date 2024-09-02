@@ -61,6 +61,13 @@
     width: 70%;
 }
 
+.photo_produit {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    height: 100%;
+}
+
 .photo_produit img {
     height: 400px;
     width: 400px;
@@ -81,8 +88,8 @@
 
 .produit_description .block_infos {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
     flex-direction: column;
     padding-top: 30px;
     padding-bottom: 10px;
@@ -96,6 +103,7 @@
     height: 20px;
     width: 20px;
     font-size: 1em;
+    margin-left: 27px;
 }
 
 .produit_description .block_infos .star_produit .no_eval {
@@ -107,6 +115,16 @@
 
 .produit_description .block_infos .avis_produit {
     font-size: 1.1em;
+}
+
+.produit_description .etiquette .etiquette_promo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #D8844D;
+    color: #F3E1D1;
+    padding: 7px;
+    border-radius: 10px;
 }
 
 .description_produit .description {
@@ -139,12 +157,11 @@
     /* border: 1px solid green; */
 }
 
-.produit_achat .etiquette .etiquette_promo,
-.produit_achat .etiquette .etiquette_pourcent {
-    background-color: #D8844D;
-    color: #F3E1D1;
-    padding: 7px;
-    border-radius: 10px;
+.produit_achat .produit_promo .etiquette_pourcent .pourcent {
+    /* background-color: #D8844D; */
+    color: rgba(255, 0, 0, 0.758);
+    font-size: 0.7em;
+    margin-right: 5px;
 }
 
 .produit_achat .produit_promo {
@@ -152,9 +169,9 @@
     flex-direction: column;
 }
 
-.produit_achat .prix_produit,
+.produit_achat .produit_promo .etiquette_pourcent .prix_enpromo,
 .produit_achat .promo_produit {
-    padding: 20px;
+    padding: 10px 10px 5px 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -167,10 +184,19 @@
     padding: 5px;
 }
 
-.produit_achat .promo_produit .prix_enpromo,
+.produit_achat .produit_promo .prix_enpromo,
 .produit_achat .prix_produit {
     font-weight: 700;
     color: #1d6f5f;
+}
+
+.produit_achat .produit_promo .ancien_prix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1em;
+    color: gray;
+    font-style: italic;
 }
 
 .produit_achat .prix_promo {
@@ -190,6 +216,11 @@
 .produit_achat .ajouter_panier h2 {
     font-weight: 500;
     font-size: 1.2em;
+}
+
+.produit_achat .ajouter_panier:hover {
+    cursor: pointer;
+    background-color: #f4ccab;
 }
 
 /* Message stock ou non */
@@ -297,7 +328,9 @@
 }
 
 .produit_step .section_avis .avis {
-    /* border: 1px solid magenta; */
+    border: 1px solid #CC8857;
+    border-radius: 20px;
+    margin: 15px 0;
     padding: 20px;
     /* border-bottom: 1px solid black; */
 }
@@ -438,8 +471,8 @@
 
     .produit_description .block_infos {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: left;
+        align-items: left;
         flex-direction: column;
         padding-top: 10px;
         padding-bottom: 5px;
@@ -466,6 +499,17 @@
         font-size: 0.8em;
     }
 
+    .produit_description .etiquette .etiquette_promo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #D8844D;
+        color: #F3E1D1;
+        padding: 5px;
+        border-radius: 10px;
+        font-size: 0.8em;
+    }
+
     .description_produit .description {
         justify-content: center;
         align-items: center;
@@ -475,15 +519,15 @@
     }
 
     /* Sélection des types/couleurs du produit */
-.produit_description .select_produit img {
-    height: 50px;
-    width: 50px;
-    margin: 5px;
-}
+    .produit_description .select_produit img {
+        height: 50px;
+        width: 50px;
+        margin: 5px;
+    }
 
-.produit_description .select_produit img:hover {
-    cursor: pointer;
-}
+    .produit_description .select_produit img:hover {
+        cursor: pointer;
+    }
 
     /* Achat du produit */
     .produit_achat {
@@ -772,11 +816,39 @@
 
     .produit_description .block_infos {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: left;
+        align-items: left;
         flex-direction: column;
         padding-top: 10px;
         padding-bottom: 5px;
+    }
+
+    .produit_description .block_infos .star_produit .no_eval {
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        font-size: 0.7em;
+    }
+
+    .produit_description .block_infos {
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        flex-direction: column;
+        padding-top: 30px;
+        padding-bottom: 10px;
+    }
+
+    .produit_description .etiquette .etiquette_promo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #D8844D;
+        color: #F3E1D1;
+        padding: 5px;
+        border-radius: 10px;
+        font-size: 0.6em;
+        margin-left: 1px;
     }
 
     .produit_description .block_infos .star_produit {
@@ -786,14 +858,8 @@
         align-items: center;
         height: 15px;
         width: 15px;
-        font-size: 0.7em;
-    }
-
-    .produit_description .block_infos .star_produit .no_eval {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 0.7em;
+        font-size: 1em;
+        margin-left: 20px;
     }
 
     .produit_description .block_infos .avis_produit {
@@ -809,15 +875,15 @@
     }
 
     /* Sélection des types/couleurs du produit */
-.produit_description .select_produit img {
-    height: 40px;
-    width: 40px;
-    margin: 5px;
-}
+    .produit_description .select_produit img {
+        height: 40px;
+        width: 40px;
+        margin: 5px;
+    }
 
-.produit_description .select_produit img:hover {
-    cursor: pointer;
-}
+    .produit_description .select_produit img:hover {
+        cursor: pointer;
+    }
 
     /* Achat du produit */
     .produit_achat {
@@ -830,6 +896,32 @@
         border-radius: 10px;
         /* border: 1px solid green; */
         width: 20%;
+    }
+
+    .produit_achat .produit_promo .etiquette_pourcent .pourcent {
+        color: rgba(255, 0, 0, 0.758);
+        font-size: 0.7em;
+        margin-right: 5px;
+    }
+
+    .produit_achat .produit_promo .etiquette_pourcent .prix_enpromo,
+    .produit_achat .promo_produit {
+        padding: 10px 10px 5px 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-weight: 500;
+        font-size: 1.2em;
+    }
+
+    .produit_achat .produit_promo .ancien_prix {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1em;
+        color: gray;
+        font-style: italic;
+        font-size: 0.6em;
     }
 
     .produit_achat .produit_promo {
@@ -1102,21 +1194,32 @@
 
     .produit_description .block_infos {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: left;
+        align-items: left;
         flex-direction: column;
-        padding-top: 5px;
-        padding-bottom: 3px;
+        padding-top: 0px;
+        padding-bottom: 10px;
     }
 
     .produit_description .block_infos .star_produit {
         display: flex;
         flex-direction: row;
-        justify-content: center;
-        align-items: center;
+        justify-content: left;
+        align-items: left;
         height: 7px;
         width: 7px;
-        font-size: 0.5em;
+        margin-left: 1px;
+    }
+
+    .produit_description .etiquette .etiquette_promo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #D8844D;
+        color: #F3E1D1;
+        padding: 4px;
+        border-radius: 10px;
+        font-size: 0.3em;
     }
 
     .produit_description .block_infos .star_produit .no_eval {
@@ -1139,15 +1242,15 @@
     }
 
     /* Sélection des types/couleurs du produit */
-.produit_description .select_produit img {
-    height: 20px;
-    width: 20px;
-    margin: 2px;
-}
+    .produit_description .select_produit img {
+        height: 20px;
+        width: 20px;
+        margin: 2px;
+    }
 
-.produit_description .select_produit img:hover {
-    cursor: pointer;
-}
+    .produit_description .select_produit img:hover {
+        cursor: pointer;
+    }
 
     /* Achat du produit */
     .produit_achat {
@@ -1160,6 +1263,32 @@
         border-radius: 10px;
         /* border: 1px solid green; */
         width: 25%;
+    }
+
+    .produit_achat .produit_promo .etiquette_pourcent .pourcent {
+        color: rgba(255, 0, 0, 0.758);
+        font-size: 0.5em;
+        margin-right: 5px;
+    }
+
+    .produit_achat .produit_promo .etiquette_pourcent .prix_enpromo,
+    .produit_achat .promo_produit {
+        padding: 10px 10px 5px 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-weight: 500;
+        font-size: 0.9em;
+    }
+
+    .produit_achat .produit_promo .ancien_prix {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1em;
+        color: gray;
+        font-style: italic;
+        font-size: 0.5em;
     }
 
     .produit_achat .produit_promo {

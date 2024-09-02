@@ -7,6 +7,7 @@ import { Carousel } from 'react-responsive-carousel';
 import { useNavigate } from "react-router-dom";
 
 import Header from './Nav';
+import Footer from './Footer.js';
 
 function App() {
   const Login = localStorage.getItem('users');
@@ -20,6 +21,7 @@ function App() {
       <PromoCarousel />
       <PopularProducts />
       <Main />
+      <Footer />
     </div>
     );
 
@@ -31,41 +33,72 @@ function App() {
         <PromoCarousel />
         <PopularProducts />
         <Main />
+        <Footer />
       </div>
     );
   }
 }
 
 
-
-
-
 function PromoCarousel() {
   const [promo, setPromo] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     fetch("https://localhost:8000/produits/suggestion")
       .then(response => response.json())
       .then(data => setPromo(data))
       .catch(error => console.error('Erreur:', error));
   }, []);
+
   function ProduitsShow(id, name) {
     navigate("/produit/" + id);
     localStorage.setItem('categorie', name);
   }
-  console.log(promo)
-  return (
-    <div className="carousel-container">
-      <Carousel showThumbs={false} autoPlay infiniteLoop>
-      {promo.map(produit => (
-        <div key={produit.id} onClick={() => ProduitsShow(produit.id, produit.categorie_name)}>
-        <img src={produit.image} alt="Promo 1" />
-        {/* <p className="legend" >{produit.prix * (1 - produit.promo / 100)}€ au lieu de {produit.prix}€!</p> */}
-            <p className="legend" >{produit.name} pour {produit.prix}€</p>
-      </div>
-          ))}
-        
 
+  return (
+
+    <div className="promo-carousel-container marging">
+      <Carousel 
+        showThumbs={false} 
+        autoPlay 
+        infiniteLoop 
+        renderArrowPrev={(onClickHandler, hasPrev, label) =>
+          hasPrev && (
+            <button type="button" onClick={onClickHandler} className="carousel-control-prev" aria-label={label}>
+              &#10094;
+            </button>
+          )
+        }
+        renderArrowNext={(onClickHandler, hasNext, label) =>
+          hasNext && (
+            <button type="button" onClick={onClickHandler} className="carousel-control-next" aria-label={label}>
+              &#10095;
+            </button>
+          )
+        }
+        renderIndicator={(onClickHandler, isSelected, index, label) => {
+          const indicatorClass = isSelected ? "carousel-dot selected" : "carousel-dot";
+          return (
+            <li
+              className={indicatorClass}
+              onClick={onClickHandler}
+              onKeyDown={onClickHandler}
+              value={index}
+              key={index}
+              role="button"
+              tabIndex={0}
+              aria-label={`${label} ${index + 1}`}
+            />
+          );
+        }}
+      >
+        {promo.map(produit => (
+          <div key={produit.id} className="promo-carousel-slide" onClick={() => ProduitsShow(produit.id, produit.categorie_name)}>
+            <img src={produit.image} alt={`Promo pour ${produit.name}`} />
+            <p className="promo-carousel-legend">{produit.name} pour {produit.prix}€</p>
+          </div>
+        ))}
       </Carousel>
     </div>
   );
@@ -74,12 +107,14 @@ function PromoCarousel() {
 function PopularProducts() {
   const [produitstop, setProduitsTop] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     fetch("https://localhost:8000/produits/top10")
       .then(response => response.json())
       .then(data => setProduitsTop(data))
       .catch(error => console.error('Erreur:', error));
   }, []);
+
   function ProduitsShow(id, name) {
     navigate("/produits/" + id);
     localStorage.setItem('categorie', name);
@@ -89,24 +124,60 @@ function PopularProducts() {
     return produitstop.slice(min - 1, max);
   };
 
- 
   return (
-    <div className="popular-products">
+    <div className="popular-products-container marging">
       <h2>Produits les plus populaires</h2>
-      <Carousel showThumbs={false} showStatus={false} infiniteLoop autoPlay interval={3000} showArrows>
-        <div className="carousel-slide">
-          {limitProduit(1, 3).map(produit => (
-            <ProductItemTop key={produit.id} src={produit.image} onClick={() => ProduitsShow(produit.id, produit.name, produit.views)} alt="Produit Populaire 1" id={produit.id} categorie={produit.categorie_name} views={produit.views} name={produit.name} />
+      <Carousel 
+        showThumbs={false} 
+        showStatus={false} 
+        infiniteLoop 
+        autoPlay 
+        interval={3000} 
+        showArrows
+        renderArrowPrev={(onClickHandler, hasPrev, label) =>
+          hasPrev && (
+            <button type="button" onClick={onClickHandler} className="carousel-control-prev" aria-label={label}>
+              &#10094;
+            </button>
+          )
+        }
+        renderArrowNext={(onClickHandler, hasNext, label) =>
+          hasNext && (
+            <button type="button" onClick={onClickHandler} className="carousel-control-next" aria-label={label}>
+              &#10095;
+            </button>
+          )
+        }
+        renderIndicator={(onClickHandler, isSelected, index, label) => {
+          const indicatorClass = isSelected ? "carousel-dot selected" : "carousel-dot";
+          return (
+            <li
+              className={indicatorClass}
+              onClick={onClickHandler}
+              onKeyDown={onClickHandler}
+              value={index}
+              key={index}
+              role="button"
+              tabIndex={0}
+              aria-label={`${label} ${index + 1}`}
+            />
+          );
+        }}
+      >
+        <div className="popular-products-carousel-slide">
+          {limitProduit(1, 6).map(produit => (
+            <div key={produit.id} className="product-item-top" onClick={() => ProduitsShow(produit.id, produit.name)}>
+              <img src={produit.image} alt={`Produit Populaire ${produit.name}`} />
+              <p className="product-name">{produit.name}</p>
+            </div>
           ))}
         </div>
-        <div className="carousel-slide">
-          {limitProduit(4, 6).map(produit => (
-            <ProductItemTop key={produit.id} src={produit.image} onClick={() => ProduitsShow(produit.id, produit.name, produit.views)} alt="Produit Populaire 1"  id={produit.id} categorie={produit.categorie_name} views={produit.views} name={produit.name} />
-          ))}
-        </div>
-        <div className="carousel-slide">
-          {limitProduit(6, 8).map(produit => (
-            <ProductItemTop key={produit.id} src={produit.image} onClick={() => ProduitsShow(produit.id, produit.name, produit.views)} alt="Produit Populaire 1" id={produit.id} categorie={produit.categorie_name} views={produit.views} name={produit.name} />
+        <div className="popular-products-carousel-slide">
+          {limitProduit(7, 12).map(produit => (
+            <div key={produit.id} className="product-item-top" onClick={() => ProduitsShow(produit.id, produit.name)}>
+              <img src={produit.image} alt={`Produit Populaire ${produit.name}`} />
+              <p className="product-name">{produit.name}</p>
+            </div>
           ))}
         </div>
       </Carousel>
@@ -127,10 +198,12 @@ function Main() {
       <div class="">
       <main class="zindex">
         <div className="main-banner">
+        <div className='main-banner'>
           <div className='byp-banner'>
             <img className='marging' src={images.BYP} alt='banniere'/>
             <button id='button-BYP' onClick={() => navigate('/build')}>Build Your PC</button>
           </div>  
+        </div>
         </div>
         <div className="grid-container marging">
           <div id='item-0'>
