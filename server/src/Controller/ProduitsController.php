@@ -25,6 +25,30 @@ class ProduitsController extends AbstractController
         return $this->json($produits);
     }
 
+    #[Route('/produitsRating', name: 'app_produitsRating', methods: ['GET', 'HEAD'])]
+    public function produitsRating(EntityManagerInterface $entityManager): Response
+    {
+        $conn = $entityManager->getConnection();
+        $sql = 'SELECT 
+    p.*, 
+    c.name AS categorie_name, 
+    COALESCE(AVG(a.rate), 0) AS rating
+FROM 
+    produits p
+INNER JOIN 
+    categorie c ON p.id_categorie = c.id
+LEFT JOIN 
+    avis a ON p.id = a.id_produits
+GROUP BY 
+    p.id, 
+    c.name';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        $produits = $resultSet->fetchAllAssociative();
+        return $this->json($produits);
+    }
+
     #[Route('produits/get/vendu', name: 'app_produits_sell', methods: ['GET', 'HEAD'])]
     public function indexsell(EntityManagerInterface $entityManager): Response
     {
@@ -184,8 +208,8 @@ class ProduitsController extends AbstractController
             return $this->json(['message' => 'Erreur : Produit non trouvé'], Response::HTTP_NOT_FOUND);
         }
 
-        $produit->setStock($produit->getStock() - 1); 
-        $produit->setVendu($produit->getVendu() + 1); 
+        $produit->setStock($produit->getStock() - 1);
+        $produit->setVendu($produit->getVendu() + 1);
 
         $entityManager->persist($produit);
         $entityManager->flush();
@@ -193,8 +217,8 @@ class ProduitsController extends AbstractController
         return $this->json(['success' => 'Produit mis à jour'], Response::HTTP_OK);
     }
 
-    
-    
+
+
 
     #[Route('/produits/add', name: 'app_produits_add', methods: ['POST'])]
     public function add(EntityManagerInterface $entityManager, Request $request): Response

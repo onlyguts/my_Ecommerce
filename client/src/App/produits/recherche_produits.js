@@ -80,7 +80,7 @@ function Nav_tree() {
     }, []);
 
     useEffect(() => {
-        fetch("https://localhost:8000/produits")
+        fetch("https://localhost:8000/produitsRating")
             .then(response => response.json())
             .then(data => setProduits(data))
             .catch(error => console.error('Erreur: ', error));
@@ -250,7 +250,7 @@ function Nav_tree() {
 
                         <div className="product-in-grid">
                             <img src={produit.image} onClick={() => OpenProduit(produit.id, produit.categorie_name)} />
-                            <span className='product-in-grid-name'>{produit.name}</span>
+                            <span className='product-in-grid-name'>{produit.rating}</span>
                             <span className='product-in-grid-marque'>marque:{produit.marque}</span>
                             <span className='product-in-grid-price'>prix:{produit.prix}€</span>
                         </div>
