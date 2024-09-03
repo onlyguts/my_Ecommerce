@@ -24,26 +24,32 @@ function Login() {
         // console.log(response)
         if (response.status === 200) {
             const data = await response.json();
-            console.log(data)
-            if (data[0].email) {
-                if (data[0].password === password) {
-                    navigate("/");
-                    const userData = {
-                        id:  data[0].id,
-                        email: data[0].email,
-                        groupe: data[0].groupe,
-                        token: data[0].token,
-                        image: data[0].image,
-                        username: data[0].username,
-                        verification: data[0].verification
-                    };
-                    localStorage.setItem('users', JSON.stringify(userData));
-                    const storedUser = localStorage.getItem('users');
-                    console.log(storedUser);
-                } else {
-                    setError("pas le bon mdp");
-                }
+       
+            if (!data) {
+                setError("pas le bon mdp");
             }
+                if (data[0]) {
+                 
+                    if (data[0].password === password) {
+                        navigate("/");
+                        const userData = {
+                            id:  data[0].id,
+                            email: data[0].email,
+                            groupe: data[0].groupe,
+                            token: data[0].token,
+                            image: data[0].image,
+                            username: data[0].username,
+                            verification: data[0].verification
+                        };
+                        localStorage.setItem('users', JSON.stringify(userData));
+                        const storedUser = localStorage.getItem('users');
+                        console.log(storedUser);
+                    } else {
+                        setError("pas le bon mdp");
+                    }
+                
+                }
+                
         } else if (response.status === 500) {
             setError("Erreur");
         } else {

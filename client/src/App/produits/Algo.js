@@ -244,6 +244,59 @@ function Algo() {
 
   }
 
+
+  // const myArray = [42, 75, 76, 77, 78, 79, 80];
+
+  // myArray.forEach((value) => {
+  //   const Login = localStorage.getItem('users');
+  //   const UserAccount = localStorage.getItem('user_no_account');
+  //   const loginUser = JSON.parse(Login);
+
+  //   for (let i = 0; i < value.length; i++) {
+    
+  //         console.log(value);
+          // let userInfos = {}
+
+          // if (!loginUser) {
+          //   userInfos = {
+          //     id_produit: id,
+          //     id_user: UserAccount,
+          //     price_type: 0,
+          //     image_type: 'null',
+          //     info: 'null',
+          //   };
+          // } else {
+          //   userInfos = {
+          //     id_produit: id,
+          //     id_user: loginUser.id,
+          //     price_type: 0,
+          //     image_type: 'null',
+          //     info: 'null',
+          //   };
+          // }
+
+
+          // console.log(userInfos);
+
+          // fetch("https://localhost:8000/panier/add", {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //   },
+          //   body: JSON.stringify(userInfos),
+          // })
+
+          //   .then(response => {
+          //     response.json();
+          //     window.location.reload()
+          //   })
+          //   .catch(error => {
+          //     console.error('Erreur:', error);
+          //   });
+    
+  //  
+  // });
+
   return (
     <div>
       <Nav />

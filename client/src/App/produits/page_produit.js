@@ -4,7 +4,7 @@ import "./page_produit.css";
 import Nav from "../Nav";
 import StarProduit from '../assets/star-produit.svg';
 import PhotoSpecs from '../assets/Specs.png';
-import StarFull from '../assets/starFull.png';
+import StarFull from '../assets/star-produit.svg';
 import StarEmpty from '../assets/starEmpty.png';
 
 export const ProductPage = () => {
@@ -340,7 +340,7 @@ export const ProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='select_produit'>
-                                        {typeporduit.length !== 0 && (
+                                        {typeporduit.length != 0 && (
 
                                         <div className='type_produit'>
                                             <img
