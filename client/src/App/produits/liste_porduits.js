@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Header from '../Nav';
 import images from '../images.js';
+import Nav from './../Nav';
 function Produits() {
   const { id } = useParams()
   const [produits, setProduits] = useState([]);
@@ -45,8 +46,7 @@ function Produits() {
   console.log(produits_trier2)
   return (
     <div>
-      <Nav_one />
-      <Nav_two />
+    <Nav/>
       <h1><button onClick={() => Debut()}>Home</button>/<button onClick={() => Mid(id)}>{Categorie}</button></h1>
 
       <select value={recherche} onChange={(e) => ChangeCherche(e)}>

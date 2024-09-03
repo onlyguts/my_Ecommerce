@@ -131,6 +131,7 @@ const Gocate = (id, name) => {
                             <th scope="col">Nom produit</th>
                             <th scope="col">Nom de la Catégorie</th>
                             <th scope="col">Stock</th>
+                            <th scope="col">Vendu</th>
                             <th scope="col">Views</th>
                             <th scope="col">Options</th>
                         </tr>
@@ -142,6 +143,7 @@ const Gocate = (id, name) => {
                                 <td className='gop' onClick={() => GoProduit(produit.id)}>{produit.name}</td>
                                 <td className='gop' onClick={() => Gocate(produit.id_categorie, produit.categorie_name)}>{produit.categorie_name}</td>
                                 <td>{produit.stock}</td>
+                                <td>{produit.vendu}</td>
                                 <td>{produit.views}</td>
                                 <td><button className='edit' onClick={() => OpenPorudits(produit.id)}>Edit</button> <button className='delete' onClick={() => DeletePorudits(produit.id)}>Delete</button> <button className='view' onClick={() => EditerProduits(produit.id)}>Page</button></td>
                             </tr>

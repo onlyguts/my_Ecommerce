@@ -45,8 +45,14 @@ class UsersController extends AbstractController
 
     #[Route('/users/get/{email}', name: 'appget_users')]
     public function indexget(EntityManagerInterface $entityManager, string $email): Response
+
     {
         $user = $entityManager->getRepository(Users::class);
+        
+        if (!$user) {
+            return $this->json(['message' => 'Erreur : lien invalide'], Response::HTTP_NOT_FOUND);
+        }
+
         return $this->json($user->findBy(['email' => $email]));
     }
 

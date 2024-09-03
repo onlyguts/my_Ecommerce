@@ -29,7 +29,6 @@ function Login() {
                 setError("pas le bon mdp");
             }
                 if (data[0]) {
-                 
                     if (data[0].password === password) {
                         navigate("/");
                         const userData = {
@@ -47,7 +46,6 @@ function Login() {
                     } else {
                         setError("pas le bon mdp");
                     }
-                
                 }
                 
         } else if (response.status === 500) {

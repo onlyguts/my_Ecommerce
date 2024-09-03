@@ -31,6 +31,8 @@ import Conf from './App/user/Confirmation'
 
 import Commande from './App/user/Commande'
 
+import Nv from './App/produits/nouveauter_produits'
+
 import ProduitsAll from './App/produits/recherche_produits'
 import Promo from './App/produits/promotions_produits'
 import Login from './App/Login/Login'
@@ -47,7 +49,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Homes />}></Route>
                 {/* <Route path="/test/:id" element={<Pro />}></Route> */}
-         
+                <Route path="/nouveauter" element={<Nv />}></Route>
 
                 <Route path="/promotions" element={<Promo />}></Route>
                 <Route path="/panier" element={<Panier />}></Route>

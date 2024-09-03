@@ -29,19 +29,7 @@ class ProduitsController extends AbstractController
     public function produitsRating(EntityManagerInterface $entityManager): Response
     {
         $conn = $entityManager->getConnection();
-        $sql = 'SELECT 
-    p.*, 
-    c.name AS categorie_name, 
-    COALESCE(AVG(a.rate), 0) AS rating
-FROM 
-    produits p
-INNER JOIN 
-    categorie c ON p.id_categorie = c.id
-LEFT JOIN 
-    avis a ON p.id = a.id_produits
-GROUP BY 
-    p.id, 
-    c.name';
+        $sql = 'SELECT p.*, c.name AS categorie_name, COALESCE(AVG(a.rate), 0) AS rating, COALESCE(COUNT(a.id), 0) as nbavis FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id LEFT JOIN avis a ON p.id = a.id_produits GROUP BY  p.id, c.name';
 
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();

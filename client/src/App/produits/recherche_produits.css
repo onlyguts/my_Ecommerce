@@ -1,0 +1,414 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.page_tout {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+   
+    overflow-y : hidden
+}
+
+.selection {
+    grid-area: 1 / 1 / 6 / 2;
+    
+}
+
+.selection form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.selection select {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 5px;
+}
+
+.selection button {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+}
+
+.tout_produit {
+    grid-area: 1 / 2 / 6 / 6;
+    height: 51.5em;
+    overflow-y: scroll;
+  
+}
+
+.tout_produit .fiche_produit {
+    border: 1px solid #D8844D;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: space-between;
+    margin: 5px 20% 10px 0;
+    border-radius: 10px;
+
+}
+
+.tout_produit .fiche_produit .jointure_produit {
+    display: flex;
+}
+
+.tout_produit .fiche_produit img {
+    height: 200px;
+    width: 200px;
+}
+
+.tout_produit .infos_produit {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 0 20px;
+}
+
+.tout_produit .infos_produit .name_produit {
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+.tout_produit .infos_produit .avis_produit {
+    display: flex;
+    flex-direction: row;
+}
+
+.tout_produit .infos_produit .etoile_produit img {
+    height: 15px;
+    width: 15px;
+}
+
+.tout_produit .infos_produit .etoile_produit {
+    padding: 0 5px 0 0;
+    /* margin-bottom: 5px; */
+}
+
+.tout_produit .infos_produit .etiquette_promo {
+    margin-bottom: 5px;
+    margin-top: 7px;
+}
+
+.tout_produit .infos_produit .etiquette_promo .promo {
+    background-color: rgba(255, 0, 0, 0.669);
+    color: white;
+    padding: 7px;
+    border-radius: 10px;
+}
+
+.tout_produit .infos_produit .description_produit {
+    font-size: 0.9em;
+    margin: 8px 0 0 0;
+    width: 45em;
+    font-style: italic;
+}
+
+.tout_produit .panier_produit {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid sienna; */
+    padding: 50px;
+}
+
+.panier_produit .prix_produit {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: #1d6f5f;
+    font-size: 1.5em;
+}
+
+.panier_produit .etiquette_pourcent {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.panier_produit .etiquette_pourcent .prix_enpromo .pourcent {
+    color: rgba(255, 0, 0, 0.758);
+    font-size: 1.2em;
+    margin-right: 5px;
+}
+
+.panier_produit .etiquette_pourcent .prix_enpromo .prix_promo {
+    font-weight: 700;
+    color: #1d6f5f;
+    font-size: 1.5em;
+}
+
+.panier_produit .addpanier_produit {
+    border: none;
+    background-color: #F4D5BB;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+@media (max-width: 1024px) {
+    .selection form {
+        margin: 7px;
+    }
+
+    .selection select {
+        padding: 7px;
+        border-radius: 8px;
+    }
+
+    .selection button {
+        padding: 7px;
+    }
+
+    .tout_produit .fiche_produit {
+        padding: 8px;
+        margin: 5px 20px 10px 0;
+    }
+
+    .tout_produit .fiche_produit img {
+        height: 150px;
+        width: 150px;
+    }
+
+    .tout_produit .fiche_produit .jointure_produit {
+        width: 35em;
+    }
+
+    .tout_produit .fiche_produit .jointure_produit .name_produit {
+        font-size: 1.2em;
+    }
+
+    .tout_produit .infos_produit .etiquette_promo {
+        margin-bottom: 4px;
+        margin-top: 6px;
+        font-size: 0.9em;
+    }
+
+    .tout_produit .infos_produit .etiquette_promo .promo {
+        padding: 6px;
+        border-radius: 10px;
+    }
+
+    .tout_produit .infos_produit .description_produit {
+        font-size: 0.8em;
+        margin: 7px 0 0 0;
+        width: 25em;
+    }
+
+    .tout_produit .panier_produit {
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+    }
+
+    .panier_produit .prix_produit {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 5px;
+        font-weight: 700;
+        color: #1d6f5f;
+    }
+
+    .panier_produit .etiquette_pourcent .prix_enpromo .pourcent {
+        font-size: 1em;
+    }
+
+    .panier_produit .etiquette_pourcent .prix_enpromo .prix_promo,
+    .panier_produit .prix_produit {
+        font-size: 1.2em;
+    }
+
+    .panier_produit .addpanier_produit {
+        padding: 13px;
+        border-radius: 15px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    .selection form {
+        margin: 6px;
+    }
+
+    .selection button {
+        padding: 6px;
+    }
+
+    .tout_produit .fiche_produit {
+        padding: 8px;
+        margin: 5px 20px 10px 0;
+    }
+
+    .tout_produit .fiche_produit img {
+        height: 125px;
+        width: 125px;
+    }
+
+    .tout_produit .fiche_produit .jointure_produit {
+        width: 23em;
+    }
+
+    .tout_produit .fiche_produit .jointure_produit .name_produit {
+        font-size: 0.9em;
+    }
+
+    .tout_produit .infos_produit .avis_produit .nbavis_produit {
+        font-size: 0.7em;
+        margin-top: 3px;
+    }
+
+    .tout_produit .infos_produit .etoile_produit img {
+        height: 10px;
+        width: 10px;
+    }
+
+    .tout_produit .infos_produit .etoile_produit {
+        padding: 0 5px 0 0;
+    }
+
+    .tout_produit .infos_produit .etiquette_promo {
+        margin-bottom: 4px;
+        margin-top: 6px;
+        font-size: 0.7em;
+    }
+
+    .tout_produit .infos_produit .etiquette_promo .promo {
+        padding: 6px;
+        border-radius: 10px;
+    }
+
+    .tout_produit .infos_produit .description_produit {
+        font-size: 0.6em;
+        margin: 7px 0 0 0;
+        width: 28em;
+    }
+
+    .tout_produit .panier_produit {
+        padding: 20px;
+    }
+
+    .panier_produit .prix_produit {
+        margin-bottom: 5px;
+        font-weight: 700;
+        color: #1d6f5f;
+    }
+
+    .panier_produit .etiquette_pourcent .prix_enpromo .pourcent {
+        font-size: 0.8em;
+    }
+
+    .panier_produit .etiquette_pourcent .prix_enpromo .prix_promo,
+    .panier_produit .prix_produit {
+        font-size: 1em;
+    }
+
+    .panier_produit .addpanier_produit {
+        padding: 13px;
+        border-radius: 15px;
+        font-size: 0.7em;
+    }
+}
+
+@media (max-width: 480px) {
+    .page_tout {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .selection form {
+        margin: 5px;
+    }
+
+    .selection select {
+        padding: 7px;
+        border-radius: 10px;
+    }
+
+    .selection button {
+        padding: 7px;
+    }
+
+    .tout_produit .fiche_produit {
+        padding: 7px;
+    }
+
+    .tout_produit .fiche_produit .jointure_produit {
+        width: 25em;
+    }
+
+    .tout_produit .fiche_produit img {
+        height: 100px;
+        width: 100px;
+    }
+
+    .tout_produit .infos_produit {
+        padding: 0 6px;
+    }
+
+    .tout_produit .fiche_produit .jointure_produit .infos_produit .name_produit {
+        font-size: 0.7em;
+    }
+
+    .tout_produit .infos_produit .etoile_produit img {
+        height: 7px;
+        width: 7px;
+    }
+
+    .tout_produit .infos_produit .etoile_produit {
+        padding: 0 5px 0 0;
+    }
+
+    .tout_produit .fiche_produit .jointure_produit .infos_produit .avis_produit .nbavis_produit {
+        font-size: 0.4em;
+        padding-top: 4px;
+    }
+
+    .tout_produit .infos_produit .etiquette_promo {
+        margin-bottom: 2px;
+        margin-top: 3px;
+    }
+
+    .tout_produit .infos_produit .etiquette_promo .promo {
+        padding: 4px;
+        border-radius: 10px;
+        font-size: 0.6em;
+    }
+
+    .tout_produit .infos_produit .description_produit {
+        font-size: 0.4em;
+        margin: 5px 0 0 0;
+        width: 25em;
+    }
+
+    .tout_produit .panier_produit {
+        padding: 15px;
+    }
+
+    .panier_produit .prix_produit {
+        font-size: 0.6em;
+    }
+
+    .panier_produit .etiquette_pourcent .prix_enpromo .pourcent {
+        font-size: 0.4em;
+        margin-right: 4px;
+    }
+
+    .panier_produit .etiquette_pourcent .prix_enpromo .prix_promo {
+        font-size: 0.6em;
+    }
+
+    .panier_produit .addpanier_produit {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 6px;
+        font-size: 0.5em;
+    }
+}
