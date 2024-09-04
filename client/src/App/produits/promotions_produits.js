@@ -51,7 +51,7 @@ function Promotionsproduits() {
                             <div className="promotions-tag">-{produit.promo}%</div>
                             <img src={produit.image} alt={produit.name} className="promotions-product-image" />
                             <p className="promotions-product-name">{produit.name}</p>
-                            {renderStars(produit.nombreAvis)}
+                            {renderStars(produit.rating)}
                             <p className="promotions-product-price">
                                 {(produit.prix * (1 - produit.promo / 100)).toFixed(2)}€ au lieu de {produit.prix.toFixed(2)}€!
                             </p>

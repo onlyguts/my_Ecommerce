@@ -168,8 +168,7 @@ function Nav_tree() {
                 <div className='selection'>
                     
                     <form>
-                    <input className="navBar" type="text" value={recherche} placeholder="Recherche" onChange={(event) => RechercheChange(event)} />
-
+                    <input className="recherche_produit" type="text" value={recherche} placeholder="Recherche" onChange={(event) => RechercheChange(event)} />
                         <select value={categorie_trier} onChange={CategorieChange}>
                             <option value=''>Catégories</option>
                             {categorie.map(categorie => (

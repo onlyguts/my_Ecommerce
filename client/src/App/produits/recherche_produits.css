@@ -14,8 +14,7 @@
 }
 
 .selection {
-    grid-area: 1 / 1 / 6 / 2;
-    
+    grid-area: 1 / 1 / 6 / 2;   
 }
 
 .selection form {
@@ -24,7 +23,8 @@
     margin: 10px;
 }
 
-.selection select {
+.selection select,
+.selection .recherche_produit {
     padding: 10px;
     border-radius: 10px;
     border: none;

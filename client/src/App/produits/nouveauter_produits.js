@@ -53,7 +53,7 @@ function NouveautesProduits() {
                                 className="nouveautes-product-image"
                             />
                             <div className="star_produit">
-                                {renderStars(produit.moyenne)}
+                                {renderStars(produit.rating)}
                             </div>
                             <p className="nouveautes-product-name">{produit.name}</p>
                             <p className="nouveautes-product-price">
