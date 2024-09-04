@@ -6,7 +6,10 @@ import CSS from './Admin.css';
 function Admin() {
     const navigate = useNavigate();
     const [data, setData] = useState({});
+    const [datax, setDatax] = useState({});
     const [produits, setProduits] = useState([]);
+
+    const [checked, setChecked] = useState(false)
 
 
     useEffect(() => {
@@ -32,7 +35,7 @@ function Admin() {
         }));
     };
 
-    
+
     const ChoisirMarque = (event) => {
         const getData = event.target.value;
         setData(backData => ({
@@ -40,7 +43,7 @@ function Admin() {
             marque: getData,
         }));
     };
-    
+
     const ChoisirPrix = (event) => {
         const getData = event.target.value;
         setData(backData => ({
@@ -82,7 +85,7 @@ function Admin() {
         }));
     };
 
-    
+
     const ChoisirTaille = (event) => {
         const getData = event.target.value;
         setData(backData => ({
@@ -115,7 +118,7 @@ function Admin() {
         }));
     };
 
-    
+
     const ChoisirConso = (event) => {
         const getData = event.target.value;
         setData(backData => ({
@@ -174,8 +177,9 @@ function Admin() {
         }));
     };
 
-        
+
     const EnvoyerAPI = () => {
+
         fetch("https://localhost:8000/produits/add", {
             method: 'POST',
             headers: {
@@ -183,15 +187,15 @@ function Admin() {
             },
             body: JSON.stringify(data),
         })
-     
-        .then(response => {
-            response.json();
-            alert('Produit Ajouter');
-            // navigate('/admin');
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-        });
+
+            .then(response => {
+                response.json();
+                // alert('Produit Ajouter');
+                // navigate('/admin');
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
     };
 
 
@@ -199,79 +203,99 @@ function Admin() {
         console.log(data);
     }, [data]);
 
+
+    const PapierCado = (e) => {
+        setChecked(e.target.checked)
+    }
+
+    const form2Change = (e) => {
+        const { name, value } = e.target;
+       console.log(datax)
+        setDatax(prevState => ({
+            ...prevState, 
+            [name]: value
+        }));
+
+    };
+
+
+
     return (
         <div>
-           
+
             <Nav />
             <div className='main'>
-         
-             <form className='form'>
-                <div>
-                    <img className='imageEdit' src={data.image}></img>
-                </div>
-                <div>
-             {produits.length === 0 ? (
-                <p>Aucun produit trouvé</p>
-            ) : (
-                <select onChange={ChoisirCategorie}>
-                    <option value="">Sélectionnez une categorie</option>
-                    {produits.map(produit => (
-                        <option key={produit.id} value={produit.id}>
-                            [ID {produit.id}] {produit.name}
-                        </option>
-                    ))}
-                </select>
-            )}
-                <label>Name:</label>
-                <input type='text' name='name' value={data.name} onChange={ChoisirName} />
-                <label>Marque:</label>
-                <input type='text' name='marque' value={data.marque} onChange={ChoisirMarque} />
-                <label>Prix:</label>
-                <input type='number' name='prix' value={data.prix} onChange={ChoisirPrix} />
-                <label>Image:</label>
-                <input type='text' name='image' value={data.image} onChange={ChoisirImage} />
-                {/* <label>Ficher Produits:</label>
-                <input type='text' value={data.fiche} onChange={ChoisirFicher} /> */}
-                <label>Stock:</label>
-                <input type='number' name='stock' value={data.stock} onChange={ChoisirStock} />
-                <label>Description:</label>
-                <input type='text' name='description' value={data.description} onChange={ChoisirDescription} />
-                <label>taille:</label>
-                <input type='text' name='taille' value={data.taille} onChange={ChoisirTaille} />
-                <label>Type:</label>
-                <input type='text' name='type' value={data.type} onChange={ChoisirType} />
-                <label>Socket:</label>
-                <input type='text' name='socket' value={data.socket} onChange={ChoisirSocket} />
-                <label>Type CPU:</label>
-                <input type='text' name='typec' value={data.typec} onChange={ChoisirCPUT} />
-                <label>Consomation:</label>
-                <input type='number' name='consomation' value={data.consomation} onChange={ChoisirConso} />
 
-                <label>Promo:</label>
-                <input type='number' name='promo' value={data.promo} onChange={ChoisirPromo} />
-                
-                <label>Recommander:</label>
-                <input type='number' name='suggestion' value={data.suggestion} onChange={ChoisirSuggestion} />
-              
-                <label>length:</label>
-                <input type='number' name='length' value={data.length} onChange={Choisirlength} />
-              
-                <label>height:</label>
-                <input type='number' name='height' value={data.height} onChange={Choisirheight} />
-                
-                <label>width:</label>
-                <input type='number' name='width' value={data.width} onChange={Choisirwidth} />
-                
-                <label>weight:</label>
-                <input type='number' name='weight' value={data.weight} onChange={Choisirweight} />
-              
-                <button onClick={() => EnvoyerAPI()}>Créer le produits</button>
-                </div>
-            </form>
+                <form className='form'>
+                    <div>
+                        <img className='imageEdit' src={data.image}></img>
+                    </div>
+                    <div>
+                        {produits.length === 0 ? (
+                            <p>Aucun produit trouvé</p>
+                        ) : (
+                            <select onChange={ChoisirCategorie}>
+                                <option value="">Sélectionnez une categorie</option>
+                                {produits.map(produit => (
+                                    <option key={produit.id} value={produit.id}>
+                                        [ID {produit.id}] {produit.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                        <label>Name:</label>
+                        <input type='text' name='name' value={data.name} onChange={ChoisirName} />
+                        <label>Marque:</label>
+                        <input type='text' name='marque' value={data.marque} onChange={ChoisirMarque} />
+                        <label>Prix:</label>
+                        <input type='number' name='prix' value={data.prix} onChange={ChoisirPrix} />
+                        <label>Image:</label>
+                        <input type='text' name='image' value={data.image} onChange={ChoisirImage} />
+                        {/* <label>Ficher Produits:</label>
+                <input type='text' value={data.fiche} onChange={ChoisirFicher} /> */}
+                        <label>Stock:</label>
+                        <input type='number' name='stock' value={data.stock} onChange={ChoisirStock} />
+                        <label>Description:</label>
+                        <input type='text' name='description' value={data.description} onChange={ChoisirDescription} />
+                        <label>taille:</label>
+                        <input type='text' name='taille' value={data.taille} onChange={ChoisirTaille} />
+                        <label>Type:</label>
+                        <input type='text' name='type' value={data.type} onChange={ChoisirType} />
+                        <label>Socket:</label>
+                        <input type='text' name='socket' value={data.socket} onChange={ChoisirSocket} />
+                        <label>Type CPU:</label>
+                        <input type='text' name='typec' value={data.typec} onChange={ChoisirCPUT} />
+                        <label>Consomation:</label>
+                        <input type='number' name='consomation' value={data.consomation} onChange={ChoisirConso} />
+
+                        <label>Promo:</label>
+                        <input type='number' name='promo' value={data.promo} onChange={ChoisirPromo} />
+
+                        <label>Recommander:</label>
+                        <input type='number' name='suggestion' value={data.suggestion} onChange={ChoisirSuggestion} />
+
+                        <label>length:</label>
+                        <input type='number' name='length' value={data.length} onChange={Choisirlength} />
+
+                        <label>height:</label>
+                        <input type='number' name='height' value={data.height} onChange={Choisirheight} />
+
+                        <label>width:</label>
+                        <input type='number' name='width' value={data.width} onChange={Choisirwidth} />
+
+                        <label>weight:</label>
+                        <input type='number' name='weight' value={data.weight} onChange={Choisirweight} />
+
+
             
-                </div>
-                </div>
-                
+
+                        <button onClick={() => EnvoyerAPI()}>Créer le produits</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
     );
 }
 

@@ -83,7 +83,7 @@ class ProduitsController extends AbstractController
     public function Promotions(EntityManagerInterface $entityManager): Response
     {
         $conn = $entityManager->getConnection();
-        $sql = 'SELECT p.*, c.name as categorie_name, p.views FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id WHERE p.promo != 0 ORDER BY p.promo DESC LIMIT 10';
+        $sql = 'SELECT p.*, c.name as categorie_name, p.views, COALESCE(AVG(a.rate), 0) AS rating, COALESCE(COUNT(a.id), 0) as nbavis FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id LEFT JOIN avis a ON p.id = a.id_produits WHERE p.promo != 0 GROUP BY  p.id, c.name ORDER BY p.promo DESC  LIMIT 10';
 
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
@@ -108,7 +108,7 @@ class ProduitsController extends AbstractController
     public function nouveauter(EntityManagerInterface $entityManager): Response
     {
         $connection = $entityManager->getConnection();
-        $Mysql = 'SELECT p.*, c.name as categorie_name FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id ORDER BY p.create_time DESC LIMIT 10';
+        $Mysql = 'SELECT p.*, c.name as categorie_name, COALESCE(AVG(a.rate), 0) AS rating, COALESCE(COUNT(a.id), 0) as nbavis FROM produits p INNER JOIN categorie c ON p.id_categorie = c.id LEFT JOIN avis a ON p.id = a.id_produits GROUP BY  p.id, c.name ORDER BY p.create_time DESC LIMIT 10';
 
         $query = $connection->prepare($Mysql);
         $resultat = $query->executeQuery();

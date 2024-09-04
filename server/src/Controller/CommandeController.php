@@ -79,9 +79,11 @@ class CommandeController extends AbstractController
         $code->setStatus($data['status']);
         $code->setAdresse($data['adress']);
         $code->setName($data['name']);
-        $code->setAdresse($data['adress']);
+
         $code->setCode((int)$data['postal']);
         $code->setProduits(json_encode($data['produit']));
+
+        $code->setEmail($data['email']);
 
         $code->setWeight($data['weight']);
         $code->setWidth($data['width']);
@@ -145,7 +147,7 @@ class CommandeController extends AbstractController
 
         $email = (new Email())
             ->from('no-reply@byp.com')
-            ->to('user@user.fr')
+            ->to($data['email'])
             ->subject('Commande confirmée!')
             ->html($emailMessage)
             ->text($emailText);

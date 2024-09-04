@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class PoduitTypeController extends AbstractController
 {
@@ -30,5 +31,27 @@ class PoduitTypeController extends AbstractController
         $produits = $resultSet->fetchAllAssociative();
     
         return $this->json($produits);
+    }
+
+    #[Route('/produitstype/add', name: 'app_produitstype_add', methods: ['POST'])]
+    public function produittypeadd(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['name'], $data['id_categorie'])) {
+            return $this->json(['error' => 'Erreur'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $produit = new ProduitType();
+        $produit->setImageType($data['image']);
+        $produit->setPrice((int)$data['price']);
+        $produit->setOutpout($data['outpout']);
+        $produit->setType($data['type']);
+       
+
+        $entityManager->persist($produit);
+        $entityManager->flush();
+
+        return $this->json(['success' => 'Produit add', 'id' => $produit->getId()], Response::HTTP_CREATED);
     }
 }

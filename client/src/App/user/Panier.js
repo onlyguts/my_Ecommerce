@@ -41,6 +41,7 @@ function Panier() {
     const [adressText, setAdressP] = useState('');
     const [codeText, setCodeP] = useState('');
     const [prenomText, setPrenomP] = useState('');
+    const [emailText, setEmail] = useState('');
     const [nomText, setNomP] = useState('');
 
     const [prixexpe, setPrixExpe] = useState(0);
@@ -478,6 +479,10 @@ function Panier() {
             setCodeP(value)
         }
 
+        if (name == 'email') {
+            setEmail(value)
+        }
+
         setForm2(prevState => ({
             ...prevState,
             [name]: value
@@ -565,6 +570,7 @@ function Panier() {
         if (!loginUser) {
             userInfos = {
                 id_user: UserAccount,
+                email: emailText,
                 id_commande: id_generate,
                 produit: value,
                 status: 0,
@@ -584,6 +590,7 @@ function Panier() {
 
             userInfos = {
                 id_user: loginUser.id,
+                email: emailText,
                 id_commande: id_generate,
                 produit: value,
                 status: 0,
@@ -795,6 +802,14 @@ function Panier() {
                             <div className="modal-step step-2">
                                 <h2>Informations de livraison</h2>
                                 <form>
+                                    <select className="form-select" onChange={(e) => adressChange(e)}>
+                                        <option value=''>Tous les adresse postal</option>
+                                        {adress.map((adress, index) => (
+                                            <option key={index} value={JSON.stringify(adress)}  >
+                                                {adress.adress} - {adress.postal}
+                                            </option>
+                                        ))}
+                                    </select>
                                     <div className="form-group">
                                         <label className="form-label">Nom:</label>
                                         <input type="text" placeholder="Votre nom" required name='nom' value={nomText} onChange={form2Change} className="form-input" />
@@ -804,17 +819,13 @@ function Panier() {
                                         <input type="text" placeholder="Votre prénom" required name='prenom' value={prenomText} onChange={form2Change} className="form-input" />
                                     </div>
                                     <div className="form-group">
+                                        <label className="form-label">Email:</label>
+                                        <input type="text" placeholder="Votre Email" required name='email' value={emailText} onChange={form2Change} className="form-input" />
+                                    </div>
+                                    <div className="form-group">
                                         <label className="form-label">Numéro de téléphone:</label>
                                         <input type="text" placeholder="Votre numéro de téléphone" required name='telephone' onChange={form2Change} className="form-input" />
                                     </div>
-                                    <select className="form-select" onChange={(e) => adressChange(e)}>
-                                        <option value=''>Tous les adresse postal</option>
-                                        {adress.map((adress, index) => (
-                                            <option key={index} value={JSON.stringify(adress)}  >
-                                                {adress.adress} - {adress.postal}
-                                            </option>
-                                        ))}
-                                    </select>
                                     <div className="form-group">
                                         <label className="form-label">Adresse:</label>
                                         <input type="text" placeholder="Votre adresse" required name='adresse' value={adressText} onChange={form2Change} className="form-input" />
