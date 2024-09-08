@@ -63,7 +63,7 @@ function Register() {
             </form>
             <div className='btn'>
             <button>Accueil</button>
-            <button onClick={() => Login()}>Login</button>
+            <button onClick={() => Login()}>Se connecter</button>
             </div>
         </div>
     </div>

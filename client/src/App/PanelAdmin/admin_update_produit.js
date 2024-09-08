@@ -139,13 +139,13 @@ function AdminProduit() {
                         <h2>{produit.name}</h2>
                         <img className='imageEdit' src={produit.image} />
                         <button onClick={() => EditerProduits(produit.id)}>Fiche produit</button>
-                        <button onClick={() => EditerAvis(produit.id)}>Editer avis</button>
-                        <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
+                        <button onClick={() => EditerAvis(produit.id)}>Modifier avis</button>
+                        <button onClick={(e) => UpdateProduit(e)}>Mettre à jour</button>
                         <button onClick={() => DeletePorudits(produit.id)}>Supprimer</button>
                         <br></br>
                     </div>
                     <div>
-                        <label>Categorie :</label>
+                        <label>Categories :</label>
                         <select name='idCategorie' value={produit.idCategorie} onChange={formChange}>
                             {categorie.map(categorie => (
                                 <option key={categorie.id} value={categorie.id}>
@@ -189,7 +189,7 @@ function AdminProduit() {
                         <input type="number" name='consommations' value={produit.consommations} onChange={formChange} />
                         <label>Promo:</label>
                         <input type="number" name='promo' value={produit.promo} onChange={formChange} />
-                        <label>Recommander:</label>
+                        <label>Recommandé:</label>
                         <input type="number" name='suggestion' value={produit.suggestion} onChange={formChange} />
 
                     </div>

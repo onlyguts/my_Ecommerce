@@ -422,7 +422,7 @@ const Profil = () => {
                         Historique d'achat
                     </button>
                     <button onClick={() => setActiveSection('paramtre')} className={`profil-menu-button ${activeSection === 'paramtre' ? 'active' : ''}`}>
-                        Paramtre
+                        Paramètres
                     </button>
                 </div>
 
@@ -526,7 +526,7 @@ const Profil = () => {
                             <table className="profil-table">
                                 <thead>
                                     <tr>
-                                        <th>Proprio</th>
+                                        <th>Propriétaire</th>
                                         <th>Numéro de carte</th>
                                         <th>Date d'expiration</th>
                                         <th>CVV</th>
@@ -542,7 +542,7 @@ const Profil = () => {
                                             <td>{details.cvv}</td>
                                             <td>
                                                 {/* <button className="btn-edit">Edit</button> */}
-                                                <button className="btn-delete" onClick={() => deleteCarte(details.id)}>Delete</button>
+                                                <button className="btn-delete" onClick={() => deleteCarte(details.id)}>Supprimer</button>
                                                 {/* <button className="btn-page">Page</button> */}
                                             </td>
                                         </tr>

@@ -44,7 +44,7 @@ function NouveautesProduits() {
                         <div
                             key={produit.id}
                             className="nouveautes-product-card"
-                            onClick={() => ProduitsShow(produit.id, produit.name)}
+                            onClick={() => ProduitsShow(produit.id, produit.categorie_name)}
                         >
                             <div className="nouveautes-tag">Nouveau</div>
                             <img

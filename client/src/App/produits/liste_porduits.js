@@ -45,16 +45,19 @@ function Produits() {
   });
   console.log(produits_trier2)
   return (
+  
     <div>
-    <Nav/>
-      <h1><button onClick={() => Debut()}>Home</button>/<button onClick={() => Mid(id)}>{Categorie}</button></h1>
+    <Nav />
+    <div className="page-container">
 
-      <select value={recherche} onChange={(e) => ChangeCherche(e)}>
-
-        <option value=''> Toutes les options </option>
-
-
-
+      
+      <div className="page-header">
+        <button className="nav-button" onClick={() => Debut()}>Home</button>/
+        <button className="nav-button" onClick={() => Mid(id)}>{Categorie}</button>
+      </div>
+  
+      <select className="custom-select" value={recherche} onChange={(e) => ChangeCherche(e)}>
+        <option value=''>Toutes les options</option>
         {produits.map(produit => {
           const data = produit[type];
           if (!marqueSolo.has(data)) {
@@ -65,36 +68,28 @@ function Produits() {
           }
         })}
       </select>
+  
       {produits_trier2.length === 0 ? (
         <p>Aucun produit trouvé</p>
       ) : (
         <div className="popular-products">
-
           <div className="carousel-slide">
             {produits_trier2.map(produit => (
-
-              <div className="item">
-                <img src={produit.image} onClick={() => ProduitsShow(produit.id)} />
-                <span>{produit.name}</span>
-                <span>marque:{produit.marque}</span>
-                <span>prix:{produit.prix}€</span>
+              <div className="product-item" key={produit.id}>
+                <img className="product-image" src={produit.image} onClick={() => ProduitsShow(produit.id)} alt={produit.name} />
+                <span className="product-name">{produit.name}</span>
+                <span className="product-brand">Marque: {produit.marque}</span>
+                <span className="product-price">Prix: {produit.prix}€</span>
               </div>
             ))}
-
           </div>
-
-
         </div>
-        // <ul>
-        //   {produits.map(produit => (
-        //   <li key={produit.id}>
-        //     <p onClick={() => ProduitsShow(produit.id)}>{produit.name}</p>
-        //   </li>
-        // ))}
-        // </ul>
       )}
     </div>
+
+    </div>
   );
+  
 }
 
 function Nav_one() {
@@ -198,8 +193,8 @@ function Nav_one() {
   const toggleCart = () => {
     setShowCart(!showCart);
   };
-  // httpss://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/some
-  // httpss://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+  // httpsss://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+  // httpsss://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
   const produits_trier = produits.filter(produit => {
     const produit_trouvee = produit.name.toLowerCase().includes(recherche.toLowerCase());
     const categorie_trouvee = categorie.some(categorie => categorie.name.toLowerCase() === recherche.toLowerCase() && produit.id_categorie === categorie.id);

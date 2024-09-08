@@ -304,7 +304,7 @@ function Algo() {
 
         <div className="algo-steps">
           <div className="panier-section">
-            <h2 className="panier-title">Votre Sélection :</h2>
+            <h2 className="panier-title">Votre sélection :</h2>
             {Object.values(panierWait).length > 0 ? (
               <ul className="panier-list">
                 {Object.values(panierWait).map((boitier, index) => (
@@ -324,7 +324,7 @@ function Algo() {
             )}
             {step === 1 && (
               <div className="step-content">
-                <h2 className="step-title">Liste des Boîtiers Disponibles :</h2>
+                <h2 className="step-title">Liste des boîtiers disponibles :</h2>
                 <ul className="item-list">
                   {boitiers.map((boitier, index) => (
                     <li className="item" key={index}>
@@ -338,7 +338,7 @@ function Algo() {
             )}
             {step === 2 && (
               <div className="step-content">
-                <h2 className="step-title">Liste des Cartes Mères Disponibles :</h2>
+                <h2 className="step-title">Liste des cartes mères disponibles :</h2>
                 <ul className="item-list">
                   {carte.map((boitier, index) => (
                     <li className="item" key={index}>
@@ -352,7 +352,7 @@ function Algo() {
             )}
             {step === 3 && (
               <div className="step-content">
-                <h2 className="step-title">Liste des CPU Disponibles :</h2>
+                <h2 className="step-title">Liste des CPU disponibles :</h2>
                 <ul className="item-list">
                   {cpu.map((boitier, index) => (
                     <li className="item" key={index}>
@@ -366,7 +366,7 @@ function Algo() {
             )}
             {step === 4 && (
               <div className="step-content">
-                <h2 className="step-title">Liste des RAM Disponibles :</h2>
+                <h2 className="step-title">Liste des RAM disponibles :</h2>
                 <ul className="item-list">
                   {ram.map((boitier, index) => (
                     <li className="item" key={index}>
@@ -380,7 +380,7 @@ function Algo() {
             )}
             {step === 5 && (
               <div className="step-content">
-                <h2 className="step-title">Liste des SSD Disponibles :</h2>
+                <h2 className="step-title">Liste des SSD disponibles :</h2>
                 <ul className="item-list">
                   {ssd.map((boitier, index) => (
                     <li className="item" key={index}>
@@ -394,7 +394,7 @@ function Algo() {
             )}
             {step === 6 && (
               <div className="step-content">
-                <h2 className="step-title">Liste des GPU Disponibles :</h2>
+                <h2 className="step-title">Liste des GPU disponibles :</h2>
                 <ul className="item-list">
                   {gpu.map((boitier, index) => (
                     <li className="item" key={index}>
@@ -408,7 +408,7 @@ function Algo() {
             )}
             {step === 7 && (
               <div className="step-content">
-                <h2 className="step-title">Liste des AIO Disponibles :</h2>
+                <h2 className="step-title">Liste des AIO disponibles :</h2>
                 <ul className="item-list">
                   {aio.map((boitier, index) => (
                     <li className="item" key={index}>
@@ -422,7 +422,7 @@ function Algo() {
             )}
             {step === 8 && (
               <div className="step-content">
-                <h2 className="step-title">Liste des Alimentations Disponibles :</h2>
+                <h2 className="step-title">Liste des Alimentations disponibles :</h2>
                 <ul className="item-list">
                   {alim.map((boitier, index) => (
                     <li className="item" key={index}>

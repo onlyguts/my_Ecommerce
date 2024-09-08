@@ -48,8 +48,8 @@ function AdminListPF() {
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">taxe</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Taxe</th>
                             <th scope="col">Options</th>
                         </tr>
                     </thead>
@@ -60,7 +60,7 @@ function AdminListPF() {
                              <td>{produit.id}</td>
                              <td>{produit.name}</td>
                              <td>{produit.taxe}€</td>
-                           <td> <button onClick={() => OpenPorudits(produit.id)}>Edit</button> </td>
+                           <td> <button onClick={() => OpenPorudits(produit.id)}>Modifier</button> </td>
                          </tr>
                         ))}
 

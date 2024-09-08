@@ -48,7 +48,7 @@ function AdminListC() {
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Nom</th>
                             <th scope="col">Options</th>
                         </tr>
                     </thead>
@@ -61,7 +61,7 @@ function AdminListC() {
                              <td>{produit.id}</td>
                              <td>{produit.name}</td>
                            
-                           <td> <button onClick={() => OpenPorudits(produit.id)}>Edit</button> <button onClick={() => DeletePorudits(produit.id)}>Delete</button></td>
+                           <td> <button onClick={() => OpenPorudits(produit.id)}>Modifier</button> <button onClick={() => DeletePorudits(produit.id)}>Supprimer</button></td>
                          </tr>
                         ))}
 

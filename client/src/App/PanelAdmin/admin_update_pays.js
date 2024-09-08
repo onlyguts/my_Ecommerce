@@ -64,7 +64,7 @@ function AdminPays() {
                     <label>Taxe:</label>
                     <input type="text" name='taxe' value={produit.taxe} onChange={formChange} />
 
-                <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
+                <button onClick={(e) => UpdateProduit(e)}>Mettre à jour</button>
             </form>
         </div>
     );

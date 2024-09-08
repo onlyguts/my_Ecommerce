@@ -64,7 +64,7 @@ function AdminProduitC() {
                     <label>Image:</label>
                     <input type="text" name='image' value={produit.image} onChange={formChange} />
 
-                <button onClick={(e) => UpdateProduit(e)}>Sauvegarder</button>
+                <button onClick={(e) => UpdateProduit(e)}>Mettre à jour</button>
             </form>
         </div>
     );

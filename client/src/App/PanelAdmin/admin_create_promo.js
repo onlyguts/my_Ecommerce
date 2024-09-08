@@ -38,13 +38,13 @@ function AdminPromo() {
         <div>
             <Nav />
              <form>
-                <label>Nom code:</label>
+                <label>Nom du code promo:</label>
                 <input type='text' value={data.name}  name='code' onChange={promoChange} />
                 <label>Réduction:</label>
                 <input type='number' value={data.image}  name='promotion' onChange={promoChange} />
-                <label>Nombre Utilisation:</label>
+                <label>Nombre d'utilisation:</label>
                 <input type='number' value={data.image} name='utilisations' onChange={promoChange} />
-                <button onClick={() => EnvoyerAPI()}>Créer le code</button>
+                <button onClick={() => EnvoyerAPI()}>Créer le code promo</button>
             </form>
         </div>
     );

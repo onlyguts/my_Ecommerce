@@ -213,7 +213,22 @@
     align-items: center;
 }
 
+.produit_achat .ajouter_panier_rupture {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 30px;
+    border-radius: 20px;
+    background-color: #F4D5BB;
+    justify-content: center;
+    align-items: center;
+}
+
 .produit_achat .ajouter_panier h2 {
+    font-weight: 500;
+    font-size: 1.2em;
+}
+
+.produit_achat .ajouter_panier_rupture h2 {
     font-weight: 500;
     font-size: 1.2em;
 }
@@ -223,6 +238,9 @@
     background-color: #f4ccab;
 }
 
+.produit_achat .ajouter_panier_rupture:hover {
+    cursor: not-allowed;
+}
 /* Message stock ou non */
 .stock_produit {
     display: flex;

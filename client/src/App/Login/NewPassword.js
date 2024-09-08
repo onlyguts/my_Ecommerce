@@ -46,7 +46,7 @@ function NewPassword() {
   return (
     <div className='wrapper'>
     <div className='container'>
-        <h2 className='titre'>Mots de passe oublié?</h2>
+        <h2 className='titre'>Mot de passe oublié?</h2>
         <form >
             {message}
              <input type='text' id='paswword' name='paswword'  value={paswword} onChange={(e) => setPassword(e.target.value)} placeholder='Nouveau mots de passe' />

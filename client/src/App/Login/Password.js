@@ -40,7 +40,7 @@ function Password() {
 return (
   <div className='wrapper'>
     <div className='container'>
-      <h2 className='titre'>Mots de passe oublié?</h2>
+      <h2 className='titre'>Mot de passe oublié?</h2>
       {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
       <form onSubmit={emailPassword}>
         <input type='email' id='mail' name='mail' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Adresse e-mail' />

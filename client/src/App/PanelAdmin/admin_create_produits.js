@@ -257,7 +257,7 @@ function Admin() {
                         <input type='number' name='stock' value={data.stock} onChange={ChoisirStock} />
                         <label>Description:</label>
                         <input type='text' name='description' value={data.description} onChange={ChoisirDescription} />
-                        <label>taille:</label>
+                        <label>Taille:</label>
                         <input type='text' name='taille' value={data.taille} onChange={ChoisirTaille} />
                         <label>Type:</label>
                         <input type='text' name='type' value={data.type} onChange={ChoisirType} />
@@ -271,25 +271,22 @@ function Admin() {
                         <label>Promo:</label>
                         <input type='number' name='promo' value={data.promo} onChange={ChoisirPromo} />
 
-                        <label>Recommander:</label>
+                        <label>Recommandé:</label>
                         <input type='number' name='suggestion' value={data.suggestion} onChange={ChoisirSuggestion} />
 
-                        <label>length:</label>
+                        <label>Longueur:</label>
                         <input type='number' name='length' value={data.length} onChange={Choisirlength} />
 
-                        <label>height:</label>
+                        <label>Hauteur:</label>
                         <input type='number' name='height' value={data.height} onChange={Choisirheight} />
 
-                        <label>width:</label>
+                        <label>Largeur:</label>
                         <input type='number' name='width' value={data.width} onChange={Choisirwidth} />
 
-                        <label>weight:</label>
+                        <label>Poids:</label>
                         <input type='number' name='weight' value={data.weight} onChange={Choisirweight} />
 
-
-            
-
-                        <button onClick={() => EnvoyerAPI()}>Créer le produits</button>
+                        <button onClick={() => EnvoyerAPI()}>Créer le produit</button>
                     </div>
                 </form>
 

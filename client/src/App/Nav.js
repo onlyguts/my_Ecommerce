@@ -115,8 +115,8 @@ function Nav_one() {
   const toggleCart = () => {
     setShowCart(!showCart);
   };
-  // httpss://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/some
-  // httpss://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+  // httpsss://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+  // httpsss://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
   const produits_trier = produits.filter(produit => {
     const produit_trouvee = produit.name.toLowerCase().includes(recherche.toLowerCase());
     const categorie_trouvee = categorie.some(categorie => categorie.name.toLowerCase() === recherche.toLowerCase() && produit.id_categorie === categorie.id);

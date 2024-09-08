@@ -749,7 +749,7 @@ function Panier() {
                 <h1 className="panier-title">Panier</h1>
                 {message}
 
-                <p className="panier-total">Prix Panier : {prixtotal}€</p>
+                <p className="panier-total">Prix du panier : {prixtotal}€</p>
                 <div className="promo-container">
                     <input
                         type='text'
@@ -803,7 +803,7 @@ function Panier() {
                                 <h2>Informations de livraison</h2>
                                 <form>
                                     <select className="form-select" onChange={(e) => adressChange(e)}>
-                                        <option value=''>Tous les adresse postal</option>
+                                        <option value=''>Tous les adresses postales</option>
                                         {adress.map((adress, index) => (
                                             <option key={index} value={JSON.stringify(adress)}  >
                                                 {adress.adress} - {adress.postal}
@@ -854,7 +854,7 @@ function Panier() {
                                 <h2>Mode de paiement & Récapitulatif</h2>
                                 <form>
                                     <select className="form-select" onChange={(e) => carteChange(e)}>
-                                        <option value=''>Tous les carte bancaire</option>
+                                        <option value=''>Toutes les cartes bancaires</option>
                                         {bancaire.carte.map((banque, index) => (
                                             <option key={index} value={JSON.stringify(banque)}  >
                                                 {banque.num}
@@ -899,7 +899,7 @@ function Panier() {
                                         </div>
                                     )}
                                     {(prixtotal > 3000 && !loginUser) ? (
-                                        <button type="button" onClick={() => navigate('/login')} className="modal-button">Login</button>
+                                        <button type="button" onClick={() => navigate('/login')} className="modal-button">Connexion</button>
 
                                     ) : (
                                         <button type="button" onClick={() => setStep(4)} className="modal-button">Confirmer</button>

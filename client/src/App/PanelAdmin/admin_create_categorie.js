@@ -54,7 +54,7 @@ function AdminCat() {
                 <input type='text' value={data.name} onChange={ChoisirName} />
                 <label>Image:</label>
                 <input type='text' value={data.image} onChange={ChoisirImage} />
-                <button onClick={() => EnvoyerAPI()}>Créer le produits</button>
+                <button onClick={() => EnvoyerAPI()}>Créer la catégorie</button>
             </form>
         </div>
     );

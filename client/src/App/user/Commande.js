@@ -128,17 +128,17 @@ function Commande() {
                             <div className="commande-info">Code : {commandes[0].code}</div>
                             <div className="commande-info">Mode d'expédition : {commandes[0].mode_expe}</div>
                             <div className="commande-info">Date : {commandes[0].date}</div>
-                            <div className="commande-info">Prix Totals : {commandes[0].prix}€</div>
+                            <div className="commande-info">Prix total : {commandes[0].prix}€</div>
 
                            
                             {status === 0 && (
-                                <div className="commande-info">Status : en préparation</div>
+                                <div className="commande-info">Statut : En préparation</div>
                             )}
                             {status === 1 && (
-                                <div className="commande-info">Status : en cours de livraison</div>
+                                <div className="commande-info">Statut : En cours de livraison</div>
                             )}
                             {status === 2 && (
-                                <div className="commande-info">Status : Livrée</div>
+                                <div className="commande-info">Statut : Livrée</div>
                             )}
                                <button onClick={facture}>Imprimer la facture</button>
                         </div>

@@ -56,7 +56,7 @@ function AdminDashboard() {
             <div>
                 <p>Nombre de catégories : {categories.length}</p>
                 <p>Nombre de produits : {produits.length}</p>
-                <p>Nombre de users : {users.length}</p>
+                <p>Nombre d'utilisateurs : {users.length}</p>
               
             </div>
         </div>

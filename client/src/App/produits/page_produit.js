@@ -288,7 +288,7 @@ export const ProductPage = () => {
             }
         }
     }
-// console.log(typeporduit)
+    // console.log(typeporduit)
 
     return (
         <div>
@@ -297,7 +297,7 @@ export const ProductPage = () => {
                 <div>
                     <div className='board'>
                         <div className='breadcrumb'>
-                            <button onClick={() => Debut()}>Home</button>/<button onClick={() => Mid(produit.idCategorie)}>{Categorie}</button>/<button onClick={() => End(produit.id)}>{produit.name}</button>
+                            <button onClick={() => Debut()}>Accueil</button>/<button onClick={() => Mid(produit.idCategorie)}>{Categorie}</button>/<button onClick={() => End(produit.id)}>{produit.name}</button>
                         </div>
                         {loginUser && (
                             loginUser.groupe === 1 ? (
@@ -342,18 +342,18 @@ export const ProductPage = () => {
                                     <div className='select_produit'>
                                         {typeporduit.length != 0 && (
 
-                                        <div className='type_produit'>
-                                            <img
-                                                src={produit.image}
-                                                alt="Image principale"
-                                                onClick={() => Type_Produit({
-                                                    price: 0,
-                                                    image_type: produit.image,
-                                                    outpout: produit.outpout
-                                                })}
-                                            />
-                                            <p>Basique</p>
-                                        </div>
+                                            <div className='type_produit'>
+                                                <img
+                                                    src={produit.image}
+                                                    alt="Image principale"
+                                                    onClick={() => Type_Produit({
+                                                        price: 0,
+                                                        image_type: produit.image,
+                                                        outpout: produit.outpout
+                                                    })}
+                                                />
+                                                <p>Basique</p>
+                                            </div>
                                         )}
                                         {typeporduit.map(item => (
                                             <div className='type_produit'>
@@ -364,10 +364,10 @@ export const ProductPage = () => {
                                                     onClick={() => Type_Produit(item)}
                                                 />
                                                 {item.type === 'To' && (
-                                                <p>{item.outpout} {item.type}</p>
+                                                    <p>{item.outpout} {item.type}</p>
                                                 )}
                                                 {item.type === 'Couleur' && (
-                                                <p>{item.outpout}</p>
+                                                    <p>{item.outpout}</p>
                                                 )}
                                             </div>
                                         ))}
@@ -391,9 +391,15 @@ export const ProductPage = () => {
                                         <div className='ancien_prix'>Ancien prix : <span className='prix_promo'>{produit.prix + newprice}€</span></div>
                                     )}
                                 </div>
-                                <div className="ajouter_panier" onClick={() => AddPanier(produit.id, produit.stock, image, outpout)}>
-                                    <h2>Ajouter au panier</h2>
-                                </div>
+                                {produit.stock <= 0 ? (
+                                    <div className="ajouter_panier_rupture">
+                                        <h2>Ajouter au panier</h2>
+                                    </div>
+                                ) : (
+                                    <div className="ajouter_panier" onClick={() => AddPanier(produit.id, produit.stock, image, outpout)}>
+                                        <h2>Ajouter au panier</h2>
+                                    </div>
+                                )}
                                 {produit.stock === 0 ? (
                                     <section className="stock_produit">
                                         <h4 className="rupture_stock">En rupture de stock!</h4>

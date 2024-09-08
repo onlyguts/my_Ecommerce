@@ -235,7 +235,7 @@ function Nav_tree() {
 
                                     : <h2 className="prix_produit">{produit.prix + newprice}€</h2>
                                 }
-                                <span className='addpanier_produit'>Ajouter au panier</span>
+                                {/* <span className='addpanier_produit'>Ajouter au panier</span> */}
                             </span>
                         </div>
                     ))}
@@ -402,7 +402,7 @@ function Cart() {
                 ))}
             </ul>
             <h2 className="cart-total">Prix total : {value}€</h2>
-            <button onClick={() => navigate('/panier')} className="cart-view-button">AFFICHEZ LE PANIER</button>
+            <button onClick={() => navigate('/panier')} className="cart-view-button">AFFICHER LE PANIER</button>
         </div>
     );
 }

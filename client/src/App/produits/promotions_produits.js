@@ -36,7 +36,10 @@ function Promotionsproduits() {
     function ProduitsShow(id, name) {
         navigate("/produit/" + id);
         localStorage.setItem('categorie', name);
+        
     }
+
+    console.log(promo)
 
     return (
         <div>
@@ -47,7 +50,7 @@ function Promotionsproduits() {
                 </div>
                 <div className="promotions-grid">
                     {promo.map(produit => (
-                        <div key={produit.id} className="promotions-product-card" onClick={() => ProduitsShow(produit.id, produit.name)}>
+                        <div key={produit.id} className="promotions-product-card" onClick={() => ProduitsShow(produit.id, produit.categorie_name)}>
                             <div className="promotions-tag">-{produit.promo}%</div>
                             <img src={produit.image} alt={produit.name} className="promotions-product-image" />
                             <p className="promotions-product-name">{produit.name}</p>

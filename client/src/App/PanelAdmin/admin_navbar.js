@@ -48,10 +48,10 @@ function NavAdmin() {
                 <a onClick={() => Ajouter()}>AJOUTER PRODUIT</a>
                 <a onClick={() => AjouterC()}>AJOUTER CATEGORIE</a>
                 <a onClick={() => AjouterP()}>AJOUTER CODE PROMO</a>
-                <a onClick={() => List()}>LISTE PRODUIT</a>
-                <a onClick={() => ListC()}>LISTE CATEGORIE</a>
-                <a onClick={() => ListP()}>LISTE PROMO</a>
-                <a onClick={() => ListPF()}>LISTE PAYS FRAIS</a>
+                <a onClick={() => List()}>LISTE PRODUITS</a>
+                <a onClick={() => ListC()}>LISTE CATEGORIES</a>
+                <a onClick={() => ListP()}>LISTE CODES PROMO</a>
+                <a onClick={() => ListPF()}>LISTE PAYS (FRAIS DE PORT)</a>
             </div>
         </div>
     )

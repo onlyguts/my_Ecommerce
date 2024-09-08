@@ -60,7 +60,7 @@ function AdmonPromoUpdate() {
             <Nav />
             <form>
                 
-                    <label>Code :</label>
+                    <label>Code promo :</label>
                     <input type="text" name='code' value={produit.code} onChange={formChange} />
         
                     <label>Utilisation:</label>
@@ -68,7 +68,7 @@ function AdmonPromoUpdate() {
                      
                     <label>Promotion:</label>
                     <input type="number" name='image' value={produit.promotion} onChange={formChange} />
-                <button onClick={(e) => UpdateProduit(e)} >Sauvegarder</button>
+                <button onClick={(e) => UpdateProduit(e)} >Mettre à jour</button>
             </form>
         </div>
     );
