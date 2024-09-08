@@ -246,11 +246,11 @@ function Nav_two() {
       <ul>
       <li className="dropdown">
           <div onClick={() => Home()}>
-            <a >Home</a>
+            <a >Accueil</a>
           </div>
         </li>
         <li className="dropdown">
-          <a href="#">Catégorie</a>
+          <a href="#">Catégories</a>
           <div className="dropdown-content">
             {categorie.map(categorie => (
               <li key={categorie.id}>
@@ -267,12 +267,12 @@ function Nav_two() {
         </li>
         <li className="dropdown">
           <div onClick={() => AllProduits()}>
-            <a >Tout Nos Produits</a>
+            <a >Tout nos produits</a>
           </div>
         </li>
         <li className="dropdown">
           <div onClick={() => navigate('/nouveauter')}>
-            <a >Nouveauter</a>
+            <a >Nouveautés</a>
           </div>
         </li>
         <li className="dropdown">

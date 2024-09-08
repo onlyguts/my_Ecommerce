@@ -52,7 +52,7 @@ function Produits() {
 
       
       <div className="page-header">
-        <button className="nav-button" onClick={() => Debut()}>Home</button>/
+        <button className="nav-button" onClick={() => Debut()}>Accueil</button>/
         <button className="nav-button" onClick={() => Mid(id)}>{Categorie}</button>
       </div>
   
@@ -323,11 +323,11 @@ function Nav_two() {
       <ul>
         <li className="dropdown">
           <div onClick={() => Home()}>
-            <a >Home</a>
+            <a >Accueil</a>
           </div>
         </li>
         <li className="dropdown">
-          <a href="#">Catégorie</a>
+          <a href="#">Catégories</a>
           <div className="dropdown-content">
             {categorie.map(categorie => (
               <li key={categorie.id}>
@@ -339,7 +339,7 @@ function Nav_two() {
         </li>
         <li className="dropdown">
           <div onClick={() => AllProduits()}>
-            <a >Tout Nos Produits</a>
+            <a >Tout nos produits</a>
           </div>
         </li>
         <li className="dropdown">
